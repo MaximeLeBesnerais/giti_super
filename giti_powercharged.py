@@ -19,7 +19,7 @@ def no_l_b(text_with_line_break):
     return text_with_line_break.replace("\n", "")
 
 menu = {1: "New Feature", 2: "Bug Fix",
-        3: "Refactoring", 4: "Code Cleanup", 5: "Other", 6: "Delete"}
+        3: "Refactoring", 4: "Code Cleanup", 5: "Other", 6: "Delete", 7: "Documentation"}
 # if it exists, use gitignore file to ignore files
 if os.path.exists(".gitignore"):
     with open(".gitignore", "r") as f:
@@ -64,6 +64,9 @@ for line in git_status:
         elif choice == '6':
             deletion_reason = input('Why did you delete this file? ')
             commit_message += "    chore: Deletion: " + deletion_reason + " :fire:\n"
+        elif choice == '7':
+            documentation_summary = input('What did you document? ')
+            commit_message += "    docs: Documentation: " + documentation_summary + " :books:\n"
 
 commit_title = ":sparkles: " + input('What is the title of the commit? ')
 final_commit_message = commit_title + "\n" + commit_message
