@@ -44,23 +44,23 @@ for line in git_status:
             if optional_feature_scope != "":
                 optional_feature_scope = "(" + optional_feature_scope + ")"
             commit_message += "    feat" + optional_feature_scope + ": New feature: " + \
-                feature_name + ": " + feature_explication + ":zap:\n"
+                feature_name + ": " + feature_explication + " :zap:\n"
         elif choice == '2':
             bug_origin = input('What is the origin of the bug? ')
             bug_fix = input('What did you do to fix it? ')
             commit_message += "    fix: " + bug_origin + ": " + bug_fix + ":bug:\n"
         elif choice == '3':
             refactoring_scope = input('What is the scope of the refactoring? ')
-            commit_message += "    refactor: " + refactoring_scope + ":recycle:\n"
+            commit_message += "    refactor: " + refactoring_scope + " :recycle:\n"
         elif choice == '4':
             code_cleanup_scope = input(
                 'What is the scope of the code cleanup? ')
             code_cleanup_details = input('What did you do to clean the code? ')
-            commit_message += "    style: Code cleanup: :wastebasket:" + \
-                code_cleanup_scope + ": " + code_cleanup_details + ":art:\n"
+            commit_message += "    style: :wastebasket: Code cleanup: " + \
+                code_cleanup_scope + ": " + code_cleanup_details + " :art:\n"
         elif choice == '5':
             other_summary = input('What was the summary of your other changes? ')
-            commit_message += "    chore: Other: " + other_summary + ":adhesive_bandage:\n"
+            commit_message += "    chore: Other: " + other_summary + " :adhesive_bandage:\n"
 
 commit_title = input('What is the title of the commit? ')
 final_commit_message = commit_title + "\n" + commit_message
