@@ -62,7 +62,7 @@ for line in git_status:
             other_summary = input('What was the summary of your other changes? ')
             commit_message += "    chore: Other: " + other_summary + " :adhesive_bandage:\n"
 
-commit_title = ": sparkles: " + input('What is the title of the commit? ')
+commit_title = ":sparkles: " + input('What is the title of the commit? ')
 final_commit_message = commit_title + "\n" + commit_message
 
 # print the final commit message and ask the user if he wants to commit
