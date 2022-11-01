@@ -8,12 +8,6 @@ commit_message = ""
 def no_l_b(text_with_line_break):
     return text_with_line_break.replace("\n", "")
 
-
-# chceck if CHANGELOG.md exists and if not, create it
-if not os.path.exists("CHANGELOG.md"):
-    with open("CHANGELOG.md", "w") as changelog:
-        changelog.write("# Changelog\n\n")
-
 menu = {1: "New Feature", 2: "Bug Fix",
         3: "Refactoring", 4: "Code Cleanup", 5: "Other", 6: "Delete", 7: "Documentation", 8: "Configuration"}
 if os.path.exists(".gitignore"):
