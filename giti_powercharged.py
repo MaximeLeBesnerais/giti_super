@@ -1,18 +1,5 @@
 import os
 
-# for each line in git status -s: ask the user what he did between 4 choices
-# 1. new feature
-# 2. bug fix
-# 3. refactoring
-# 4. Code Cleanup
-# 5. Other
-
-# if the user choose 1, ask him for the name of the feature
-# if the user choose 2, ask him for the origin of the bug and what he did to fix it
-# if the user choose 3, ask him for the scope of the refactoring
-# if the user choose 4, ask him for the scope of the code cleanup
-# if the user choose 5, ask him precisely what he did
-
 commit_message = ""
 
 
@@ -22,14 +9,12 @@ def no_l_b(text_with_line_break):
 
 menu = {1: "New Feature", 2: "Bug Fix",
         3: "Refactoring", 4: "Code Cleanup", 5: "Other", 6: "Delete", 7: "Documentation", 8: "Configuration"}
-# if it exists, use gitignore file to ignore files
 if os.path.exists(".gitignore"):
     with open(".gitignore", "r") as f:
         gitignore = f.readlines()
 
 git_status = os.popen('git status -s').readlines()
 for line in git_status:
-    # ignore file in gitignore
     if line[3:] in gitignore:
         continue
     else:
@@ -74,14 +59,14 @@ for line in git_status:
                 documentation_summary + " :books:\n"
         elif choice == '8':
             config_name = input('What configuration did you change / add ? ')
-            config_utility = input('What is the utility of this configuration? ')
+            config_utility = input(
+                'What is the utility of this configuration? ')
             commit_message += "    chore: Configuration: " + config_name + ": " + \
                 config_utility + " :wrench:\n"
 
 commit_title = ":sparkles: " + input('What is the title of the commit? ')
 final_commit_message = commit_title + "\n" + commit_message
 
-# print the final commit message and ask the user if he wants to commit
 print("\n" + final_commit_message)
 commit_loop = True
 while commit_loop:
