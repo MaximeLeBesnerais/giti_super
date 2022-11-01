@@ -9,8 +9,7 @@ if ! [ -x "$(command -v python)" ]; then
 fi
 
 # move giti and pe to /usr/local/bin
-sudo cp ./giti /usr/local/bin
-sudo cp ./pe /usr/local/bin
+sudo cp ./giti /usr/bin
 
 # check current path
 if [ -d ~/.giti ]; then
@@ -27,5 +26,4 @@ else
 fi
 
 rm -rf ~/.giti/giti
-rm -rf ~/.giti/pe
 rm -rf ~/.giti/install.sh
