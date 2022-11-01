@@ -56,7 +56,7 @@ for line in git_status:
         elif choice == '7':
             documentation_summary = input('What did you document? ')
             commit_message += "    docs: Documentation: " + \
-                documentation_summary + " :books:\n"
+                documentation_summary + " :memo:\n"
         elif choice == '8':
             config_name = input('What configuration did you change / add ? ')
             config_utility = input(
