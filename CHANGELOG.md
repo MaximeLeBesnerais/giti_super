@@ -1,9 +1,7 @@
 # Changelog
 
-## :sparkles: Changelog automation
+## :sparkles: Cleaning repo
 
-- giti_powercharged.py: 
--     feat(functionnality): New feature: auto changelog: Will redo a changelog for each commit :zap:
-- CHANGELOG.md: 
--     docs: Documentation: changelog :memo:
+- giti_power_simple.py: 
+-     chore: Deletion: Useless as of now, will redo later :fire:
 - 
