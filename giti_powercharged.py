@@ -9,6 +9,20 @@ def no_l_b(text_with_line_break):
     return text_with_line_break.replace("\n", "")
 
 
+def new_changelog(commit_title, commit_message):
+    # if CHANGELOG.md exists, delete it
+    if os.path.exists("CHANGELOG.md"):
+        os.remove("CHANGELOG.md")
+    with open("CHANGELOG.md", "w") as changelog:
+        changelog.write(f"# Changelog\n\n## {commit_title}\n\n")
+        for line in commit_message.split("\n"):
+            changelog.write(f"- {line}\n")
+
+# chceck if CHANGELOG.md exists and if not, create it
+if not os.path.exists("CHANGELOG.md"):
+    with open("CHANGELOG.md", "w") as changelog:
+        changelog.write("# Changelog\n\n")
+
 menu = {1: "New Feature", 2: "Bug Fix",
         3: "Refactoring", 4: "Code Cleanup", 5: "Other", 6: "Delete", 7: "Documentation", 8: "Configuration"}
 if os.path.exists(".gitignore"):
@@ -78,6 +92,9 @@ while commit_loop:
     commit_choice = input('Do you want to commit? (y/n) ')
     if commit_choice == 'y':
         os.system('git commit -m "' + final_commit_message + '"')
+        new_changelog(commit_title, commit_message)
+        os.system('git add CHANGELOG.md')
+        os.system('git commit --amend --no-edit')
         os.system('git pull')
         commit_loop = False
     elif commit_choice == 'n':
