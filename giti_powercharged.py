@@ -1,5 +1,7 @@
 import os
 
+os.system('git add .')
+
 commit_message = ""
 
 
@@ -63,6 +65,9 @@ for line in git_status:
                 'What is the utility of this configuration? ')
             commit_message += "    chore: Configuration: " + config_name + ": " + \
                 config_utility + " :wrench:\n"
+        else:
+            weird_comment = choice
+            commit_message += "    chore: " + weird_comment + " :question:\n"
 
 commit_title = ":sparkles: " + input('What is the title of the commit? ')
 final_commit_message = commit_title + "\n" + commit_message
@@ -72,7 +77,6 @@ commit_loop = True
 while commit_loop:
     commit_choice = input('Do you want to commit? (y/n) ')
     if commit_choice == 'y':
-        os.system('git add .')
         os.system('git commit -m "' + final_commit_message + '"')
         os.system('git pull')
         commit_loop = False
