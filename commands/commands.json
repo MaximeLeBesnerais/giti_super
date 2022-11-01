@@ -2,6 +2,7 @@
     {
         "name": "New Feature",
         "command": "feat",
+        "description": "Adding a new feature - a new feature should be a new command or a new option to an existing command",
         "input": [
             "What is the name of the feature? ",
                 "What is the feature about? ",
@@ -11,7 +12,8 @@
     },
     {
         "name": "Bug Fix",
-        "command": "fix",
+        "command": ["fix", "bug"],
+        "description": "After a successful bug fix - a bug fix is a change that fixes a code malfunction",
         "input": [
             "What was the origin of the bug? ",
             "How was the bug fixed? "
@@ -21,6 +23,7 @@
     {
         "name": "Documentation",
         "command": "docs",
+        "description": "Documentation changes - documentation are files that are not code",
         "input": [
             "How was the documentation updated? "
         ],
@@ -29,6 +32,7 @@
     {
         "name": "Refactor",
         "command": "refactor",
+        "description": "Refactoring changes - refactoring code, changing variable names, etc.",
         "input": [
             "What was the reason of the refactor ?",
             "How was the refactor performed? "
@@ -38,6 +42,7 @@
     {
         "name": "Test",
         "command": "test",
+        "description": "Test changes - a test consists of trying to break the code with normal use cases",
         "input": [
             "What was the extent of the testing? ",
             "Did you achieve the expected results? "
@@ -47,6 +52,7 @@
     {
         "name": "Chore",
         "command": "chore",
+        "description": "chores are tasks that are not directly related to the code",
         "input": [
             "What was the chore ?",
             "How was the chore performed ?"
@@ -56,6 +62,7 @@
     {
         "name": "Release",
         "command": "release",
+        "description": "New release - a release is a new version of the code, with a vast amount of changes, a ensemble of new features, bug fixes, etc.",
         "input": [
             "What is the version number? "
         ],
@@ -64,6 +71,7 @@
     {
         "name": "Revert",
         "command": "revert",
+        "description": "You reverted some code - a revert is a change that undoes a previous change",
         "input": [
             "What was the reason of the revert? "
         ],
@@ -72,6 +80,7 @@
     {
         "name": "Merge",
         "command": "merge",
+        "description": "Merging - a merge is a change that merges two branches, or two versions of the code",
         "input": [
             "What was the branch name? ",
             "What was the reason of the merge? "
@@ -81,9 +90,58 @@
     {
         "name": "WIP",
         "command": "wip",
+        "description": "Work in progress - a wip is a change that is not finished yet, or a change that is not ready to be implemented",
         "input": [
             "What are you working on? "
         ],
         "message": "    wip: $1 :construction:"
+    },
+    {
+        "name": "Style",
+        "command": "style",
+        "description": "Style change - a style change is a change that does not affect the code, but the way it is displayed",
+        "input": [
+            "What was the reason of the style change? ",
+            "How will it affect readability? "
+        ],
+        "message": "    style: $1 -- $2 :art:"
+    },
+    {
+        "name": "bad",
+        "command": "bad",
+        "description": "Unclean code, or that is not working but that you want to save for later or is necessary for the code to work",
+        "input": [
+            "What is the final aim of the code? ",
+            "What do you want to improve? "
+        ],
+        "message": "    bad: $1 -- $2 :poop:"
+    },
+    {
+        "name": "frame",
+        "command": "frame",
+        "description": "Incomplete code that will be used as a frame in a refactoring",
+        "input": [
+            "What is the refactoring target? "
+        ],
+        "message": "    frame: $1 :building_construction:"
+    },
+    {
+        "name": "gitingore",
+        "command": "igit",
+        "description": "Changes to the .gitignore file",
+        "input": [
+            "Update or add to the .gitignore file? "
+        ],
+        "message": "    gitingore: $1 :see_no_evil:"
+    },
+    {
+        "name": "trash",
+        "command": "trash",
+        "description": "Cleaning code after a refactoring",
+        "input": [
+            "What part of the code was cleaned? (ie: a function, a variable, etc.) ",
+            "What was the reason of the cleaning? "
+        ],
+        "message": "    trash: $1 -- $2 :wastebasket:"
     }
 ]
