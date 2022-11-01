@@ -1,7 +1,7 @@
 # Changelog
 
-## :sparkles: Cleaning repo
+## :sparkles: Gitmoji Badge
 
-- giti_power_simple.py: 
--     chore: Deletion: Useless as of now, will redo later :fire:
+- README.md: 
+-     docs: Documentation: added gitmoji badge :memo:
 - 
