@@ -16,7 +16,11 @@ def new_changelog(commit_title, commit_message):
     with open("CHANGELOG.md", "w") as changelog:
         changelog.write(f"# Changelog\n\n## {commit_title}\n\n")
         for line in commit_message.split("\n"):
-            changelog.write(f"- {line}\n")
+            # check if line is empty
+            if line != "":
+                sp = '  ' * line.count('\t')
+                changelog.write(f"{sp}- {no_l_b(line)}\n")
+
 
 # chceck if CHANGELOG.md exists and if not, create it
 if not os.path.exists("CHANGELOG.md"):

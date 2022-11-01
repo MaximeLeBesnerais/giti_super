@@ -1,7 +1,6 @@
 # Changelog
 
-## :sparkles: Gitmoji Badge
+## :sparkles: Better changelog tabulation
 
-- README.md: 
--     docs: Documentation: added gitmoji badge :memo:
-- 
+- giti_powercharged.py: 
+-     fix: '-' misplacement inside changelog script, and added tabulation correction: Added a sp var that takes tabulation into account:bug:
