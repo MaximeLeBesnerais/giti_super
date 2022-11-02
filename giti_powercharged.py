@@ -1,5 +1,11 @@
 import os
 
+# check if current directory is a git repository
+if not os.path.isdir('.git'):
+    print('This is not a git repository')
+    exit()
+
+
 def powercharged():
     os.system('git add .')
 
@@ -24,7 +30,7 @@ def powercharged():
             for key, value in menu.items():
                 print(key, value)
             commit_message += no_l_b(line[3:]) + ": " + "\n"
-            choice = input('What did you do? ')
+            choice = str(input('What did you do? '))
             if choice == '1':
                 feature_name = input('What is the name of the feature? ')
                 feature_explication = input('What is the feature about? ')
