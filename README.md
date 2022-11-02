@@ -8,3 +8,7 @@ This is a tool and not perfect, so please use it with caution.
 
 ## Installation
 figure it out yourself, I'm not there yet
+
+## Known Issues
+- [ ] The script doesn't work out of a specific directory
+- [ ] Must resolve python version issues
