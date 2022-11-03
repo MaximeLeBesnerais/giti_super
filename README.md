@@ -10,7 +10,7 @@ This is a tool and not perfect, so please use it with caution.
 
 ```bash
 git clone https://github.com/3andan4/giti_super.git ~/.giti
-sudo mv ~/.giti/giti /usr/bin/giti
+sudo ln -s ~/.giti/giti /usr/bin/giti
 ```
 
 ## Known Issues
