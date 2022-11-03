@@ -1,6 +1,5 @@
 import os
 
-# check if current directory is a git repository
 if not os.path.isdir('.git'):
     print('This is not a git repository')
     exit()

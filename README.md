@@ -14,5 +14,4 @@ sudo mv ~/.giti/giti /usr/bin/giti
 ```
 
 ## Known Issues
-- [ ] The script doesn't work out of a specific directory
-- [ ] Must resolve python version issues
+- [x] The script doesn't work out of a specific directory

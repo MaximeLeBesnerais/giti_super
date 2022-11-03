@@ -3,7 +3,6 @@ import sys
 from giti_powercharged import powercharged
 import json
 
-# create a dictionary of commands with the commands/commands.json file
 commands_list = []
 description = {}
 command_input = {}
