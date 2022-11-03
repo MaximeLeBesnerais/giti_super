@@ -54,7 +54,7 @@ def git_file():
 
 def load_commands():
     global commands_list, description, command_input, message
-    file_data = json.load(open('commands/commands.json'))
+    file_data = json.load(open(script_path + '/commands/commands.json'))
     for entry in file_data:
         command_name = entry['command']
         if isinstance(command_name, list):
