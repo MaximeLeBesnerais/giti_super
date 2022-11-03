@@ -21,7 +21,12 @@ def powercharged():
         exit()
     for line in git_status:
         # Check if file was deleted
-        if not line.startswith(' D'):
+        if line.startswith(' D') or line.startswith('D'):
+            print("The file " + line[3:] + " was deleted")
+            commit_message += no_l_b(line[3:]) + ": " + "\n"
+            deleted_file_comment = input("Why did you delete it? ")
+            commit_message += "     deletion: " + deleted_file_comment + " :fire:\n"
+        else:
             print("for the file: " + line[3:] + " what did you do?")
             for key, value in menu.items():
                 print(key, value)
@@ -47,11 +52,6 @@ def powercharged():
             else:
                 weird_comment = choice
                 commit_message += "    chore: " + weird_comment + " :question:\n"
-        else:
-            print("The file " + line[3:] + " was deleted")
-            commit_message += no_l_b(line[3:]) + ": " + "\n"
-            deleted_file_comment = input("Why did you delete it? ")
-            commit_message += "     deletion: " + deleted_file_comment + " :fire:\n"
     commit_title = ":sparkles: " + input('What is the title of the commit? ')
     final_commit_message = commit_title + "\n" + commit_message
 
