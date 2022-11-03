@@ -7,7 +7,11 @@ Python script to write commit message following the [Conventional Commits](https
 This is a tool and not perfect, so please use it with caution.
 
 ## Installation
-figure it out yourself, I'm not there yet
+
+```bash
+git clone https://github.com/3andan4/giti_super.git ~/.giti
+sudo mv ~/.giti/giti /usr/bin/giti
+```
 
 ## Known Issues
 - [ ] The script doesn't work out of a specific directory
