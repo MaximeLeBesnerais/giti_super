@@ -9,16 +9,14 @@ def no_l_b(text_with_line_break):
     return text_with_line_break.replace("\n", "")
 
 def powercharged():
-    os.system('git add .')
 
     commit_message = ""
 
     menu = {1: "New Feature", 2: "Bug Fix", 3: "Documentations"}
 
     git_status = os.popen('git status -s').readlines()
-    # if there is no file to commit, exit
     if len(git_status) == 0:
-        print("There is no file to commit")
+        print("There are no changes to commit")
         exit()
     for line in git_status:
         # Check if file was deleted
@@ -61,6 +59,7 @@ def powercharged():
     while commit_loop:
         commit_choice = input('Do you want to commit? (y/n) ')
         if commit_choice == 'y':
+            os.popen('git add .')
             os.system('git commit -m "' + final_commit_message + '"')
             os.system('git commit --amend --no-edit')
             os.system('git pull')
