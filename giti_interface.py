@@ -12,6 +12,13 @@ message = {}
 os.popen('clear')
 git_status = os.popen('git status -s').readlines()
 
+def is_a_command(command):
+    global commands_list
+    if command in commands_list:
+        return True
+    else:
+        return False
+
 def git_file():
     global git_status
     choice_loop = True
@@ -60,7 +67,7 @@ def file_picker():
         return file
 
 # read the commands.json file and load the commands into the program
-def command_interpreter(command):
+def command_interpreter(command, file):
     global command_input, message
     inputs = command_input[command]
     msg = message[command]
@@ -69,26 +76,31 @@ def command_interpreter(command):
         answer.append(input(f"{qs}: "))
     for x, item in enumerate(answer):
         msg = msg.replace(f"${x + 1}", item)
-    return message
+    msg = f"{file}:\n\t\t{msg}"
+    return msg
 
+
+def file_by_file(command):
+    file = file_picker()
+    if file == 0:
+        print("Exiting...")
+        return 0
+    msg = command_interpreter(command, file)
+    os.popen(f"git add *{file}")
+    return msg
 
 def main(params):
     global commands_list, description, command_input, message
 
     if len(params) == 1 or params[1] == "powercharged":
         powercharged()
-    elif params[1] in commands_list:
-        if len(params) < 2:
-            print("You need to specify a command")
-            return
-        file = file_picker()
-        if file == 0:
-            print("Exiting...")
-            return
-        msg = command_interpreter(params[1])
+    elif is_a_command(params[1]):
+        command = params[1]
+        msg = file_by_file(command)
+        if msg == 0:
+            exit()
         commit_title = input("Commit title: ")
-        final_msg = f":sparkles: {commit_title}\n" + f"{file}: {msg}"
-        os.popen(f"git add *{file}")
+        final_msg = f":sparkles: {commit_title}\n" + msg
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
     elif params[1] == 'help':
