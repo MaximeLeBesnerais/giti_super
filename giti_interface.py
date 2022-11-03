@@ -10,15 +10,28 @@ command_input = {}
 message = {}
 
 os.popen('clear')
-os.popen('git add .').readlines()
 git_status = os.popen('git status -s').readlines()
 
-def git_follow(file_name):
+def git_file():
     global git_status
-    for line in git_status:
-        if line[3:] == file_name:
-            return True
-    return False
+    choice_loop = True
+    while choice_loop:
+        print("0. Exit")
+        for line in git_status:
+            print(f"{git_status.index(line) + 1}: {line[3:]}")
+        choice = input("Which file do you want to commit? ")
+        try:
+            choice = int(choice) - 1
+        except:
+            print("Invalid input.")
+            continue
+        # check if the choice is valid
+        if choice < -1 or choice >= len(git_status):
+            print("Invalid choice")
+        elif choice == -1:
+            return False
+        else:
+            return git_status[choice][3:]
 
 
 def load_commands():
@@ -39,14 +52,24 @@ def load_commands():
             message[command_name] = entry['message']
 
 
-def command_interpreter(command, file):
-    print("received command: " + command)
-    print("Evaluated file: " + file)
-    if git_follow(file):
-        print("File is interesting for git")
+def file_picker():
+    file = git_file()
+    if file == False:
+        return 0
     else:
-        print("Git doesn't care about this file")
+        return file
 
+# read the commands.json file and load the commands into the program
+def command_interpreter(command):
+    global command_input, message
+    inputs = command_input[command]
+    msg = message[command]
+    answer = []
+    for qs in inputs:
+        answer.append(input(f"{qs}: "))
+    for x, item in enumerate(answer):
+        msg = msg.replace(f"${x + 1}", item)
+    return message
 
 
 def main(params):
@@ -55,10 +78,19 @@ def main(params):
     if len(params) == 1 or params[1] == "powercharged":
         powercharged()
     elif params[1] in commands_list:
-        if len(params) < 3:
-            print("You need to specify a file")
+        if len(params) < 2:
+            print("You need to specify a command")
             return
-        command_interpreter(params[1], params[2])
+        file = file_picker()
+        if file == 0:
+            print("Exiting...")
+            return
+        msg = command_interpreter(params[1])
+        commit_title = input("Commit title: ")
+        final_msg = f":sparkles: {commit_title}\n" + f"{file}: {msg}"
+        os.popen(f"git add *{file}")
+        os.popen(f'git commit -m "{final_msg}"')
+        print("Commit successful!")
     elif params[1] == 'help':
         print('''
         giti is a git commit interface that allows you to make commits without having to type them out.
