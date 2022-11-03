@@ -5,21 +5,21 @@ if not os.path.isdir('.git'):
     exit()
 
 
+def no_l_b(text_with_line_break):
+    return text_with_line_break.replace("\n", "")
+
 def powercharged():
     os.system('git add .')
 
     commit_message = ""
 
-
-    def no_l_b(text_with_line_break):
-        return text_with_line_break.replace("\n", "")
-
     menu = {1: "New Feature", 2: "Bug Fix", 3: "Documentations"}
-    if os.path.exists(".gitignore"):
-        with open(".gitignore", "r") as f:
-            gitignore = f.readlines()
 
     git_status = os.popen('git status -s').readlines()
+    # if there is no file to commit, exit
+    if len(git_status) == 0:
+        print("There is no file to commit")
+        exit()
     for line in git_status:
         # Check if file was deleted
         if not line.startswith(' D'):
@@ -53,8 +53,6 @@ def powercharged():
             commit_message += no_l_b(line[3:]) + ": " + "\n"
             deleted_file_comment = input("Why did you delete it? ")
             commit_message += "     deletion: " + deleted_file_comment + " :fire:\n"
-
-
     commit_title = ":sparkles: " + input('What is the title of the commit? ')
     final_commit_message = commit_title + "\n" + commit_message
 
