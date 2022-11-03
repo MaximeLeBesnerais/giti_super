@@ -83,7 +83,7 @@ def command_interpreter(command, file):
         answer.append(input(f"{qs}: "))
     for x, item in enumerate(answer):
         msg = msg.replace(f"${x + 1}", item)
-    msg = f"{file}:\n\t\t{msg}"
+    msg = f"{file}:\n\t\t{msg}\n"
     return msg
 
 
