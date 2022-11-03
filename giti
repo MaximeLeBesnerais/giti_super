@@ -1,4 +1,4 @@
 #!/bin/bash
 # TEST COMMENTARY
 
-python ~/.giti/giti_interface.py
+python ~/.giti/giti_interface.py $@
