@@ -113,6 +113,7 @@ def main(params):
             msg = file_by_file(command, params[2])
         else:
             print("There was an error - Invalid Command")
+            exit(1)
         if msg == 0:
             exit()
         commit_title = input("Commit title: ")
