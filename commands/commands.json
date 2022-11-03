@@ -143,5 +143,21 @@
             "What was the reason of the cleaning? "
         ],
         "message": "    trash: $1 -- $2 :wastebasket:"
+    },
+    {
+        "name": "Header",
+        "command": "header",
+        "description": "Changes to .h files",
+        "input": [
+            "What functions were added to the header file? "
+        ],
+        "message": "    header: $1 :file_cabinet:"
+    },
+    {
+        "name": "Makefile",
+        "command": "make",
+        "description": "Changes to the Makefile",
+        "input": [],
+        "message": "    Makefile :hammer:"
     }
 ]

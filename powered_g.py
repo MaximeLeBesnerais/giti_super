@@ -20,7 +20,6 @@ def powercharged():
         print("There are no changes to commit")
         exit()
     for line in git_status:
-        # Check if file was deleted
         if line.startswith(' D') or line.startswith('D'):
             print("The file " + line[3:] + " was deleted")
             commit_message += no_l_b(line[3:]) + ": " + "\n"

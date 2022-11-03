@@ -13,9 +13,10 @@ description = {}
 command_input = {}
 message = {}
 
-
-os.popen('clear')
+if os.path.isfile("./.git/index.lock"):
+    os.remove("./.git/index.lock")
 git_status = os.popen('git status -s').readlines()
+
 
 def search_in_status(file_name):
     for entry in git_status:
@@ -31,6 +32,7 @@ def is_a_command(command):
         return True
     else:
         return False
+
 
 def git_file():
     global git_status
@@ -79,6 +81,7 @@ def file_picker():
     else:
         return file
 
+
 def command_interpreter(command, file):
     global command_input, message
     inputs = command_input[command]
@@ -92,7 +95,7 @@ def command_interpreter(command, file):
     return msg
 
 
-def file_by_file(command, file = 0):
+def file_by_file(command, file=0):
     if file == 0:
         file = file_picker()
     if file == 0:
@@ -101,6 +104,7 @@ def file_by_file(command, file = 0):
     msg = command_interpreter(command, file)
     os.popen(f"git add *{file}")
     return msg
+
 
 def main(params):
     global commands_list, description, command_input, message
@@ -129,14 +133,26 @@ def main(params):
         The commands are:
         - powercharged (or none): a commit interface that allows you to make commits with extensive help.
         - help: displays this message.
+        - update: Fetch an update from github
         ''')
-        x = 0
-        for command in commands_list:
-            print(f'''- {command}: {description[command]}''')
-            x += 1
-            if x == 6:
-                x = 0
-                input("----------")
+        ch = input("Do you want to display the commit help ? (y)es / (n)o")
+        if ch == "y" or ch == "yes":
+            x = 0
+            for command in commands_list:
+                print(f'''- {command}: {description[command]}''')
+                x += 1
+                if x == 6:
+                    x = 0
+                    input("----------")
+    elif params[1] == 'update':
+        os.popen("cd " + script_path + " && git pull")
+        os.popen("cd -")
+        print("Update successful!")
+    elif params[1] == 'all':
+        commit_message = input("Commit message: ") + ":card_file_box: "
+        number_of_files = len(git_status)
+        os.popen(f'git add .')
+        os.popen(f'git commit -m "sparkles: For {number_of_files} files:\n\t{commit_message}"')
     else:
         print("Command not found. Type 'giti help' for help.")
 
@@ -144,4 +160,3 @@ def main(params):
 if __name__ == '__main__':
     load_commands()
     main(sys.argv)
-
