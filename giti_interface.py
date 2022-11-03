@@ -12,6 +12,14 @@ message = {}
 os.popen('clear')
 git_status = os.popen('git status -s').readlines()
 
+def search_in_status(file_name):
+    for entry in git_status:
+        comp = entry[3:]
+        if file_name in comp or comp in file_name:
+            return True
+    return False
+
+
 def is_a_command(command):
     global commands_list
     if command in commands_list:
@@ -66,7 +74,6 @@ def file_picker():
     else:
         return file
 
-# read the commands.json file and load the commands into the program
 def command_interpreter(command, file):
     global command_input, message
     inputs = command_input[command]
@@ -80,8 +87,9 @@ def command_interpreter(command, file):
     return msg
 
 
-def file_by_file(command):
-    file = file_picker()
+def file_by_file(command, file = 0):
+    if file == 0:
+        file = file_picker()
     if file == 0:
         print("Exiting...")
         return 0
@@ -94,9 +102,14 @@ def main(params):
 
     if len(params) == 1 or params[1] == "powercharged":
         powercharged()
-    elif is_a_command(params[1]):
+    elif is_a_command(params[1]) and len(params) < 4:
         command = params[1]
-        msg = file_by_file(command)
+        if len(params) == 2:
+            msg = file_by_file(command)
+        elif len(params) == 3 and search_in_status(params[2]):
+            msg = file_by_file(command, params[2])
+        else:
+            print("There was an error - Invalid Command")
         if msg == 0:
             exit()
         commit_title = input("Commit title: ")
