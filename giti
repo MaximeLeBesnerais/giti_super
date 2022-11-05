@@ -2,9 +2,12 @@
 
 import os
 import sys
-import importlib
 import json
 from powered_g import powercharged
+
+if not os.path.isdir('.git'):
+    print('This is not a git repository')
+    exit()
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -91,7 +94,7 @@ def command_interpreter(command, file):
         answer.append(input(f"{qs}: "))
     for x, item in enumerate(answer):
         msg = msg.replace(f"${x + 1}", item)
-    msg = f"{file}:\n\t\t{msg}\n"
+    msg = f"{file}:\n\t{msg}\n"
     return msg
 
 
@@ -152,7 +155,7 @@ def main(params):
         commit_message = input("Commit message: ") + ":card_file_box: "
         number_of_files = len(git_status)
         os.popen(f'git add .')
-        os.popen(f'git commit -m "sparkles: For {number_of_files} files:\n\t{commit_message}"')
+        os.popen(f'git commit -m ":sparkles: For {number_of_files} files:\n\t{commit_message}"')
     else:
         print("Command not found. Type 'giti help' for help.")
 
