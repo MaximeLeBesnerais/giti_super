@@ -184,6 +184,9 @@ def main(params):
         commit_title = input("Commit title: ")
         final_msg = f":sparkles: {commit_title}\n" + msg
         os.wait()
+        for commit_target in files:
+            os.popen(f"git add *{commit_target}")
+        os.wait()
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
     else:
