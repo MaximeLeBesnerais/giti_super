@@ -179,7 +179,7 @@ def main(params):
             print("No files found - Exiting")
             exit(1)
         command = params[1]
-        file = files.join("\n")
+        file = "\t\n".join(files)
         msg = command_interpreter(command, file)
         commit_title = input("Commit title: ")
         final_msg = f":sparkles: {commit_title}\n" + msg
