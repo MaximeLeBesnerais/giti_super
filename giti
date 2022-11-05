@@ -10,6 +10,10 @@ if not os.path.isdir('.git'):
     exit()
 
 script_path = os.path.dirname(os.path.realpath(__file__))
+# check if script_path + /update.log exists
+if not os.path.isfile(script_path + '/update.log'):
+    os.popen("date >> ~/.giti/update.log")
+
 updatelog = open(script_path + '/update.log', 'r').readlines()
 
 commands_list = []
