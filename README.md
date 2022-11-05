@@ -14,4 +14,5 @@ sudo ln -s ~/.giti/giti /usr/bin/giti
 ```
 
 ## Known Issues
-- [x] The script doesn't work out of a specific directory
+- The script will sometimes conflict with original git commit command
+  - A fix is in the works
