@@ -155,12 +155,11 @@ def main(params):
                     x = 0
                     input("----------")
     elif params[1] == 'update':
-        os.popen('rm -rf ~/.giti')
-        os.wait()
-        os.popen('git clone https://github.com/3andan4/giti_super.git ~/.giti')
-        os.wait()
-        os.popen('date >> ~/.giti/update.log')
+        os.popen('cd ~/.giti / && git pull -q && cd -')
+        os.popen('date > ~/.giti/update.log')
         print("Update successful!")
+
+
     elif params[1] == 'all':
         commit_message = input("Commit message: ") + ":card_file_box: "
         number_of_files = len(git_status)
