@@ -10,6 +10,7 @@ if not os.path.isdir('.git'):
     exit()
 
 script_path = os.path.dirname(os.path.realpath(__file__))
+updatelog = open(script_path + '/update.log', 'r').readlines()
 
 commands_list = []
 description = {}
@@ -130,6 +131,7 @@ def main(params):
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
     elif params[1] == 'help':
+        print("Last updated: " + updatelog[0])
         print('''
         giti is a git commit interface that allows you to make commits without having to type them out.
         To use giti, type 'giti' followed by the command you want to run.
@@ -138,7 +140,7 @@ def main(params):
         - help: displays this message.
         - update: Fetch an update from github
         ''')
-        ch = input("Do you want to display the commit help ? (y)es / (n)o")
+        ch = input("Do you want to display the commit help ? y/n  ")
         if ch == "y" or ch == "yes":
             x = 0
             for command in commands_list:
@@ -150,6 +152,7 @@ def main(params):
     elif params[1] == 'update':
         os.popen('rm -rf ~/.giti')
         os.popen('git clone https://github.com/3andan4/giti_super.git ~/.giti')
+        os.popen('date >> ~/.giti/update.log')
         print("Update successful!")
     elif params[1] == 'all':
         commit_message = input("Commit message: ") + ":card_file_box: "
