@@ -178,14 +178,15 @@ def main(params):
         if len(files) == 0:
             print("No files found - Exiting")
             exit(1)
-        file_commit = " ".join(files)
         command = params[1]
         file = "\t\n".join(files)
         msg = command_interpreter(command, file)
         commit_title = input("Commit title: ")
         final_msg = f":sparkles: {commit_title}\n" + msg
         os.wait()
-        os.popen(f"git add {file_commit}")
+        for commit_target in files:
+            os.popen(f"git add {commit_target}")
+            os.wait()
         os.wait()
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
