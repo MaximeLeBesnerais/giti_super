@@ -106,6 +106,7 @@ def file_by_file(command, file=0):
         print("Exiting...")
         return 0
     msg = command_interpreter(command, file)
+    os.wait()
     os.popen(f"git add *{file}")
     return msg
 
@@ -128,6 +129,7 @@ def main(params):
             exit()
         commit_title = input("Commit title: ")
         final_msg = f":sparkles: {commit_title}\n" + msg
+        os.wait()
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
     elif params[1] == 'help':
@@ -160,7 +162,28 @@ def main(params):
         commit_message = input("Commit message: ") + ":card_file_box: "
         number_of_files = len(git_status)
         os.popen(f'git add .')
+        os.wait()
         os.popen(f'git commit -m ":sparkles: For {number_of_files} files:\n\t{commit_message}"')
+
+    elif is_a_command(params[1]) and len(params) >= 4:
+        print("Multiple Files commit")
+        files = []
+        for file in params[2:]:
+            if search_in_status(file):
+                files.append(file)
+            else:
+                print(f"File {file} not found - Ignoring")
+        if len(files) == 0:
+            print("No files found - Exiting")
+            exit(1)
+        command = params[1]
+        file = files.join("\n")
+        msg = command_interpreter(command, file)
+        commit_title = input("Commit title: ")
+        final_msg = f":sparkles: {commit_title}\n" + msg
+        os.wait()
+        os.popen(f'git commit -m "{final_msg}"')
+        print("Commit successful!")
     else:
         print("Command not found. Type 'giti help' for help.")
 
