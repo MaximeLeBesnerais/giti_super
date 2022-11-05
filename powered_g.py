@@ -1,10 +1,6 @@
 #!/usr/bin/python3
 import os
 
-if not os.path.isdir('.git'):
-    print('This is not a git repository')
-    exit()
-
 
 def no_l_b(text_with_line_break):
     return text_with_line_break.replace("\n", "")
@@ -61,7 +57,6 @@ def powercharged():
         if commit_choice == 'y':
             os.popen('git add .')
             os.system('git commit -m "' + final_commit_message + '"')
-            os.system('git commit --amend --no-edit')
             os.system('git pull')
             commit_loop = False
         elif commit_choice == 'n':
