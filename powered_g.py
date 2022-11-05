@@ -55,8 +55,11 @@ def powercharged():
     while commit_loop:
         commit_choice = input('Do you want to commit? (y/n) ')
         if commit_choice == 'y':
+            os.wait()
             os.popen('git add .')
+            os.wait()
             os.system('git commit -m "' + final_commit_message + '"')
+            os.wait()
             os.system('git pull')
             commit_loop = False
         elif commit_choice == 'n':
