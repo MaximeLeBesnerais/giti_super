@@ -151,7 +151,9 @@ def main(params):
                     input("----------")
     elif params[1] == 'update':
         os.popen('rm -rf ~/.giti')
+        os.wait()
         os.popen('git clone https://github.com/3andan4/giti_super.git ~/.giti')
+        os.wait()
         os.popen('date >> ~/.giti/update.log')
         print("Update successful!")
     elif params[1] == 'all':
