@@ -119,6 +119,7 @@ def main(params):
 
     if len(params) == 1 or params[1] == "powercharged":
         powercharged()
+
     elif is_a_command(params[1]) and len(params) < 4:
         command = params[1]
         if len(params) == 2:
@@ -135,6 +136,16 @@ def main(params):
         os.wait()
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
+
+    elif params[1] == "del":
+        delete_string = []
+        for line in git_status:
+            if line.startswith(' D') or line.startswith('D'):
+                delete_string.append(line[3:])
+        commit_msg = "\tDeleted files:\n" + "\n".join(delete_string)
+        commit_tlt = input(f"Deleted {len(delete_string)} files.\nCommit title: ")
+        final_msg = f":fire: {commit_tlt}\n" + commit_msg
+
     elif params[1] == 'help':
         print("Last updated: " + updatelog[0])
         print('''
@@ -154,11 +165,11 @@ def main(params):
                 if x == 6:
                     x = 0
                     input("----------")
+
     elif params[1] == 'update':
         os.popen('cd ~/.giti / && git pull -f -q && cd -')
         os.popen('date > ~/.giti/update.log')
         print("Update successful!")
-
 
     elif params[1] == 'all':
         commit_message = input("Commit message: ") + ":card_file_box: "
@@ -189,6 +200,7 @@ def main(params):
         os.wait()
         os.popen(f'git commit -m "{final_msg}"')
         print("Commit successful!")
+
     else:
         print("Command not found. Type 'giti help' for help.")
 
