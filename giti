@@ -142,6 +142,9 @@ def main(params):
         for line in git_status:
             if line.startswith(' D') or line.startswith('D'):
                 delete_string.append(line[3:])
+        if len(delete_string) == 0:
+            print("There are no files to delete")
+            return
         commit_msg = "\tDeleted files:\n" + "\n".join(delete_string)
         commit_tlt = input(f"Deleted {len(delete_string)} files.\nCommit title: ")
         final_msg = f":fire: {commit_tlt}\n" + commit_msg
