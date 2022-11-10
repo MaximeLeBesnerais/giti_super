@@ -141,7 +141,7 @@ def main(params):
         delete_string = []
         for line in git_status:
             if line.startswith(' D') or line.startswith('D'):
-                delete_string.append(line[3:])
+                delete_string.append(f"./line[3:]")
         if len(delete_string) == 0:
             print("There are no files to delete")
             return
