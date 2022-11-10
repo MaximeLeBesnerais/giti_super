@@ -148,7 +148,9 @@ def main(params):
         commit_msg = "\tDeleted files:\n" + "\n".join(delete_string)
         commit_tlt = input(f"Deleted {len(delete_string)} files.\nCommit title: ")
         final_msg = f":fire: {commit_tlt}\n" + commit_msg
-
+        os.popen(f"git add {' '.join(delete_string)}")
+        os.wait()
+        os.popen(f'git commit -m "{final_msg}"')
     elif params[1] == 'help':
         print("Last updated: " + updatelog[0])
         print('''
