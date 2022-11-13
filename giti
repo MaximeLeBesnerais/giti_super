@@ -168,7 +168,7 @@ def main(params):
               There are also custom commands that can be added to the commands.json file.
               The most useful ones are: feat, fix, docs, style, refactor, revert, igit
               You can also add your own commands by creating a user_commands.json file.
-              (Note that the commands in the user_commands.json file will override the default ones)
+              (Note that the commands in the user_commands.json may behave differently than the default ones)
               ''')
 
         ch = input("Do you want to display the advanced commands? (y/n) ")
