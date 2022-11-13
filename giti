@@ -66,6 +66,8 @@ def git_file():
 def load_commands():
     global commands_list, description, command_input, message
     file_data = json.load(open(script_path + '/commands/commands.json'))
+    if os.path.exists(script_path + '/commands/user_commands.json'):
+        file_data.update(json.load(open(script_path + '/commands/user_commands.json')))
     for entry in file_data:
         command_name = entry['command']
         if isinstance(command_name, list):
@@ -117,7 +119,7 @@ def file_by_file(command, file=0):
 def main(params):
     global commands_list, description, command_input, message
 
-    if len(params) == 1 or params[1] == "powercharged":
+    if len(params) == 1 or params[1] == "pw":
         powercharged()
 
     elif is_a_command(params[1]) and len(params) < 4:
@@ -146,22 +148,30 @@ def main(params):
             print("There are no files to delete")
             return
         commit_msg = "\tDeleted files:\n" + "\n".join(delete_string)
-        commit_tlt = input(f"Deleted {len(delete_string)} files.\nCommit title: ")
+        commit_tlt = input(
+            f"Deleted {len(delete_string)} files.\nCommit title: ")
         final_msg = f":fire: {commit_tlt}\n" + commit_msg
         os.popen(f"git add {' '.join(delete_string)}")
         os.wait()
         os.popen(f'git commit -m "{final_msg}"')
+
     elif params[1] == 'help':
         print("Last updated: " + updatelog[0])
-        print('''
-        giti is a git commit interface that allows you to make commits without having to type them out.
-        To use giti, type 'giti' followed by the command you want to run.
-        The commands are:
-        - powercharged (or none): a commit interface that allows you to make commits with extensive help.
-        - help: displays this message.
-        - update: Fetch an update from github
-        ''')
-        ch = input("Do you want to display the commit help ? y/n  ")
+        print(''' Giti is a simple git wrapper that makes it easier to commit files.
+              Usage: giti [command] [file]
+              Default command:
+              - (no command) or 'pw': Select a file to commit
+              - del: Commit deleted files
+              - update: Update giti
+              - all: Commit all files with the same message
+              - help: Show this message
+              There are also custom commands that can be added to the commands.json file.
+              The most useful ones are: feat, fix, docs, style, refactor, revert, igit
+              You can also add your own commands by creating a user_commands.json file.
+              (Note that the commands in the user_commands.json file will override the default ones)
+              ''')
+
+        ch = input("Do you want to display the advanced commands? (y/n) ")
         if ch == "y" or ch == "yes":
             x = 0
             for command in commands_list:
@@ -181,7 +191,8 @@ def main(params):
         number_of_files = len(git_status)
         os.popen(f'git add .')
         os.wait()
-        os.popen(f'git commit -m ":sparkles: For {number_of_files} files:\n\t{commit_message}"')
+        os.popen(
+            f'git commit -m ":sparkles: For {number_of_files} files:\n\t{commit_message}"')
 
     elif is_a_command(params[1]) and len(params) >= 4:
         print("Multiple Files commit")

@@ -7,7 +7,7 @@
                 "What is the feature about? ",
                 "What is the scope of the feature? (ie: lang)"
         ],
-        "message": "    feat($3): $1 -- $2 :zap:"
+        "message": "    feat($2): $1 :zap:"
     },
     {
         "name": "Bug Fix",
@@ -16,15 +16,13 @@
         "input": [
             "How was the bug fixed? "
         ],
-        "message": "    fix: $1 -- $2 :bug:"
+        "message": "    fix: $1 :bug:"
     },
     {
         "name": "Documentation",
         "command": "docs",
         "description": "Documentation changes - documentation are files that are not code",
-        "input": [
-            "How was the documentation updated? "
-        ],
+        "input": [],
         "message": "    docs: $1 :memo:"
     },
     {
@@ -34,52 +32,7 @@
         "input": [
             "How was the refactor performed? "
         ],
-        "message": "    refactor: $1 -- $2 :recycle:"
-    },
-    {
-        "name": "Test",
-        "command": "test",
-        "description": "Test changes - a test consists of trying to break the code with normal use cases",
-        "input": [
-            "Did you achieve the expected results? "
-        ],
-        "message": "    test: $1 -- $2 :white_check_mark:"
-    },
-    {
-        "name": "Chore",
-        "command": "chore",
-        "description": "chores are tasks that are not directly related to the code",
-        "input": [
-            "How was the chore performed ?"
-        ],
-        "message": "    chore: $1 -- $2 :wrench:"
-    },
-    {
-        "name": "Release",
-        "command": "release",
-        "description": "New release - a release is a new version of the code, with a vast amount of changes, a ensemble of new features, bug fixes, etc.",
-        "input": [
-            "What is the version number? "
-        ],
-        "message": "    release: $1 :rocket:"
-    },
-    {
-        "name": "Revert",
-        "command": "revert",
-        "description": "You reverted some code - a revert is a change that undoes a previous change",
-        "input": [
-            "What was the reason of the revert? "
-        ],
-        "message": "    revert: $1 :rewind:"
-    },
-    {
-        "name": "Merge",
-        "command": "merge",
-        "description": "Merging - a merge is a change that merges two branches, or two versions of the code",
-        "input": [
-            "What was the reason of the merge? "
-        ],
-        "message": "    merge: $1 -- $2 :twisted_rightwards_arrows:"
+        "message": "    refactor: $1 :recycle:"
     },
     {
         "name": "WIP",
@@ -91,57 +44,25 @@
         "message": "    wip: $1 :construction:"
     },
     {
-        "name": "Style",
-        "command": "style",
+        "name": "Visual",
+        "command": "visual",
         "description": "Style change - a style change is a change that does not affect the code, but the way it is displayed",
-        "input": [
-            "How will it affect readability? "
-        ],
-        "message": "    style: $1 -- $2 :art:"
-    },
-    {
-        "name": "bad",
-        "command": "bad",
-        "description": "Unclean code, or that is not working but that you want to save for later or is necessary for the code to work",
-        "input": [
-            "What do you want to improve? "
-        ],
-        "message": "    bad: $1 -- $2 :poop:"
-    },
-    {
-        "name": "frame",
-        "command": "frame",
-        "description": "Incomplete code that will be used as a frame in a refactoring",
-        "input": [
-            "What is the refactoring target? "
-        ],
-        "message": "    frame: $1 :building_construction:"
+        "input": [],
+        "message": "    style: CHanged the way the code is displayed :art:"
     },
     {
         "name": "gitingore",
         "command": "igit",
         "description": "Changes to the .gitignore file",
-        "input": [
-            "Update or add to the .gitignore file? "
-        ],
-        "message": "    gitingore: $1 :see_no_evil:"
-    },
-    {
-        "name": "trash",
-        "command": "trash",
-        "description": "Cleaning code after a refactoring",
-        "input": [
-            "What part of the code was cleaned? (ie: a function, a variable, etc.) "
-        ],
-        "message": "    trash: $1 -- $2 :wastebasket:"
+        "input": [],
+        "message": "    gitingore: Updated the gitignore - refer to commit directly :see_no_evil:"
     },
     {
         "name": "Header",
         "command": "header",
         "description": "Changes to .h files",
-        "input": [
-        ],
-        "message": "    header: $1 :file_cabinet:"
+        "input": [],
+        "message": "    header: Made changes to header - refer to commit or title directly :file_cabinet:"
     },
     {
         "name": "Makefile",
@@ -149,5 +70,12 @@
         "description": "Changes to the Makefile",
         "input": [],
         "message": "    Makefile :hammer:"
+    },
+    {
+        "name": "Coding Style",
+        "command": "abricot",
+        "description": "Changes to the coding style -- according to the Epitech norm",
+        "input": [],
+        "message": "    Coding Style :tangerine::banana:"
     }
 ]
