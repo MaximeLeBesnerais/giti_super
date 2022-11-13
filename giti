@@ -158,17 +158,17 @@ def main(params):
     elif params[1] == 'help':
         print("Last updated: " + updatelog[0])
         print(''' Giti is a simple git wrapper that makes it easier to commit files.
-              Usage: giti [command] [file]
-              Default command:
-              - (no command) or 'pw': Select a file to commit
-              - del: Commit deleted files
-              - update: Update giti
-              - all: Commit all files with the same message
-              - help: Show this message
-              There are also custom commands that can be added to the commands.json file.
-              The most useful ones are: feat, fix, docs, style, refactor, revert, igit
-              You can also add your own commands by creating a user_commands.json file.
-              (Note that the commands in the user_commands.json may behave differently than the default ones)
+Usage: giti [command] [file]
+Default command:
+- (no command) or 'pw': Select a file to commit
+- del: Commit deleted files
+- update: Update giti
+- all: Commit all files with the same message
+- help: Show this message
+There are also custom commands that can be added to the commands.json file.
+The most useful ones are: feat, fix, docs, style, refactor, revert, igit
+You can also add your own commands by creating a user_commands.json file.
+(Note that the commands in the user_commands.json may behave differently than the default ones)
               ''')
 
         ch = input("Do you want to display the advanced commands? (y/n) ")
