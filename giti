@@ -157,7 +157,7 @@ def main(params):
 
     elif params[1] == 'help':
         print("Last updated: " + updatelog[0])
-        print(''' Giti is a simple git wrapper that makes it easier to commit files.
+        print('''Giti is a simple git wrapper that makes it easier to commit files.
 Usage: giti [command] [file]
 Default command:
 - (no command) or 'pw': Select a file to commit
