@@ -84,8 +84,8 @@
         "description": "Changes to the assets - images, sounds, etc.",
         "input":
         [
-            "Assets type: ",
-            "Assets utility: "
+            "Assets type (ie: images, sounds, etc.)",
+            "Assets utility "
         ],
         "message": "    assets($1): $2 :camera:"
     }
