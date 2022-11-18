@@ -77,5 +77,16 @@
         "description": "Changes to the coding style -- according to the Epitech norm",
         "input": [],
         "message": "    Coding Style :tangerine::banana:"
+    },
+    {
+        "name": "Assets",
+        "command": "assets",
+        "description": "Changes to the assets - images, sounds, etc.",
+        "input":
+        [
+            "Assets type: ",
+            "Assets utility: "
+        ],
+        "message": "    assets($1): $2 :camera:"
     }
 ]
