@@ -55,7 +55,7 @@
         "command": "igit",
         "description": "Changes to the .gitignore file",
         "input": [],
-        "message": "    gitingore: Updated the gitignore - refer to commit directly :see_no_evil:"
+        "message": "    gitignore: Updated the gitignore - refer to commit directly :see_no_evil:"
     },
     {
         "name": "Header",
