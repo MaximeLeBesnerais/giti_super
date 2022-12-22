@@ -194,6 +194,12 @@ You can also add your own commands by creating a user_commands.json file.
         os.popen(
             f'git commit -m ":sparkles: For {number_of_files} files:\n\t\t{commit_message}"')
 
+    elif params[1] == 'refresh':
+        os.popen('git stash')
+        os.wait()
+        os.popen('git pull')
+        os.wait()
+        os.popen('git stash pop')
     elif is_a_command(params[1]) and len(params) >= 4:
         print("Multiple Files commit")
         files = []
