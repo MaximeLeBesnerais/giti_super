@@ -25,6 +25,14 @@ if os.path.isfile("./.git/index.lock"):
 git_status = os.popen('git status -s').readlines()
 
 
+def possibility_to_stash():
+    global git_status
+    for line in git_status:
+        if line.strip()[0] != '?':
+            return True
+    return False
+
+
 def search_in_status(file_name):
     for entry in git_status:
         comp = entry[3:]
@@ -194,7 +202,7 @@ You can also add your own commands by creating a user_commands.json file.
         os.popen(
             f'git commit -m ":sparkles: For {number_of_files} files:\n\t\t{commit_message}"')
 
-    elif params[1] == 'refresh':
+    elif params[1] == 'refresh' and possibility_to_stash():
         os.popen('git stash')
         os.wait()
         os.popen('git pull')
