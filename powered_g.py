@@ -47,7 +47,7 @@ def giti_makefile(potential_title):
     os.system(f'git commit -m "{commit_message}"')
 
 
-def giti_coding_style(potential_title, files):
+def giti_coding_style(files, potential_title):
     commit_line = []
     for file in files:
         os.system(f'git add {file}')
@@ -57,3 +57,29 @@ def giti_coding_style(potential_title, files):
     else:
         commit_message = f"[CODING STYLE] {potential_title}:\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
+
+
+def giti_bug_fix(files: str, comment, potential_title):
+    commit_line = []
+    git_log = os.popen('git status -s').readlines()
+    for file in files:
+        os.system(f'git add {file}')
+        commit_line.append(f"\t{file}: {comment}")
+    if potential_title == "":
+        potential_title = f"[BUG FIX] {len(files.split(' '))} files changed:\n"
+    else:
+        potential_title = f"[BUG FIX] {potential_title}:\n"
+    if comment == "":
+        for line in git_log:
+            for file in files.split(' '):
+                if line[3:].startswith(file):
+                    commit_line.append(f"\t{file}: {status_letters[line[:2]]}")
+                    break
+    else:
+        for file in files.split(' '):
+            commit_line.append(f"\t{file}")
+        commit_line.append(f"\t\tCommitted without a comment")
+    commit_message = potential_title + "\n".join(commit_line)
+    os.system(f'git commit -m "{commit_message}"')
+                    
+
