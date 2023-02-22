@@ -85,6 +85,22 @@ def giti_ignore(potential_title):
     os.system(f'git commit -m "{commit_message}"')
 
 
+def giti_del(potential_title):
+    git_log = os.popen('git ls-files --deleted').readlines()
+    if len(git_log) == 0:
+        print("There are no deleted files to commit")
+        exit()
+    commit_line = []
+    for line in git_log:
+        os.system(f'git add {line}')
+        commit_line.append(f"\t{line}: Deleted file")
+    if potential_title == "":
+        commit_message = f"[DELETION] {len(commit_line)} files removed:\n" + "\n".join(commit_line)
+    else:
+        commit_message = f"[DELETION] {potential_title}:\n" + "\n".join(commit_line)
+    os.system(f'git commit -m "{commit_message}"')
+
+
 def generic_giti(tag, files: str, comment, potential_title):
     if files == "":
         print("No files to commit")
