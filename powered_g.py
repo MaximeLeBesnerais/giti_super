@@ -118,6 +118,6 @@ def generic_giti(tag_key, title, comment, files: list):
     if comment != "":
         commit_line.append(f"\t\t{comment}")
     else:
-        commit_line.append(f"\t\tCommitted without a comment")
+        commit_line.append(f"\tCommitted without a comment")
     commit_message = potential_title + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
