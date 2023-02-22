@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 
-import os
 import sys
-import json
 from powered_g import *
 
-# This is the main instance of the giti script
 commands_dict = {
     "all": giti_all,
     "makefile": giti_makefile,
@@ -25,3 +22,6 @@ def main():
         commands_dict[command](args[0] if len(args) > 0 else "")
     else:
         generic_giti(command, args)
+
+
+main()
