@@ -13,7 +13,7 @@ status_letters = {
 command_types = {
     "fix": "[BUG FIX]",
     "bug": "[BUG FIX]",
-    "feat": "[FEATURE]",
+    "feat": "[FEAT]",
     "docs": "[DOCUMENTATION]",
     "wip": "[WIP]",
     "header": "[HEADER]",
@@ -88,64 +88,19 @@ def giti_ignore(potential_title):
     os.system(f'git commit -m "{commit_message}"')
 
 
-def giti_bug_fix(files: str, comment, potential_title):
+def generic_giti(tag, files: str, comment, potential_title):
+    if files == "":
+        print("No files to commit")
+        exit()
     commit_line = []
     git_log = os.popen('git status -s').readlines()
     for file in files:
         os.system(f'git add {file}')
         commit_line.append(f"\t{file}: {comment}")
     if potential_title == "":
-        potential_title = f"[BUG FIX] {len(files.split(' '))} files changed:\n"
+        potential_title = f"[{tag}] {len(files.split(' '))} files changed:\n"
     else:
-        potential_title = f"[BUG FIX] {potential_title}:\n"
-    if comment == "":
-        for line in git_log:
-            for file in files.split(' '):
-                if line[3:].startswith(file):
-                    commit_line.append(f"\t{file}: {status_letters[line[:2]]}")
-                    break
-    else:
-        for file in files.split(' '):
-            commit_line.append(f"\t{file}")
-        commit_line.append(f"\t\tCommitted without a comment")
-    commit_message = potential_title + "\n".join(commit_line)
-    os.system(f'git commit -m "{commit_message}"')
-
-
-def giti_feat(files: str, comment, potential_title):
-    commit_line = []
-    git_log = os.popen('git status -s').readlines()
-    for file in files:
-        os.system(f'git add {file}')
-        commit_line.append(f"\t{file}: {comment}")
-    if potential_title == "":
-        potential_title = f"[FEATURE] {len(files.split(' '))} files changed:\n"
-    else:
-        potential_title = f"[FEATURE] {potential_title}:\n"
-    if comment == "":
-        for line in git_log:
-            for file in files.split(' '):
-                if line[3:].startswith(file):
-                    commit_line.append(f"\t{file}: {status_letters[line[:2]]}")
-                    break
-    else:
-        for file in files.split(' '):
-            commit_line.append(f"\t{file}")
-        commit_line.append(f"\t\tCommitted without a comment")
-    commit_message = potential_title + "\n".join(commit_line)
-    os.system(f'git commit -m "{commit_message}"')
-
-
-def giti_doc(files: str, comment, potential_title):
-    commit_line = []
-    git_log = os.popen('git status -s').readlines()
-    for file in files:
-        os.system(f'git add {file}')
-        commit_line.append(f"\t{file}: {comment}")
-    if potential_title == "":
-        potential_title = f"[DOCUMENTATION] {len(files.split(' '))} files changed:\n"
-    else:
-        potential_title = f"[DOCUMENTATION] {potential_title}:\n"
+        potential_title = f"[{tag}] {potential_title}:\n"
     if comment == "":
         for line in git_log:
             for file in files.split(' '):
