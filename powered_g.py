@@ -45,7 +45,6 @@ def giti_makefile(potential_title):
     if len(git_log) == 0:
         print("There are no changes to commit")
         exit()
-    # for each line that contains a Makefile, add it to the commit
     for line in git_log:
         if line[3:].startswith('Makefile'):
             os.system(f'git add {line[3:]}')
@@ -70,13 +69,11 @@ def giti_coding_style(files, potential_title):
 
 
 def giti_ignore(potential_title):
-    # check if .gitignore exists
     if not os.path.exists('.gitignore'):
         print("There is no .gitignore file to commit")
         exit()
     git_log = os.popen('git status -s').readlines()
     commit_line = []
-    # for each line that contains a .gitignore, add it to the commit
     for line in git_log:
         if ".gitignore" in line:
             os.system(f'git add {line[3:]}')
