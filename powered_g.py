@@ -98,7 +98,7 @@ def giti_del(potential_title):
     os.system(f'git commit -m "{commit_message}"')
 
 
-def generic_giti(tag_key, comment, files: list):
+def generic_giti(tag_key, title, comment, files: list):
     if files == "":
         print("No files to commit")
         exit()
@@ -109,9 +109,12 @@ def generic_giti(tag_key, comment, files: list):
         os.system(f'git add {file}')
         letter = git_log[0][:2].strip()
         commit_line.append(f"\t{file}: {status_letters[letter]}")
-    potential_title = f"{tag} {len(files)} files changed:\n"
-    for file in files:
-        commit_line.append(f"\t{file}")
+    # potential_title = f"{tag} {len(files)} {'file' if len(files) == 1 else 'files'} changed:\n"
+    # use conditional to check if title is empty
+    if title == "":
+        potential_title = f"{tag} {len(files)} {'file' if len(files) == 1 else 'files'} changed:\n"
+    else:
+        potential_title = f"{tag} {title}:\n"
     if comment != "":
         commit_line.append(f"\t\t{comment}")
     else:
