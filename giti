@@ -21,7 +21,10 @@ def main():
     if command in commands_dict:
         commands_dict[command](args[0] if len(args) > 0 else "")
     else:
-        generic_giti(command, args[0], args[1:])
+        title = args[0] if args[0] != "-t" and args[0] != "-tc" and args[0] != "-ct" else ""
+        comment = args[1] if args[1] != "-c" and args[1] != "-tc" and args[1] != "-ct" else ""
+        files = args[2:] if args[0] != "-t" and args[0] != "-tc" and args[0] != "-ct" else args[1:]
+        generic_giti(command, title, comment, files)
 
 
 main()
