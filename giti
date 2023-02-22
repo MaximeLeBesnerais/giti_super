@@ -3,238 +3,25 @@
 import os
 import sys
 import json
-from powered_g import powercharged
+from powered_g import *
 
-if not os.path.isdir('.git'):
-    print('This is not a git repository')
-    exit()
-
-script_path = os.path.dirname(os.path.realpath(__file__))
-if not os.path.isfile(script_path + '/update.log'):
-    os.popen("date >> ~/.giti/update.log")
-
-updatelog = open(script_path + '/update.log', 'r').readlines()
-
-commands_list = []
-description = {}
-command_input = {}
-message = {}
-
-if os.path.isfile("./.git/index.lock"):
-    os.remove("./.git/index.lock")
-git_status = os.popen('git status -s').readlines()
+# This is the main instance of the giti script
+commands_dict = {
+    "all": giti_all,
+    "makefile": giti_makefile,
+    "coding_style": giti_coding_style,
+    "ignore": giti_ignore,
+    "delete": giti_del
+}
 
 
-def possibility_to_stash():
-    global git_status
-    for line in git_status:
-        if line.strip()[0] != '?':
-            return True
-    return False
-
-
-def search_in_status(file_name):
-    for entry in git_status:
-        comp = entry[3:]
-        if file_name in comp or comp in file_name:
-            return True
-    return False
-
-
-def is_a_command(command):
-    global commands_list
-    if command in commands_list:
-        return True
+def main():
+    if len(sys.argv) < 2:
+        print("GITI: No command given")
+        exit()
+    command = sys.argv[1]
+    args = sys.argv[2:]
+    if command in commands_dict:
+        commands_dict[command](args[0] if len(args) > 0 else "")
     else:
-        return False
-
-
-def git_file():
-    global git_status
-    choice_loop = True
-    while choice_loop:
-        print("0. Exit")
-        for line in git_status:
-            print(f"{git_status.index(line) + 1}: {line[3:]}")
-        choice = input("Which file do you want to commit? ")
-        try:
-            choice = int(choice) - 1
-        except:
-            print("Invalid input.")
-            continue
-        # check if the choice is valid
-        if choice < -1 or choice >= len(git_status):
-            print("Invalid choice")
-        elif choice == -1:
-            return False
-        else:
-            return git_status[choice][3:]
-
-
-def load_commands():
-    global commands_list, description, command_input, message
-    file_data = json.load(open(script_path + '/commands/commands.json'))
-    if os.path.exists(script_path + '/commands/user_commands.json'):
-        file_data.update(json.load(open(script_path + '/commands/user_commands.json')))
-    for entry in file_data:
-        command_name = entry['command']
-        if isinstance(command_name, list):
-            for command in command_name:
-                commands_list.append(command)
-                description[command] = entry['description']
-                command_input[command] = entry['input']
-                message[command] = entry['message']
-        else:
-            commands_list.append(command_name)
-            description[command_name] = entry['description']
-            command_input[command_name] = entry['input']
-            message[command_name] = entry['message']
-
-
-def file_picker():
-    file = git_file()
-    if file == False:
-        return 0
-    else:
-        return file
-
-
-def command_interpreter(command, file):
-    global command_input, message
-    inputs = command_input[command]
-    msg = message[command]
-    answer = []
-    for qs in inputs:
-        answer.append(input(f"{qs}: "))
-    for x, item in enumerate(answer):
-        msg = msg.replace(f"${x + 1}", item)
-    msg = f"{file}:\n\t{msg}\n"
-    return msg
-
-
-def file_by_file(command, file=0):
-    if file == 0:
-        file = file_picker()
-    if file == 0:
-        print("Exiting...")
-        return 0
-    msg = command_interpreter(command, file)
-    os.wait()
-    os.popen(f"git add *{file}")
-    return msg
-
-
-def main(params):
-    global commands_list, description, command_input, message
-
-    if len(params) == 1 or params[1] == "pw":
-        powercharged()
-
-    elif is_a_command(params[1]) and len(params) < 4:
-        command = params[1]
-        if len(params) == 2:
-            msg = file_by_file(command)
-        elif len(params) == 3 and search_in_status(params[2]):
-            msg = file_by_file(command, params[2])
-        else:
-            print("There was an error - Invalid Command")
-            exit(1)
-        if msg == 0:
-            exit()
-        commit_title = input("Commit title: ")
-        final_msg = f":sparkles: {commit_title}\n" + msg
-        os.wait()
-        os.popen(f'git commit -m "{final_msg}"')
-        print("Commit successful!")
-
-    elif params[1] == "del":
-        delete_string = []
-        for line in git_status:
-            if line.startswith(' D') or line.startswith('D'):
-                delete_string.append(f"./{line[3:]}")
-        if len(delete_string) == 0:
-            print("There are no files to delete")
-            return
-        commit_msg = "\tDeleted files:\n\t\t" + "\n\t\t".join(delete_string)
-        commit_tlt = input(
-            f"Deleted {len(delete_string)} files.\nCommit title: ")
-        final_msg = f":fire: {commit_tlt}\n" + commit_msg
-        os.popen(f"git add {' '.join(delete_string)}")
-        os.wait()
-        os.popen(f'git commit -m "{final_msg}"')
-
-    elif params[1] == 'help':
-        print("Last updated: " + updatelog[0])
-        print('''Giti is a simple git wrapper that makes it easier to commit files.
-Usage: giti [command] [file]
-Default command:
-- (no command) or 'pw': Select a file to commit
-- del: Commit deleted files
-- update: Update giti
-- all: Commit all files with the same message
-- help: Show this message
-There are also custom commands that can be added to the commands.json file.
-The most useful ones are: feat, fix, docs, style, refactor, revert, igit
-You can also add your own commands by creating a user_commands.json file.
-(Note that the commands in the user_commands.json may behave differently than the default ones)
-              ''')
-
-        ch = input("Do you want to display the advanced commands? (y/n) ")
-        if ch == "y" or ch == "yes":
-            x = 0
-            for command in commands_list:
-                print(f'''- {command}: {description[command]}''')
-                x += 1
-                if x == 6:
-                    x = 0
-                    input("----------")
-
-    elif params[1] == 'update':
-        os.popen('cd ~/.giti / && git pull -f -q && cd -')
-        os.popen('date > ~/.giti/update.log')
-        print("Update successful!")
-
-    elif params[1] == 'all':
-        commit_message = input("Commit message: ") + ":card_file_box: "
-        number_of_files = len(git_status)
-        os.popen(f'git add .')
-        os.wait()
-        os.popen(
-            f'git commit -m ":sparkles: For {number_of_files} files:\n\t\t{commit_message}"')
-
-    elif params[1] == 'refresh' and possibility_to_stash():
-        os.popen('git stash')
-        os.wait()
-        os.popen('git pull')
-        os.wait()
-        os.popen('git stash pop')
-    elif is_a_command(params[1]) and len(params) >= 4:
-        print("Multiple Files commit")
-        files = []
-        for file in params[2:]:
-            if search_in_status(file):
-                files.append(file)
-            else:
-                print(f"File {file} not found - Ignoring")
-        if len(files) == 0:
-            print("No files found - Exiting")
-            exit(1)
-        file_commit = " ".join(files)
-        command = params[1]
-        file = "\t\n".join(files)
-        msg = command_interpreter(command, file)
-        commit_title = input("Commit title: ")
-        final_msg = f":sparkles: {commit_title}\n" + msg
-        os.wait()
-        os.popen(f"git add {file_commit}")
-        os.wait()
-        os.popen(f'git commit -m "{final_msg}"')
-        print("Commit successful!")
-
-    else:
-        print("Command not found. Type 'giti help' for help.")
-
-
-if __name__ == '__main__':
-    load_commands()
-    main(sys.argv)
+        generic_giti(command, args)
