@@ -9,10 +9,5 @@ This is a tool and not perfect, so please use it with caution.
 ## Installation
 
 ```bash
-git clone https://github.com/3andan4/giti_super.git ~/.giti
-sudo ln -s ~/.giti/giti /usr/bin/giti
+curl https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/install.sh | sh
 ```
-
-## Known Issues
-- The script will sometimes conflict with original git commit command
-  - A fix is in the works
