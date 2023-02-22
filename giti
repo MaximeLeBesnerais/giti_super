@@ -21,7 +21,7 @@ def main():
     if command in commands_dict:
         commands_dict[command](args[0] if len(args) > 0 else "")
     else:
-        generic_giti(command, args)
+        generic_giti(command, args[0], args[1:])
 
 
 main()
