@@ -11,3 +11,23 @@ This is a tool and not perfect, so please use it with caution.
 ```bash
 curl https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/install.sh | sh
 ```
+## Usage
+
+Default usage:
+```bash
+giti <type> [title] [commit message] <files>
+```
+to skip a field, use `-`:
+- `-nt` to skip the title
+- `-nc` to skip the commit message
+- `-nct` to skip the title and the commit message (or `-ntc`)
+
+You can't skip the type, nor the files.
+
+### Examples
+
+```bash
+giti feat -nct README.md
+giti fix -nt "Solved a bug" readme.md (no title)
+giti bug -nc "Solved a bug" readme.md (no commit message)
+```
