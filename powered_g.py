@@ -29,7 +29,7 @@ def giti_all(potential_title):
         print("There are no changes to commit")
         exit()
     for line in git_status:
-        status_letter = line[:2]
+        status_letter = line[:2].strip()
         status_comment = status_letters[status_letter]
         commit_line.append(f"\t{line[3:]}: {status_comment}")
     if potential_title == "":
@@ -78,7 +78,8 @@ def giti_ignore(potential_title):
     for line in git_log:
         if ".gitignore" in line:
             os.system(f'git add {line[3:]}')
-            commit_line.append(f"\t{line[3:]}: {status_letters[line[:2]]}")
+            letter = line[:2].strip()
+            commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
     if potential_title == "":
         commit_message = f"[IGNORE] Modified .gitignore"
     else:
