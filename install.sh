@@ -29,6 +29,7 @@ fi
 
 if [ -f /usr/bin/giti ]; then
     sudo rm /usr/bin/giti
+    echo "Removed old version of giti shortcut..."
 fi
 
 if [ -f /usr/bin/giti ]; then
@@ -38,6 +39,7 @@ fi
 
 if [ -d ~/.giti ]; then
     rm -rf ~/.giti
+    echo "Removed old version of giti folder..."
 fi
 
 if [ -d ~/.giti ]; then
@@ -46,6 +48,7 @@ if [ -d ~/.giti ]; then
 fi
 
 git clone git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
+echo "Cloned the repo..."
 
 if [ ! -d ~/.giti ]; then
     echo "Failed to clone the repo"
@@ -53,6 +56,7 @@ if [ ! -d ~/.giti ]; then
 fi
 
 sudo ln -s ~/.giti/giti /usr/bin/giti
+echo "Created symlink..."
 
 if [ ! -f /usr/bin/giti ]; then
     echo "Failed to create symlink"
