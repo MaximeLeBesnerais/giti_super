@@ -169,6 +169,7 @@ def giti_interactive():
     for file in committing_files:
         os.system(f'git add {file}')
         letter = git_log[0][:2].strip()
+        file = file[:-1]
         commit_line.append(f"\t{file}: {status_letters[letter]}")
     commit_type = input("What type of commit is this ? (default: [OTHER]) ")
     if commit_type == "":
