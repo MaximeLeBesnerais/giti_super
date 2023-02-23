@@ -43,12 +43,12 @@ def main():
         files = []
         for arg in args:
             if arg == "-nc":
-                title = args[args.index(arg) + 1]
-                files = args[args.index(arg) + 2:]
+                title = input("Title: ")
+                files = args[args.index(arg) + 1:]
                 break
             elif arg == "-nt":
-                comment = args[args.index(arg) + 1]
-                files = args[args.index(arg) + 2:]
+                comment = input("Comment: ")
+                files = args[args.index(arg) + 1:]
                 break
             elif arg == "-ntc" or arg == "-nct":
                 files = args[args.index(arg) + 1:]
