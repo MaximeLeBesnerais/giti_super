@@ -31,7 +31,8 @@ commands_dict = {
 
 def main():
     if len(sys.argv) < 2:
-        print("GITI: No command given")
+        print("GITI: Interactive GITI mode")
+        giti_interactive()
         exit()
     command = sys.argv[1]
     args = sys.argv[2:]
