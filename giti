@@ -25,7 +25,7 @@ commands_dict = {
     "style": giti_coding_style,
     "igit": giti_ignore,
     "del": giti_del,
-    "update": giti_update
+    "--update": giti_update
 }
 
 
