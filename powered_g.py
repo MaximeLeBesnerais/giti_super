@@ -33,7 +33,8 @@ def giti_all(potential_title):
         status_comment = status_letters[status_letter]
         commit_line.append(f"\t{line[3:]}: {status_comment}")
     if potential_title == "":
-        commit_message = f"[ALL] {len(git_status)} files changed:\n" + "\n".join(commit_line)
+        commit_message = f"[ALL] {len(git_status)} {'file' if len(git_status) <= 1 else 'files'} changed:\n" + \
+                        "\n".join(commit_line)
     else:
         commit_message = f"[ALL] {potential_title}:\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -48,9 +49,11 @@ def giti_makefile(potential_title):
     for line in git_log:
         if line[3:].startswith('Makefile'):
             os.system(f'git add {line[3:]}')
-            commit_line.append(f"\t{line[3:]}: {status_letters[line[:2]]}")
+            letter = line[:2].strip()
+            commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
     if potential_title == "":
-        commit_message = f"[MAKEFILE] {len(commit_line)} files changed:\n" + "\n".join(commit_line)
+        commit_message = f"[MAKEFILE] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed:\n" + \
+                     "\n".join(commit_line)
     else:
         commit_message = f"[MAKEFILE] {potential_title}:\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -61,7 +64,8 @@ def giti_coding_style(files):
     for file in files:
         os.system(f'git add {file}')
         commit_line.append(f"\t{file}: Coding style related changes")
-    commit_message = f"[CODING STYLE] {len(commit_line)} files changed:\n" + "\n".join(commit_line)
+    commit_message = f"[CODING STYLE] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed:\n" + \
+                     "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
 
 
@@ -92,7 +96,8 @@ def giti_del(potential_title):
         os.system(f'git add {line}')
         commit_line.append(f"\t{line}: Deleted file")
     if potential_title == "":
-        commit_message = f"[DELETION] {len(commit_line)} files removed:\n" + "\n".join(commit_line)
+        commit_message = f"[DELETION] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} removed:\n" + \
+                        "\n".join(commit_line)
     else:
         commit_message = f"[DELETION] {potential_title}:\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -109,10 +114,8 @@ def generic_giti(tag_key, title, comment, files: list):
         os.system(f'git add {file}')
         letter = git_log[0][:2].strip()
         commit_line.append(f"\t{file}: {status_letters[letter]}")
-    # potential_title = f"{tag} {len(files)} {'file' if len(files) == 1 else 'files'} changed:\n"
-    # use conditional to check if title is empty
     if title == "":
-        potential_title = f"{tag} {len(files)} {'file' if len(files) == 1 else 'files'} changed:\n"
+        potential_title = f"{tag} {len(files)} {'file' if len(files) <= 1 else 'files'} changed:\n"
     else:
         potential_title = f"{tag} {title}:\n"
     if comment != "":
