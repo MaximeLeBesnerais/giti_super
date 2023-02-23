@@ -24,6 +24,8 @@ to skip a field, use `-`:
 
 You can't skip the type, nor the files.
 
+There is also an interactive mode. It will prompt you for each field.
+
 ### Examples
 
 ```bash
