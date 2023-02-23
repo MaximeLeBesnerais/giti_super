@@ -5,10 +5,10 @@ from powered_g import *
 
 commands_dict = {
     "all": giti_all,
-    "makefile": giti_makefile,
-    "coding_style": giti_coding_style,
-    "ignore": giti_ignore,
-    "delete": giti_del
+    "make": giti_makefile,
+    "style": giti_coding_style,
+    "igit": giti_ignore,
+    "del": giti_del
 }
 
 
@@ -33,9 +33,13 @@ def main():
                 comment = args[args.index(arg) + 1]
                 files = args[args.index(arg) + 2:]
                 break
-            elif arg == "-ntc":
+            elif arg == "-ntc" or arg == "-nct":
                 files = args[args.index(arg) + 1:]
                 break
+            else:
+                title = args[0]
+                comment = args[1]
+                files = args[2:]
         generic_giti(command, title, comment, files)
 
 
