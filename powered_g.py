@@ -34,7 +34,7 @@ def giti_all(potential_title):
         commit_line.append(f"\t{line[3:]}: {status_comment}")
     if potential_title == "":
         commit_message = f"[ALL] {len(git_status)} {'file' if len(git_status) <= 1 else 'files'} changed\n" + \
-                        "\n".join(commit_line)
+                         "\n".join(commit_line)
     else:
         commit_message = f"[ALL] {potential_title}\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -53,7 +53,7 @@ def giti_makefile(potential_title):
             commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
     if potential_title == "":
         commit_message = f"[MAKEFILE] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed\n" + \
-                     "\n".join(commit_line)
+                         "\n".join(commit_line)
     else:
         commit_message = f"[MAKEFILE] {potential_title}\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -98,7 +98,7 @@ def giti_del(potential_title):
         commit_line.append(f"\t{line}: Deleted file")
     if potential_title == "":
         commit_message = f"[DELETION] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} removed\n" + \
-                        "\n".join(commit_line)
+                         "\n".join(commit_line)
     else:
         commit_message = f"[DELETION] {potential_title}\n" + "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
@@ -184,4 +184,23 @@ def giti_interactive():
     if commit_comment == "":
         commit_comment = "Committed without a comment"
     commit_message = f"{commit_type} {commit_title}\n" + "\n".join(commit_line) + f"\n\t{commit_comment}"
+    os.system(f'git commit -m "{commit_message}"')
+
+
+def giti_header():
+    selection = [".h", ".hpp", ".hxx", ".hh"]
+    log = os.popen('git status -s').readlines()
+    for line in log:
+        if not any(line.endswith(ext) for ext in selection):
+            log.remove(line)
+    if len(log) == 0:
+        print("There are no header files to commit")
+        exit()
+    commit_line = []
+    for line in log:
+        os.system(f'git add {line[3:]}')
+        letter = line[:2].strip()
+        commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
+    commit_message = f"[HEADER] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed\n" + \
+                     "\n".join(commit_line)
     os.system(f'git commit -m "{commit_message}"')
