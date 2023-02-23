@@ -173,16 +173,14 @@ def giti_interactive():
     commit_type = input("What type of commit is this ? (default: [OTHER]) ")
     if commit_type == "":
         commit_type = "[OTHER]"
+    else:
+        commit_type = f"[{commit_type.upper()}]"
     commit_title = input("What is the title of the commit ? (default: giti default commit) ")
     if commit_title == "":
-        commit_title = f"{commit_type} {len(committing_files)} {'file' if len(committing_files) <= 1 else 'files'} changed"
+        commit_title = f"{commit_type} {len(committing_files)} {'file' if len(committing_files) <= 1 else 'files'}" \
+                       f" changed"
     commit_comment = input("Do you want to add a comment to the commit ? (default: no comment) ")
     if commit_comment == "":
         commit_comment = "Committed without a comment"
     commit_message = f"{commit_type} {commit_title}\n" + "\n".join(commit_line) + f"\n\t{commit_comment}"
     os.system(f'git commit -m "{commit_message}"')
-
-
-            
-
-
