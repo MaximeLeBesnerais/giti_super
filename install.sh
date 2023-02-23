@@ -47,7 +47,7 @@ if [ -d ~/.giti ]; then
     exit
 fi
 
-git clone git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
+git clone --quiet git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
 echo "Cloned the repo..."
 
 if [ ! -d ~/.giti ]; then
