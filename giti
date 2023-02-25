@@ -43,26 +43,16 @@ def main():
         title = ""
         comment = ""
         files = []
-        # for arg in args:
-        #     if arg == "-nc":
-        #         title = input("Title: ")
-        #         files = args[args.index(arg) + 1:]
-        #         break
-        #     elif arg == "-nt":
-        #         comment = input("Comment: ")
-        #         files = args[args.index(arg) + 1:]
-        #         break
-        #     elif arg == "-ntc" or arg == "-nct":
-        #         files = args[args.index(arg) + 1:]
-        #         break
         if "-nc" in args:
             title = input("Title: ")
             files = args[args.index("-nc") + 1:]
         elif "-nt" in args:
             comment = input("Comment: ")
             files = args[args.index("-nt") + 1:]
-        elif "-ntc" in args or "-nct" in args:
+        elif "-ntc" in args:
             files = args[args.index("-ntc") + 1:]
+        elif "-nct" in args:
+            files = args[args.index("-nct") + 1:]
         else:
             files = args
             title = input("Title: ")
