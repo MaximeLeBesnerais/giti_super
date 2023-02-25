@@ -187,20 +187,20 @@ def giti_interactive():
     os.system(f'git commit -m "{commit_message}"')
 
 
-def giti_header(potential_title):
-    selection = [".h", ".hpp", ".hxx", ".hh"]
-    log = os.popen('git status -s').readlines()
-    for line in log:
-        if not any(line.endswith(ext) for ext in selection):
-            log.remove(line)
-    if len(log) == 0:
-        print("There are no header files to commit")
-        exit()
-    commit_line = []
-    for line in log:
-        os.system(f'git add {line[3:]}')
-        letter = line[:2].strip()
-        commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
-    commit_message = f"[HEADER] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed\n" + \
-                     "\n".join(commit_line)
-    os.system(f'git commit -m "{commit_message}"')
+# def giti_header(potential_title):
+#     selection = [".h", ".hpp", ".hxx", ".hh"]
+#     log = os.popen('git status -s').readlines()
+#     for line in log:
+#         if not any(line.endswith(ext) for ext in selection):
+#             log.remove(line)
+#     if len(log) == 0:
+#         print("There are no header files to commit")
+#         exit()
+#     commit_line = []
+#     for line in log:
+#         os.system(f'git add {line[3:]}')
+#         letter = line[:2].strip()
+#         commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
+#     commit_message = f"[HEADER] {len(commit_line)} {'file' if len(commit_line) <= 1 else 'files'} changed\n" + \
+#                      "\n".join(commit_line)
+#     os.system(f'git commit -m "{commit_message}"')
