@@ -187,7 +187,7 @@ def giti_interactive():
     os.system(f'git commit -m "{commit_message}"')
 
 
-def giti_header():
+def giti_header(potential_title):
     selection = [".h", ".hpp", ".hxx", ".hh"]
     log = os.popen('git status -s').readlines()
     for line in log:
