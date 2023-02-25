@@ -43,22 +43,30 @@ def main():
         title = ""
         comment = ""
         files = []
-        for arg in args:
-            if arg == "-nc":
-                title = input("Title: ")
-                files = args[args.index(arg) + 1:]
-                break
-            elif arg == "-nt":
-                comment = input("Comment: ")
-                files = args[args.index(arg) + 1:]
-                break
-            elif arg == "-ntc" or arg == "-nct":
-                files = args[args.index(arg) + 1:]
-                break
-            else:
-                title = args[0]
-                comment = args[1]
-                files = args[2:]
+        # for arg in args:
+        #     if arg == "-nc":
+        #         title = input("Title: ")
+        #         files = args[args.index(arg) + 1:]
+        #         break
+        #     elif arg == "-nt":
+        #         comment = input("Comment: ")
+        #         files = args[args.index(arg) + 1:]
+        #         break
+        #     elif arg == "-ntc" or arg == "-nct":
+        #         files = args[args.index(arg) + 1:]
+        #         break
+        if "-nc" in args:
+            title = input("Title: ")
+            files = args[args.index("-nc") + 1:]
+        elif "-nt" in args:
+            comment = input("Comment: ")
+            files = args[args.index("-nt") + 1:]
+        elif "-ntc" in args or "-nct" in args:
+            files = args[args.index("-ntc") + 1:]
+        else:
+            files = args
+            title = input("Title: ")
+            comment = input("Comment: ")
         generic_giti(command, title, comment, files)
 
 
