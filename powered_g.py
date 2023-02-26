@@ -64,16 +64,18 @@ def giti_makefile(potential_title):
 
 def giti_header(potential_title):
     git_log = os.popen('git status -s').readlines()
+    git_log = [line[:-1] for line in git_log]
+    header_extensions = [".h", ".hpp", ".hxx", ".hh"]
     commit_line = []
     if len(git_log) == 0:
         print("There are no changes to commit")
         exit()
     for line in git_log:
-        # if file extension is .h, .hpp or .hxx, add it to commit
-        if line[3:].endswith(('.h', '.hpp', '.hxx')):
+        if line[3:].endswith(tuple(header_extensions)):
             os.system(f'git add {line[3:]}')
             letter = line[:2].strip()
             commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
+            continue
     if len(commit_line) == 0:
         print("There are no header files to commit")
         exit()
