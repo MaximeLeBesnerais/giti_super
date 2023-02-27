@@ -29,14 +29,13 @@ class GitiVersion:
         return self.major == other.major and self.minor == other.minor and self.patch == other.patch
 
     def is_newer(self, other):
-        if self.major > other.major:
-            return True
-        elif self.major == other.major:
-            if self.minor > other.minor:
+        here_properties = [self.major, self.minor, self.patch]
+        other_properties = [other.major, other.minor, other.patch]
+        for i in range(3):
+            if here_properties[i] > other_properties[i]:
                 return True
-            elif self.minor == other.minor:
-                if self.patch > other.patch:
-                    return True
+            if here_properties[i] < other_properties[i]:
+                return False
         return False
 
     def is_older(self, other):
@@ -84,5 +83,14 @@ def giti_update(silent=False):
 def giti_version():
     current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
     print(f"Current version: {current_version.version()}")
-    print(f"Last updated {time_diff(current_version.date, get_today())} days ago ({current_version.date})")
+    days_since_update = time_diff(current_version.date, get_today())
+    txt = ""
+    match days_since_update:
+        case 0:
+            txt = "today"
+        case 1:
+            txt = "yesterday"
+        case _:
+            txt = f"{days_since_update} days ago"
+    print(f"Last updated {txt} ({current_version.date})")
     print(f"Changelog: {current_version.changelog}")
