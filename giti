@@ -3,7 +3,7 @@
 import sys
 from powered_g import *
 from giti_interactive import giti_interactive
-from update import giti_update
+from update import giti_update, giti_version
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -13,8 +13,7 @@ commands_dict = {
     "make": giti_makefile,
     "igit": giti_ignore,
     "del": giti_del,
-    "header": giti_header,
-    "--update": giti_update
+    "header": giti_header
 }
 
 
@@ -27,8 +26,16 @@ def main():
     args = sys.argv[2:]
     if command in commands_dict:
         commands_dict[command](args[0] if len(args) > 0 else "")
+        exit()
     if command == "style":
         giti_coding_style(args)
+        exit()
+    if command == "--update":
+        giti_update()
+        exit()
+    if command == "--version":
+        giti_version()
+        exit()
     else:
         title = ""
         comment = ""
