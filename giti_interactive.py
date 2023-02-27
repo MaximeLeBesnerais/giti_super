@@ -17,22 +17,27 @@ def parse_selection(selection: str, upper_limit) -> [int]:
     return selection
 
 
-def get_files_selection(file_list) -> [int]:
-    selection: [int] = []
+def get_files_selection(file_list) -> [str]:
+    selection: [str] = []
     adding = True
     while adding:
         print("Select a file to commit")
         for i, file in enumerate(file_list):
             print(f"\t{i + 1}. {file}")
         print("\t0. Done (or press enter)")
-        selection_input = input("Selection: ")
+        try:
+            selection_input = input("Selection: ")
+        except EOFError:
+            print("\nInterrupted")
+            return []
         selection_input = parse_selection(selection_input, len(file_list))
         if len(selection_input) == 0:
             adding = False
         else:
-            selection += selection_input
             for i in selection_input:
-                file_list.remove(file_list[i - 1])
+                selection.append(file_list[i - 1])
+            for i in selection_input:
+                file_list.pop(i - 1 - i)
             if len(file_list) == 0:
                 adding = False
                 print("All files have been selected")
@@ -41,7 +46,7 @@ def get_files_selection(file_list) -> [int]:
                 print(f"Do you want to select {file_list[0]}? (y/n)")
                 selection_input = input("Selection: ")
                 if selection_input.lower() == "y":
-                    selection.append(1)
+                    selection.append(file_list[0])
                 adding = False
     return selection
 
@@ -49,7 +54,6 @@ def get_files_selection(file_list) -> [int]:
 def giti_interactive():
     git_log = os.popen('git status -s').readlines()
     git_log = [line[:-1] for line in git_log]
-    print(git_log)
     commit_line = []
     if len(git_log) == 0:
         print("There are no changes to commit")
@@ -64,10 +68,9 @@ def giti_interactive():
         print("There are no files to commit")
         exit()
     for i in selection:
-        os.system(f'git add {git_log[i - 1][3:]}')
-        letter = git_log[i - 1][:2].strip()
-        commit_line.append(f"\t{git_log[i - 1][3:]}: {status_letters[letter]}")
-    type_commit = input("What type of commit is this?")
+        os.system(f'git add {i}')
+        commit_line.append(f"\t{i}")
+    type_commit = input("What type of commit is this?   ")
     if type_commit == "":
         type_commit = "OTHER"
     title = input("Title: ")

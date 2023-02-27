@@ -3,7 +3,7 @@
 import sys
 from powered_g import *
 from giti_interactive import giti_interactive
-from update import giti_update, giti_version
+from update import giti_update, giti_version, giti_update_necessity, is_git
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -18,6 +18,8 @@ commands_dict = {
 
 
 def main():
+    giti_update_necessity()
+    is_git()
     if len(sys.argv) < 2:
         print("GITI: Interactive GITI mode")
         giti_interactive()

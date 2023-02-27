@@ -18,11 +18,12 @@ def time_diff(date1, date2):
 
 
 class GitiVersion:
-    def __init__(self, version, changelog, date):
+    def __init__(self, version, changelog, date, last_update=None):
         self.major = version.split(".")[0]
         self.minor = version.split(".")[1]
         self.patch = version.split(".")[2]
         self.changelog = changelog
+        self.last_update = last_update
         self.date = date
 
     def equals(self, other):
@@ -32,14 +33,17 @@ class GitiVersion:
         here_properties = [self.major, self.minor, self.patch]
         other_properties = [other.major, other.minor, other.patch]
         for i in range(3):
-            if here_properties[i] > other_properties[i]:
-                return True
-            if here_properties[i] < other_properties[i]:
+            if here_properties[i] <= other_properties[i]:
                 return False
-        return False
+        return True
 
     def is_older(self, other):
-        return not self.is_newer(other) and not self.equals(other)
+        here_properties = [self.major, self.minor, self.patch]
+        other_properties = [other.major, other.minor, other.patch]
+        for i in range(3):
+            if here_properties[i] >= other_properties[i]:
+                return False
+        return True
 
     def changelog(self):
         return self.changelog
@@ -49,7 +53,7 @@ class GitiVersion:
 
 
 def giti_get_version(json_file):
-    return GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
+    return GitiVersion(json_file["version"], json_file["changelog"], json_file["date"], json_file["LUC"])
 
 
 def proceed():
@@ -94,3 +98,40 @@ def giti_version():
             txt = f"{days_since_update} days ago"
     print(f"Last updated {txt} ({current_version.date})")
     print(f"Changelog: {current_version.changelog}")
+
+
+def giti_update_necessity():
+    current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
+    last_update = current_version.last_update
+    if last_update != "None":
+        days_since_update = time_diff(last_update, get_today())
+        if days_since_update < 4:
+            return
+    json_file = os.popen(
+        'curl -s https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json').read()
+    json_file = json.loads(json_file)
+    latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
+    if current_version.is_newer(latest_version) or current_version.equals(latest_version):
+        json_file["LUC"] = get_today()
+        with open(f"{script_path}/versions_changelog.json", "w") as f:
+            f.write(json.dumps(json_file))
+        return
+    print(f"A new version of GITI is available ({latest_version.version()})")
+    json_file["LUC"] = get_today()
+    with open(f"{script_path}/versions_changelog.json", "w") as f:
+        f.write(json.dumps(json_file))
+
+
+def is_git():
+    path = os.getcwd()
+    valid = False
+    while True:
+        if os.path.exists(f"{path}/.git"):
+            valid = True
+            break
+        if path == "/":
+            break
+        path = os.path.dirname(path)
+    if not valid:
+        print("Giti can only be used in a git repository")
+        exit()
