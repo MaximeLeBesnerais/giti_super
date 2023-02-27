@@ -1,1 +1,1 @@
-{"version": "1.1.3", "date": "27/02/2023", "changelog": "\t[FIX] Repair version", "LUC": "27/02/2023"}
+{"version": "1.1.4", "date": "27/02/2023", "changelog": "\t[FEAT] added internet check before trying to fetch update", "LUC": "27/02/2023"}

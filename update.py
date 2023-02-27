@@ -1,10 +1,19 @@
 import os
 import json
 import datetime
+import urllib.request
 
 # https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json
 
 script_path = os.path.dirname(os.path.realpath(__file__))
+
+
+def connect(host="https://google.com"):
+    try:
+        urllib.request.urlopen(host)
+        return True
+    except urllib.error.URLError:
+        return False
 
 
 def get_today():
@@ -105,8 +114,9 @@ def giti_update_necessity():
     last_update = current_version.last_update
     if last_update != "None":
         days_since_update = time_diff(last_update, get_today())
-        if days_since_update < 4:
+        if days_since_update < 3 or not connect():
             return
+
     json_file = os.popen(
         'curl -s https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json').read()
     json_file = json.loads(json_file)
