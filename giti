@@ -3,21 +3,9 @@
 import sys
 from powered_g import *
 from giti_interactive import giti_interactive
+from update import giti_update
 
 script_path = os.path.dirname(os.path.realpath(__file__))
-
-
-def giti_update(none):
-    print("The old version of GITI will be deleted and the new one will be downloaded")
-    # check if update.sh exists in the script path
-    if os.path.exists(f"{script_path}/update.sh"):
-        os.system(f"{script_path}/update.sh")
-        exit()
-    print("The update script is missing at script location. Will now look in default location")
-    # check if update.sh exists in the default location ~/.giti
-    if os.path.exists(f"{os.path.expanduser('~')}/.giti/update.sh"):
-        os.system(f"{os.path.expanduser('~')}/.giti/update.sh")
-        exit()
 
 
 commands_dict = {
