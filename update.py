@@ -73,6 +73,7 @@ def proceed():
     if os.path.exists(f"{os.path.expanduser('~')}/.giti/update.sh"):
         os.system(f"{os.path.expanduser('~')}/.giti/update.sh")
         exit()
+    print("The update script is missing at default location. Please contact the developer to fix this issue")
 
 
 def giti_update(silent=False):
@@ -91,6 +92,17 @@ def giti_update(silent=False):
     print(f"Latest version: {latest_version.version()}")
     print("The old version of GITI will be deleted and the new one will be downloaded")
     proceed()
+
+
+def giti_remove():
+    if os.path.exists(f"{script_path}/remove.sh"):
+        os.system(f"rm {script_path}/remove.sh")
+        exit()
+    print("The update script is missing at script location. Will now look in default location")
+    if os.path.exists(f"{os.path.expanduser('~')}/.giti/remove.sh"):
+        os.system(f"rm {os.path.expanduser('~')}/.giti/remove.sh")
+        exit()
+    print("The remove script is missing at default location. Please remove the folder ~/.giti manually")
 
 
 def giti_version():
