@@ -4,6 +4,7 @@ import sys
 from powered_g import *
 from giti_interactive import giti_interactive
 from update import giti_update, giti_version, giti_update_necessity, is_git
+from run_song import giti_vahan
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,6 +38,9 @@ def main():
         exit()
     if command == "--version":
         giti_version()
+        exit()
+    if command == "--vahan":
+        giti_vahan()
         exit()
     else:
         title = ""
