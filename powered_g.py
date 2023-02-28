@@ -131,6 +131,7 @@ def giti_ignore(potential_title):
 
 def giti_del(potential_title):
     git_log = os.popen('git ls-files --deleted').readlines()
+    git_log = [line[:-1] for line in git_log]
     if len(git_log) == 0:
         print("There are no deleted files to commit")
         exit()
