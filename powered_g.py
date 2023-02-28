@@ -50,7 +50,7 @@ def giti_makefile(potential_title):
         print("There are no changes to commit")
         exit()
     for line in git_log:
-        if "M"
+        if "Makefile" in line:
             os.system(f'git add {line[3:]}')
             letter = line[:2].strip()
             commit_line.append(f"\t{line[3:]}: {status_letters[letter]}")
