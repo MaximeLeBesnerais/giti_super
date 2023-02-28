@@ -107,6 +107,7 @@ def giti_version():
             txt = f"{days_since_update} days ago"
     print(f"Last updated {txt} ({current_version.date})")
     print(f"Changelog: {current_version.changelog}")
+    giti_update_necessity()
 
 
 def giti_update_necessity():

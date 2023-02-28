@@ -2,16 +2,6 @@
 
 set +e
 
-
-#░██████╗░██╗████████╗██╗
-#██╔════╝░██║╚══██╔══╝██║
-#██║░░██╗░██║░░░██║░░░██║
-#██║░░╚██╗██║░░░██║░░░██║
-#╚██████╔╝██║░░░██║░░░██║
-#░╚═════╝░╚═╝░░░╚═╝░░░╚═╝
-
-# put the above text in the terminal to see the logo
-
 echo "Installing giti..."
 
 echo "░██████╗░██╗████████╗██╗"
@@ -62,6 +52,9 @@ if [ ! -f /usr/bin/giti ]; then
     echo "Failed to create symlink"
     exit
 fi
+
+echo "Installing dependencies..."
+pip3 install -r ~/.giti/requirements.txt
 
 # rename install.sh to update.sh
 if [ -f ~/.giti/install.sh ]; then
