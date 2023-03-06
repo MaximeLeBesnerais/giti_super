@@ -81,13 +81,17 @@ def proceed():
     print("The update script is missing at default location. Please contact the developer to fix this issue")
 
 
-def giti_update(silent=False):
+def giti_update(force=False):
     current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
     print(f"Current version: {current_version.version()}")
     json_file = os.popen(
         'curl -s https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json').read()
     json_file = json.loads(json_file)
     latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
+    if force:
+        print("Forcing update")
+        proceed()
+        exit()
     if current_version.is_newer(latest_version):
         print("You are using a newer version of GITI than the latest one")
         exit()

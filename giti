@@ -34,7 +34,11 @@ def main():
         giti_coding_style(args)
         exit()
     if command == "--update":
-        giti_update()
+        args = sys.argv[2:]
+        force = False
+        if "--force" in args or "-f" in args:
+            force = True
+        giti_update(force)
         exit()
     if command == "--version":
         giti_version()
