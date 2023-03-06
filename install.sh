@@ -3,14 +3,14 @@
 set +e
 
 echo "Installing giti..."
-
+echo -e "\033[0;32m"
 echo "░██████╗░██╗████████╗██╗"
 echo "██╔════╝░██║╚══██╔══╝██║"
 echo "██║░░██╗░██║░░░██║░░░██║"
 echo "██║░░╚██╗██║░░░██║░░░██║"
 echo "╚██████╔╝██║░░░██║░░░██║"
 echo "░╚═════╝░╚═╝░░░╚═╝░░░╚═╝"
-
+echo -e "\033[0m"
 
 if [ "$EUID" -eq 0 ]
   then echo "Please do not run this script as root"

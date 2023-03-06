@@ -31,6 +31,11 @@ class GitiVersion:
         self.major = version.split(".")[0]
         self.minor = version.split(".")[1]
         self.patch = version.split(".")[2]
+        self.small_patch = "0"
+        try:
+            self.small_patch = version.split(".")[3]
+        except IndexError:
+            pass
         self.changelog = changelog
         self.last_update = last_update
         self.date = date
@@ -47,8 +52,8 @@ class GitiVersion:
         return True
 
     def is_older(self, other):
-        here_properties = [self.major, self.minor, self.patch]
-        other_properties = [other.major, other.minor, other.patch]
+        here_properties = [self.major, self.minor, self.patch, self.small_patch]
+        other_properties = [other.major, other.minor, other.patch, other.small_patch]
         for i in range(3):
             if here_properties[i] >= other_properties[i]:
                 return False
@@ -58,7 +63,7 @@ class GitiVersion:
         return self.changelog
 
     def version(self):
-        return f"{self.major}.{self.minor}.{self.patch}"
+        return f"{self.major}.{self.minor}.{self.patch}.{self.small_patch}"
 
 
 def giti_get_version(json_file):
