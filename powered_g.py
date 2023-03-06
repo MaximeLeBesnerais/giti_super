@@ -154,6 +154,9 @@ def generic_giti(tag_key, title, comment, files: list):
     commit_line = []
     git_log = os.popen('git status -s').readlines()
     git_log = [line[:-1] for line in git_log]
+    if len(git_log) == 0:
+        print("There are no changes to commit")
+        exit()
     tag = command_types[tag_key] if tag_key in command_types else f"[{tag_key.upper()}]"
     for file in files:
         os.system(f'git add {file}')
