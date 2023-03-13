@@ -66,4 +66,5 @@ def main():
         generic_giti(command, title, comment, files)
 
 
-main()
+if __name__ == "__main__":
+    main()
