@@ -1,0 +1,17 @@
+{
+    "Abricot":{
+        "Active": "False",
+        "Report": "False",
+        "Hook": "False",
+        "Summary": "False"
+    },
+    "Unit Test":{
+        "Active": "False",
+        "Report": "False",
+        "Hook": "False",
+        "Summary": "False"
+    },
+    "Clang Format": {
+        "Active": "False"
+    }
+}
