@@ -1,5 +1,7 @@
 import os
 from .commit import make_commit
+from .configs import print_error
+from argparse import ArgumentParser as ap
 
 def do_commit(tag, title, comment, files, f = "git status --porcelain"):
     if make_commit(tag, title, comment, files, f):
@@ -86,3 +88,16 @@ def generic_giti(tag_key, files:list, title = "", comment = ""):
     title = f"{len(files)} {'file' if len(files) <= 1 else 'files'} were committed" if title == "" else title
     comment = "Committed files" if comment == "" else comment
     do_commit(tag_key, title, comment, files)
+
+def power_action_picker(args: ap):
+    if args.all:
+        giti_all()
+    if args.make:
+        giti_makefile()
+    if args.header:
+        giti_header()
+    if args.igit:
+        giti_ignore()
+    if args.deleted:
+        giti_del()
+    print_error("No valid action was found")
