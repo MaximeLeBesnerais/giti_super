@@ -28,21 +28,53 @@ special = ap.ArgumentParser(prog="giti", formatter_class=ap.RawTextHelpFormatter
                            GITI: Interactive commit tool
                             ----------------------------
                             Made by: Bandana
-                            Note: Using without arguments will open the interactive mode'''), add_help=False, )
+                            Note: Using without arguments will open the interactive mode'''), add_help=False)
 
 x = special.add_mutually_exclusive_group()
-info = x.add_argument_group("Informations")
+az = x.add_argument_group("Informations")
+info = az.add_mutually_exclusive_group()
 info.add_argument("-v", "--version", action="store_true", help="Show the version of giti")
 info.add_argument("-u", "--update", action="store_true", help="Update giti")
 info.add_argument("-U", "--force-update", action="store_true", help="Force update giti")
 info.add_argument("-r", "--remove", action="store_true", help="Remove giti")
 
-tools = x.add_argument_group("Tools")
+wk = x.add_argument_group("Tools")
+tools = wk.add_mutually_exclusive_group() 
 tools.add_argument("-a", "--all", action="store_true", help="Commit all files")
 tools.add_argument("-i", "--igit", action="store_true", help="Commit .gitignore")
 tools.add_argument("-d", "--deleted", action="store_true", help="Commit deleted files")
 tools.add_argument("-l", "--header", action="store_true", help="Commit header files")
 tools.add_argument("-m", "--make", action="store_true", help="Commit makefile")
 
-hlp = x.add_argument_group("Help")
-hlp.add_argument("--flags-help", action="store_true", help="Show the help of flags")
+def special_help():
+    print('''\
+GITI: Interactive commit tool
+----------------------------
+Made by: Bandana
+Note: Using without arguments will open the interactive mode
+                            
+    Information:
+    -v, --version: Show the version of giti
+    -u, --update: Update giti
+    -U, --force-update: Force update giti
+    -r, --remove: Remove giti
+
+    Tools:
+    -a, --all: Commit all files
+    -i, --igit: Commit .gitignore
+    -d, --deleted: Commit deleted files
+    -l, --header: Commit header files
+    -m, --make: Commit makefile
+        ''')
+
+x.add_argument("--help2", action="store_true", help="Show the help of the special flags")
+
+def multiple_true(*args):
+    kwargs = vars(args[0])
+    num = 0
+    for i in kwargs:
+        if kwargs[i] == True:
+            num += 1
+    if num > 1:
+        print("Error: Multiple special flags")
+        exit(1)
