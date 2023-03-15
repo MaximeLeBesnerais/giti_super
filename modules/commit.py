@@ -25,13 +25,14 @@ def file_line(log_line):
 
 
 class Commit:
-    def __init__(self, tag, title, comment, files):
+    def __init__(self, tag, title, comment, files,
+                 status = "git status --porcelain"):
         self.tag: str = tag
         self.title: str = title
         self.comment: str = comment
         self.files: list = files
         self.valid : bool = False
-        self.status = subprocess.run(["git", "status", "--porcelain"], stdout=subprocess.PIPE).stdout.decode("utf-8")
+        self.status = subprocess.run(status.split(), stdout=subprocess.PIPE).stdout.decode("utf-8")
     
     def check_files(self):
         for file in self.files:
@@ -41,10 +42,16 @@ class Commit:
     
     def __str__(self):
         tag = f"[{self.tag.upper()}]"
-        title = f"{self.title}"
-        comment = f"{self.comment}"
+        if self.title != "":
+            title = f"{self.title}"
+        else:
+            title = f"{tag} {len(self.files)} {'file' if len(self.files) <= 1 else 'files'} changed"
         files = [file_line(file) for file in self.status.split() if file != ""]
         files_msg = f"Files:" + "\n\t\t".join(files)
+        if self.comment != "":
+            comment = f"{self.comment}"
+        else:
+            comment = "Commit made without comment"
         commit_msg = f"{tag} {title}\n{files_msg}\n\n{comment}"
         return commit_msg
     
