@@ -26,9 +26,7 @@ def main():
     mt(special_flags)
     if True in vars(special_flags).values():
         sap(special_flags)
-        exit()
     args = p.parse_args()
-    print(args)
     rap(args)
 
 
