@@ -1,22 +1,17 @@
 #!/usr/bin/python3
 
 import sys
-from modules.powered_g import *
-from modules.giti_interactive import giti_interactive
-from modules.update import giti_update, giti_version, giti_update_necessity, is_git, giti_remove
+import os
+from modules.update import giti_update_necessity, is_git
 from modules.argsParse import parser as p
+from modules.giti_interactive import giti_interactive
 from modules.argsParse import special as s
+from modules.argsParse import special_help as sh
+from modules.argsParse import multiple_true as mt
+from modules.argsParse import regular_action_picker as rap
+from modules.argsParse import special_action_picker as sap
 
 script_path = os.path.dirname(os.path.realpath(__file__))
-
-commands_dict = {
-    "all": giti_all,
-    "make": giti_makefile,
-    "igit": giti_ignore,
-    "del": giti_del,
-    "header": giti_header
-}
-
 
 def main():
     giti_update_necessity()
@@ -25,12 +20,16 @@ def main():
         giti_interactive()
         exit()
     special_flags = s.parse_known_args()[0]
+    if special_flags.help2:
+        sh()
+        exit()
+    mt(special_flags)
     if True in vars(special_flags).values():
-        print("Found special flag")
-        print(special_flags)
+        sap(special_flags)
         exit()
     args = p.parse_args()
     print(args)
+    rap(args)
 
 
 if __name__ == "__main__":
