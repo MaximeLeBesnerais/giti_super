@@ -1,8 +1,26 @@
 import os
-from modules.powered_g import status_letters
+
+letters = ["A", "M", "D", "R", "C", "U", "?", "!"]
+
+git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored"}
+
+def associate(letters):
+    text = ""
+    if letters[0] == letters[1]:
+        if letters[0] in letters:
+            return git_dict[letters[0]]
+        return "Unknown"
+    for i in range(len(letters)):
+        if i != len(letters) - 1:
+                text += " & "
+        if letters[i] in letters:
+            text += git_dict[letters[i]]
+            continue
+        text += "Unknown"
+    return text
 
 
-def parse_selection(selection: str, upper_limit) -> [int]:
+def parse_selection(selection: str, upper_limit):
     if selection == "":
         return []
     selection = selection.split()
@@ -17,8 +35,8 @@ def parse_selection(selection: str, upper_limit) -> [int]:
     return selection
 
 
-def get_files_selection(file_list) -> [str]:
-    selection: [str] = []
+def get_files_selection(file_list):
+    selection = []
     adding = True
     while adding:
         print("Select a file to commit")
@@ -69,7 +87,7 @@ def giti_interactive():
         exit()
     for i in selection:
         os.system(f'git add {i}')
-        commit_line.append(f"\t{i}")
+        commit_line.append(f"\t{i}: {associate(i[:2])}")
     type_commit = input("What type of commit is this?   ")
     if type_commit == "":
         type_commit = "OTHER"
