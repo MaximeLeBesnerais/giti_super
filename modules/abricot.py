@@ -1,4 +1,8 @@
 import json
+import os
+import shutil
+import subprocess
+
 import markdown
 
 
@@ -94,6 +98,7 @@ def generate_file_summary(report_: AbricotReport):
               f"info\n\n"
     return md
 
+
 def markdown_abricot(report_: AbricotReport):
     report_.parse()
     total_errors = report_.major + report_.minor + report_.info
@@ -116,11 +121,36 @@ def markdown_abricot(report_: AbricotReport):
     return markdown.markdown(md)
 
 
+# search for .git folder
+def get_asc():
+    if os.path.isdir(".git"):
+        return os.getcwd()
+    git_f = ""
+    while not os.path.isdir(".git"):
+        git_f = os.path.join("..", git_f)
+        if git_f == "../":
+            print("No git repository found.")
+            exit(1)
+    return git_f
+
+
+def giti_abricot():
+    if not os.path.isfile("/usr/local/bin/abricot"):
+        print("abricot not found. Please install it.")
+        exit(1)
+    git_f = get_asc()
+    output = subprocess.check_output(["abricot", "--ignore", "--format", "json"], cwd=git_f).decode("utf-8")
+    report_ = json.loads(output)
+    report_ = AbricotReport(report_)
+    md_file = markdown_abricot(report_)
+    error_total = report_.major + report_.minor + report_.info
+    if error_total == 0:
+        return
+    with open("report.md", "w") as file_:
+        file_.write(md_file)
+
+
 if __name__ == "__main__":
     print(f"\033[91mFor test purposes only. Do NOT use as main script.\033[0m")
-    with open("report.json", "r") as f:
-        report = json.load(f)
-    report = AbricotReport(report)
-    md_r = markdown_abricot(report)
-    with open("report.md", "w") as f:
-        f.write(md_r)
+    giti_abricot()
+    print(f"\033[92mDone.\033[0m")
