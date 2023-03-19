@@ -2,6 +2,7 @@
 
 import sys
 import os
+from modules.configs import Config, fetch_config
 from modules.update import giti_update_necessity, is_git
 from modules.argsParse import parser as p
 from modules.giti_interactive import giti_interactive
@@ -12,9 +13,14 @@ from modules.argsParse import regular_action_picker as rap
 from modules.argsParse import special_action_picker as sap
 
 script_path = os.path.dirname(os.path.realpath(__file__))
+config = fetch_config()
+
 
 def main():
-    giti_update_necessity()
+    try:
+        giti_update_necessity()
+    except Exception:
+        print("\033[91mError: \033[0mNot fatal failure while checking for updates")
     is_git()
     if len(sys.argv) == 1:
         giti_interactive()
