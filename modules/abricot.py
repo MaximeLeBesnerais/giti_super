@@ -1,154 +1,5 @@
-# [
-#     {
-#         "title": "\u2023 In File tests2.c",
-#         "group": "tests2.c",
-#         "meta": {
-#             "file": "tests2.c"
-#         },
-#         "errors": [
-#             {
-#                 "file": "tests2.c",
-#                 "line": 14,
-#                 "code": "C-A3",
-#                 "message": "Files must end with a line break",
-#                 "severity": "INFO"
-#             },
-#             {
-#                 "file": "tests2.c",
-#                 "line": 10,
-#                 "code": "C-F6",
-#                 "message": "A function taking no parameters must take void as a parameter",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests2.c",
-#                 "line": 12,
-#                 "code": "C-FN",
-#                 "message": "This syscall is usually banned in projects",
-#                 "severity": "MAJOR"
-#             }
-#         ]
-#     },
-#     {
-#         "title": "\u2023 In File tests.c",
-#         "group": "tests.c",
-#         "meta": {
-#             "file": "tests.c"
-#         },
-#         "errors": [
-#             {
-#                 "file": "tests.c",
-#                 "line": 33,
-#                 "code": "C-A3",
-#                 "message": "Files must end with a line break",
-#                 "severity": "INFO"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 32,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 31,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 30,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 29,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 28,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 27,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 26,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 25,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 24,
-#                 "code": "C-F4",
-#                 "message": "The body of a function must not exceed 20 lines",
-#                 "severity": "MAJOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 1,
-#                 "code": "C-G1",
-#                 "message": "Files must always start with the standard header",
-#                 "severity": "MINOR"
-#             },
-#             {
-#                 "file": "tests.c",
-#                 "line": 1,
-#                 "code": "C-G8",
-#                 "message": "No empty lines must be present",
-#                 "severity": "MINOR"
-#             }
-#         ]
-#     },
-#     {
-#         "title": "\u2023 In File tests3.h",
-#         "group": "tests3.h",
-#         "meta": {
-#             "file": "tests3.h"
-#         },
-#         "errors": [
-#             {
-#                 "file": "tests3.h",
-#                 "line": 9,
-#                 "code": "C-G3",
-#                 "message": "The preprocessor directives must be indented",
-#                 "severity": "MINOR"
-#             },
-#             {
-#                 "file": "tests3.h",
-#                 "line": 10,
-#                 "code": "C-G3",
-#                 "message": "The preprocessor directives must be indented",
-#                 "severity": "MINOR"
-#             }
-#         ]
-#     }
-# ]
-# To be parsed by the plugin
-
 import json
+import markdown
 
 
 def get_errors(report_: dict):
@@ -233,15 +84,43 @@ class AbricotReport:
             self.files.append(FileReport(file_))
 
 
+def generate_file_summary(report_: AbricotReport):
+    md = ""
+    for file_ in report_.files:
+        file_.parse()
+        total_errors = file_.major + file_.minor + file_.info
+        # write in bold the file name
+        md += f"- **{file_.name}**: {total_errors} errors: {file_.major} major, {file_.minor} minor, {file_.info} " \
+              f"info\n\n"
+    return md
+
+def markdown_abricot(report_: AbricotReport):
+    report_.parse()
+    total_errors = report_.major + report_.minor + report_.info
+    md = f"# Abricot report\n\n"
+    md += f"## Summary\n\n"
+    md += f"Number of files: {report_.number_of_files}\n\n"
+    md += f"{total_errors} errors:\n\n"
+    md += f"- {report_.major} major\n\n"
+    md += f"- {report_.minor} minor\n\n"
+    md += f"- {report_.info} info\n\n"
+    md += f"## Files summary\n\n"
+    md += generate_file_summary(report_)
+    md += f"## Files\n\n"
+    for file_ in report_.files:
+        md += f"### {file_.name}\n\n"
+        md += f"Number of errors: {file_.major} major, {file_.minor} minor, {file_.info} info\n\n"
+        md += f"#### Errors\n\n"
+        for error_ in file_.errors:
+            md += f"- {error_.severity} - {error_.code} - {error_.message} - {error_.file}:{error_.line}\n\n"
+    return markdown.markdown(md)
+
+
 if __name__ == "__main__":
-    # print in red: \033[91m
     print(f"\033[91mFor test purposes only. Do NOT use as main script.\033[0m")
     with open("report.json", "r") as f:
         report = json.load(f)
     report = AbricotReport(report)
-    report.parse()
-    for file in report.files:
-        print(f"File: {file.name} - {file.number_of_errors} errors: {file.major} major, {file.minor} minor, {file.info} info")
-        file.parse()
-        for error in file.errors:
-            print(f"\t{error.severity} - {error.code} - {error.message} - {error.file}:{error.line}")
+    md_r = markdown_abricot(report)
+    with open("report.md", "w") as f:
+        f.write(md_r)
