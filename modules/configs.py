@@ -20,7 +20,7 @@ def extract_conf(json_data):
 
 class Abricot:
     def __init__(self):
-        self.active = False
+        self.active = True
         self.report = False
         self.Hook = False
         self.Summary = False
