@@ -13,7 +13,6 @@ from modules.argsParse import regular_action_picker as rap
 from modules.argsParse import special_action_picker as sap
 
 script_path = os.path.dirname(os.path.realpath(__file__))
-config = fetch_config()
 
 
 def main():
