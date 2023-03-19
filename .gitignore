@@ -1,6 +1,6 @@
 *.c
 *.h
-report.json
+report.*
 
 *.conf
 shell*
