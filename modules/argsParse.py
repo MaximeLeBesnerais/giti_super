@@ -1,6 +1,9 @@
 import argparse as ap
 import textwrap
-
+from .configs import print_error
+from .commit import make_commit
+from .update import giti_update, giti_version, giti_remove
+from .powered_g import power_action_picker as pap
 
 parser = ap.ArgumentParser(prog="giti", formatter_class=ap.RawTextHelpFormatter,
                            description=textwrap.dedent('''\
@@ -46,28 +49,32 @@ tools.add_argument("-d", "--deleted", action="store_true", help="Commit deleted 
 tools.add_argument("-l", "--header", action="store_true", help="Commit header files")
 tools.add_argument("-m", "--make", action="store_true", help="Commit makefile")
 
+x.add_argument("--help2", action="store_true", help="Show the help of the special flags")
+
 def special_help():
+    special.print_usage()
     print('''\
 GITI: Interactive commit tool
-----------------------------
-Made by: Bandana
-Note: Using without arguments will open the interactive mode
+ ----------------------------
+ Made by: Bandana
+ Note: Using without arguments will open the interactive mode
                             
-    Information:
-    -v, --version: Show the version of giti
-    -u, --update: Update giti
-    -U, --force-update: Force update giti
-    -r, --remove: Remove giti
+Information:
+    -v, --version            Show the version of giti
+    -u, --update             Update giti
+    -U, --force-update       Force update giti
+    -r, --remove             Remove giti
 
-    Tools:
-    -a, --all: Commit all files
-    -i, --igit: Commit .gitignore
-    -d, --deleted: Commit deleted files
-    -l, --header: Commit header files
-    -m, --make: Commit makefile
+Tools:
+    -a, --all              Commit all files
+    -i, --igit             Commit .gitignore
+    -d, --deleted          Commit deleted files
+    -l, --header           Commit header files
+    -m, --make             Commit makefile
+    
+Help:
+    --help2                Show the help of the special flags (overriding the other flags)
         ''')
-
-x.add_argument("--help2", action="store_true", help="Show the help of the special flags")
 
 def multiple_true(*args):
     kwargs = vars(args[0])
@@ -77,4 +84,37 @@ def multiple_true(*args):
             num += 1
     if num > 1:
         print("Error: Multiple special flags")
+        special.print_usage()
         exit(1)
+
+
+def regular_action_picker(args: parser):
+    title = ""
+    comment = ""
+    tag = args.tag
+    if tag == None:
+        print_error("No tag")
+    files = args.files
+    if files == []:
+        print_error("No files")
+    if not args.no_title and not args.no_comment_title:
+        title = input("Title: ")
+    if not args.no_comment and not args.no_comment_title:
+        comment = input("Comment: ")
+    make_commit(tag, title, comment, files)
+
+def special_action_picker(args: ap.ArgumentParser):
+    if args.version:
+        giti_version()
+        exit()
+    if args.update:
+        giti_update()
+        exit()
+    if args.force_update:
+        giti_update(True)
+        exit()
+    if args.remove:
+        giti_remove()
+        exit()
+    pap(args)
+    
