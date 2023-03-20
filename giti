@@ -4,9 +4,10 @@ import sys
 from modules.powered_g import *
 from modules.giti_interactive import giti_interactive
 from modules.update import giti_update, giti_version, giti_update_necessity, is_git, giti_remove
+from modules.argsParse import parser as p
+from modules.argsParse import special as s
 
 script_path = os.path.dirname(os.path.realpath(__file__))
-
 
 commands_dict = {
     "all": giti_all,
@@ -20,50 +21,16 @@ commands_dict = {
 def main():
     giti_update_necessity()
     is_git()
-    if len(sys.argv) < 2:
-        print("GITI: Interactive GITI mode")
+    if len(sys.argv) == 1:
         giti_interactive()
         exit()
-    command = sys.argv[1]
-    args = sys.argv[2:]
-    if command in commands_dict:
-        commands_dict[command](args[0] if len(args) > 0 else "")
+    special_flags = s.parse_known_args()[0]
+    if True in vars(special_flags).values():
+        print("Found special flag")
+        print(special_flags)
         exit()
-    if command == "style":
-        giti_coding_style(args)
-        exit()
-    if command == "--update":
-        args = sys.argv[2:]
-        force = False
-        if "--force" in args or "-f" in args:
-            force = True
-        giti_update(force)
-        exit()
-    if command == "--version":
-        giti_version()
-        exit()
-    if command == "--remove":
-        giti_remove()
-        exit()
-    else:
-        title = ""
-        comment = ""
-        files = []
-        if "-nc" in args:
-            title = input("Title: ")
-            files = args[args.index("-nc") + 1:]
-        elif "-nt" in args:
-            comment = input("Comment: ")
-            files = args[args.index("-nt") + 1:]
-        elif "-ntc" in args:
-            files = args[args.index("-ntc") + 1:]
-        elif "-nct" in args:
-            files = args[args.index("-nct") + 1:]
-        else:
-            files = args
-            title = input("Title: ")
-            comment = input("Comment: ")
-        generic_giti(command, title, comment, files)
+    args = p.parse_args()
+    print(args)
 
 
 if __name__ == "__main__":
