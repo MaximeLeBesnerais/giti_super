@@ -27,7 +27,7 @@ parser.add_argument("files", nargs="*", help="The files to commit")
 
 # Special
 special = ap.ArgumentParser(prog="giti", formatter_class=ap.RawTextHelpFormatter,
-                           description=textwrap.dedent('''\
+                            description=textwrap.dedent('''\
                            GITI: Interactive commit tool
                             ----------------------------
                             Made by: Bandana
@@ -42,7 +42,7 @@ info.add_argument("-U", "--force-update", action="store_true", help="Force updat
 info.add_argument("-r", "--remove", action="store_true", help="Remove giti")
 
 wk = x.add_argument_group("Tools")
-tools = wk.add_mutually_exclusive_group() 
+tools = wk.add_mutually_exclusive_group()
 tools.add_argument("-a", "--all", action="store_true", help="Commit all files")
 tools.add_argument("-i", "--igit", action="store_true", help="Commit .gitignore")
 tools.add_argument("-d", "--deleted", action="store_true", help="Commit deleted files")
@@ -50,6 +50,7 @@ tools.add_argument("-l", "--header", action="store_true", help="Commit header fi
 tools.add_argument("-m", "--make", action="store_true", help="Commit makefile")
 
 x.add_argument("--help2", action="store_true", help="Show the help of the special flags")
+
 
 def special_help():
     special.print_usage()
@@ -76,11 +77,12 @@ Help:
     --help2                Show the help of the special flags (overriding the other flags)
         ''')
 
+
 def multiple_true(*args):
     kwargs = vars(args[0])
     num = 0
     for i in kwargs:
-        if kwargs[i] == True:
+        if kwargs[i]:
             num += 1
     if num > 1:
         print("Error: Multiple special flags")
@@ -92,16 +94,17 @@ def regular_action_picker(args: parser):
     title = ""
     comment = ""
     tag = args.tag
-    if tag == None:
+    if tag is None:
         print_error("No tag")
     files = args.files
-    if files == []:
+    if not files:
         print_error("No files")
     if not args.no_title and not args.no_comment_title:
         title = input("Title: ")
     if not args.no_comment and not args.no_comment_title:
         comment = input("Comment: ")
     make_commit(tag, title, comment, files)
+
 
 def special_action_picker(args: ap.ArgumentParser):
     if args.version:
@@ -117,4 +120,3 @@ def special_action_picker(args: ap.ArgumentParser):
         giti_remove()
         exit()
     pap(args)
-    
