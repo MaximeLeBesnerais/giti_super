@@ -6,7 +6,8 @@ import urllib.request
 # https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json
 
 CHANGELOG = "jsons/versions_changelog.json"
-ADDRESS = f"https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json"
+ADDRESS = "https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json"
+NEW_ADRESS = "https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/jsons/versions_changelog.json"
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 # file is in parent directory, in jsons folder
@@ -89,7 +90,10 @@ def proceed():
 def giti_update(force=False):
     current_version = giti_get_version(json.loads(open(f"{script_path}/{CHANGELOG}").read()))
     print(f"Current version: {current_version.version()}")
-    json_file = os.popen(f'curl -s {ADDRESS}').read()
+    try:
+        json_file = os.popen(f'curl -s {ADDRESS}').read()
+    except Exception:
+        json_file = os.popen(f'curl -s {NEW_ADRESS}').read()
     json_file = json.loads(json_file)
     latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
     if force:
