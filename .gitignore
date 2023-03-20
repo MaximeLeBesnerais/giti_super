@@ -1,3 +1,7 @@
+*.c
+*.h
+report.json
+
 *.conf
 shell*
 wallpaper*
