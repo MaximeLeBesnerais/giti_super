@@ -43,7 +43,10 @@ class Commit:
         tag = f"[{self.tag.upper()}]"
         title = f"{self.title}"
         comment = f"{self.comment}"
-        files : list = self.files
+        files = [file_line(file) for file in self.status.split() if file != ""]
+        files_msg = f"Files:" + "\n\t\t".join(files)
+        commit_msg = f"{tag} {title}\n{files_msg}\n\n{comment}"
+        return commit_msg
     
     def commit(self):
         if self.valid:
