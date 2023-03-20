@@ -1,24 +1,5 @@
 import os
-
-letters = ["A", "M", "D", "R", "C", "U", "?", "!"]
-
-git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored"}
-
-def associate(letters):
-    text = ""
-    if letters[0] == letters[1]:
-        if letters[0] in letters:
-            return git_dict[letters[0]]
-        return "Unknown"
-    for i in range(len(letters)):
-        if i != len(letters) - 1:
-                text += " & "
-        if letters[i] in letters:
-            text += git_dict[letters[i]]
-            continue
-        text += "Unknown"
-    return text
-
+from .commit import associate
 
 def parse_selection(selection: str, upper_limit):
     if selection == "":
