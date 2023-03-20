@@ -28,7 +28,7 @@ special = ap.ArgumentParser(prog="giti", formatter_class=ap.RawTextHelpFormatter
                            GITI: Interactive commit tool
                             ----------------------------
                             Made by: Bandana
-                            Note: Using without arguments will open the interactive mode'''), add_help=False)
+                            Note: Using without arguments will open the interactive mode'''), add_help=False, )
 
 x = special.add_mutually_exclusive_group()
 info = x.add_argument_group("Informations")
@@ -44,7 +44,5 @@ tools.add_argument("-d", "--deleted", action="store_true", help="Commit deleted 
 tools.add_argument("-l", "--header", action="store_true", help="Commit header files")
 tools.add_argument("-m", "--make", action="store_true", help="Commit makefile")
 
-
-
-
-
+hlp = x.add_argument_group("Help")
+hlp.add_argument("--flags-help", action="store_true", help="Show the help of flags")
