@@ -52,19 +52,18 @@ def giti_header():
     do_commit("HEADER", title, comment, headers)
 
 
-def giti_ignore(potential_title):
-    git_log = os.popen('git status -s').readlines()
+def giti_ignore():
+    git_log = os.popen('git status --porcelain').readlines()
     git_log = [line[3:-1] for line in git_log]
     gitignore = []
     for line in git_log:
-        if line.endswith(".gitignore"):
+        if '.gitignore' in line:
             gitignore.append(line)
     if len(gitignore) == 0:
         print("There are no .gitignore files to commit")
         exit()
-    title = f".gitignore file was committed"
-    comment = "Committed .gitignore file"
-    do_commit("IGNORE", title, comment, gitignore)
+    title = f"Modified .gitignore file"
+    do_commit("IGNORE", title, "", gitignore)
 
 
 def giti_del():
