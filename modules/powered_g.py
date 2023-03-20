@@ -1,5 +1,5 @@
 import os
-from commit import make_commit
+from .commit import make_commit
 
 def do_commit(tag, title, comment, files, f = "git status --porcelain"):
     if make_commit(tag, title, comment, files, f):
