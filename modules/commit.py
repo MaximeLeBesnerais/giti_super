@@ -45,7 +45,7 @@ class Commit:
         if self.title != "":
             title = f"{self.title}"
         else:
-            title = f"{tag} {len(self.files)} {'file' if len(self.files) <= 1 else 'files'} changed"
+            title = f"{len(self.files)} {'file' if len(self.files) <= 1 else 'files'} changed"
         array = self.status.splitlines()
         array = array_accept(array, self.files)
         files = [file_line(line.strip()) for line in array]
