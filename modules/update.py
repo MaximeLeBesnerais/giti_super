@@ -90,9 +90,9 @@ def proceed():
 def giti_update(force=False):
     current_version = giti_get_version(json.loads(open(f"{script_path}/{CHANGELOG}").read()))
     print(f"Current version: {current_version.version()}")
-    try:
-        json_file = os.popen(f'curl -s {ADDRESS}').read()
-    except Exception:
+    json_file = ""
+    json_file = os.popen(f'curl -s {ADDRESS}').read()
+    if json_file == "404: Not Found":
         json_file = os.popen(f'curl -s {NEW_ADRESS}').read()
     json_file = json.loads(json_file)
     latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
