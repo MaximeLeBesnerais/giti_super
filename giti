@@ -2,7 +2,6 @@
 
 import sys
 import os
-from modules.configs import Config, fetch_config
 from modules.update import giti_update_necessity, is_git
 from modules.argsParse import parser as p
 from modules.giti_interactive import giti_interactive
