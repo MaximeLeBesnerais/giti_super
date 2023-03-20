@@ -5,13 +5,13 @@
         "Hook": "False",
         "Summary": "False"
     },
-    "Unit Test":{
+    "Unit":{
         "Active": "False",
         "Report": "False",
         "Hook": "False",
         "Summary": "False"
     },
-    "Clang Format": {
+    "Clang": {
         "Active": "False"
     }
 }
