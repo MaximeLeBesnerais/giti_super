@@ -4,6 +4,9 @@ import json
 script_path = os.path.dirname(os.path.realpath(__file__))
 script_path = "/".join(script_path.split("/")[:-1])
 
+def print_error(msg):
+    print(f"\033[91mError: \033[0m{msg}")
+    exit(1)
 
 def extract_conf(json_data):
     active = json_data["Active"]
