@@ -113,11 +113,11 @@ def giti_update(force=False):
 
 def giti_remove():
     if os.path.exists(f"{script_path}/remove.sh"):
-        os.system(f"rm {script_path}/remove.sh")
+        os.system(f"{script_path}/remove.sh")
         exit()
     print("The update script is missing at script location. Will now look in default location")
     if os.path.exists(f"{os.path.expanduser('~')}/.giti/remove.sh"):
-        os.system(f"rm {os.path.expanduser('~')}/.giti/remove.sh")
+        os.system(f"{os.path.expanduser('~')}/.giti/remove.sh")
         exit()
     print("The remove script is missing at default location. Please remove the folder ~/.giti manually")
 
