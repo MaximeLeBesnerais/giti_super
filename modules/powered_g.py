@@ -1,14 +1,16 @@
 import os
-from .commit import make_commit
+from .commit import make_commit, abricoting_exiting
 from .configs import print_error
 from argparse import ArgumentParser as ap
+
 
 def do_commit(tag, title, comment, files, f = "git status --porcelain"):
     if make_commit(tag, title, comment, files, f):
         print("Commit status: \033[92mSuccess\033[0m")
-        exit(0)
+        return
     print("Commit status: \033[91mFailed\033[0m")
     exit(1)
+
 
 def giti_all():
     git_log = os.popen('git status -s').readlines()
@@ -19,6 +21,7 @@ def giti_all():
     comment = "Committed all files"
     files = [line[3:-1] for line in git_log]
     do_commit("ALL", title, comment, files)
+
 
 def giti_makefile():
     git_log = os.popen('git status -s').readlines()
@@ -34,7 +37,6 @@ def giti_makefile():
     comment = "Committed Makefiles"
     do_commit("MAKE", title, comment, makefiles)
     
-
 
 def giti_header():
     git_log = os.popen('git status -s').readlines()
@@ -88,15 +90,21 @@ def generic_giti(tag_key, files:list, title = "", comment = ""):
     comment = "Committed files" if comment == "" else comment
     do_commit(tag_key, title, comment, files)
 
+
 def power_action_picker(args: ap):
     if args.all:
         giti_all()
+        abricoting_exiting()
     if args.make:
         giti_makefile()
+        abricoting_exiting()
     if args.header:
         giti_header()
+        abricoting_exiting()
     if args.igit:
         giti_ignore()
+        abricoting_exiting()
     if args.deleted:
         giti_del()
+        abricoting_exiting()
     print_error("No valid action was found")

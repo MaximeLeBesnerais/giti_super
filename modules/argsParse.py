@@ -1,9 +1,10 @@
 import argparse as ap
 import textwrap
 from .configs import print_error
-from .commit import make_commit
+from .commit import make_commit, abricoting_exiting
 from .update import giti_update, giti_version, giti_remove
 from .powered_g import power_action_picker as pap
+
 
 parser = ap.ArgumentParser(prog="giti", formatter_class=ap.RawTextHelpFormatter,
                            description=textwrap.dedent('''\
@@ -109,14 +110,14 @@ def regular_action_picker(args: parser):
 def special_action_picker(args: ap.ArgumentParser):
     if args.version:
         giti_version()
-        exit()
+        abricoting_exiting()
     if args.update:
         giti_update()
-        exit()
+        abricoting_exiting()
     if args.force_update:
         giti_update(True)
-        exit()
+        abricoting_exiting()
     if args.remove:
         giti_remove()
-        exit()
+        abricoting_exiting()
     pap(args)

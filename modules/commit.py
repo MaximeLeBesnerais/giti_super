@@ -1,8 +1,13 @@
+from .configs import fetch_config
 import subprocess
+from .abricot import giti_abricot
 
 letters = ["A", "M", "D", "R", "C", "U", "?", "!"]
 
 git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored"}
+
+config = fetch_config()
+
 
 def associate(letters):
     text = ""
@@ -19,9 +24,11 @@ def associate(letters):
         text += "Unknown"
     return text
 
+
 def file_line(log_line):
     tab = log_line.split(" ")
     return f"{tab[1]}: {associate(tab[0])}"
+
 
 def array_accept(array, values):
     new_array = []
@@ -29,6 +36,7 @@ def array_accept(array, values):
         if any (value in array[i] for value in values):
             new_array.append(array[i])
     return new_array
+
 
 class Commit:
     def __init__(self, tag, title, comment, files,
@@ -67,9 +75,16 @@ class Commit:
         print(f"Could not proceed with this commit")
         print(f"Reason: A file is not in the git status")
         return False
-    
+
+
 def make_commit(tag, title, comment, files, status = "git status --porcelain"):
     commit = Commit(tag, title, comment, files, status)
     commit.valid = True
     commit.commit()
     return True
+
+
+def abricoting_exiting():
+    if config.Abricot.active:
+        giti_abricot()
+        exit()
