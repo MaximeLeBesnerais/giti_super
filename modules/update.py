@@ -5,7 +5,11 @@ import urllib.request
 
 # https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json
 
+CHANGELOG = "versions_changelog.json"
+ADDRESS = f"https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/{CHANGELOG}"
+
 script_path = os.path.dirname(os.path.realpath(__file__))
+script_path = "/".join(script_path.split("/")[:-1])
 
 
 def connect(host="https://google.com"):
@@ -82,10 +86,9 @@ def proceed():
 
 
 def giti_update(force=False):
-    current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
+    current_version = giti_get_version(json.loads(open(f"{script_path}/{CHANGELOG}").read()))
     print(f"Current version: {current_version.version()}")
-    json_file = os.popen(
-        'curl -s https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json').read()
+    json_file = os.popen(f'curl -s {ADDRESS}').read()
     json_file = json.loads(json_file)
     latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
     if force:
@@ -115,7 +118,7 @@ def giti_remove():
 
 
 def giti_version():
-    current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
+    current_version = giti_get_version(json.loads(open(f"{script_path}/{CHANGELOG}").read()))
     print(f"Current version: {current_version.version()}")
     days_since_update = time_diff(current_version.date, get_today())
     txt = ""
@@ -133,25 +136,24 @@ def giti_version():
 
 
 def giti_update_necessity():
-    current_version = giti_get_version(json.loads(open(f"{script_path}/versions_changelog.json").read()))
+    current_version = giti_get_version(json.loads(open(f"{script_path}/{CHANGELOG}").read()))
     last_update = current_version.last_update
     if last_update != "None":
         days_since_update = time_diff(last_update, get_today())
         if days_since_update < 3 or not connect():
             return
 
-    json_file = os.popen(
-        'curl -s https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json').read()
+    json_file = os.popen(f'curl -s {ADDRESS}').read()
     json_file = json.loads(json_file)
     latest_version = GitiVersion(json_file["version"], json_file["changelog"], json_file["date"])
     if current_version.is_newer(latest_version) or current_version.equals(latest_version):
         json_file["LUC"] = get_today()
-        with open(f"{script_path}/versions_changelog.json", "w") as f:
+        with open(f"{script_path}/{CHANGELOG}", "w") as f:
             f.write(json.dumps(json_file))
         return
     print(f"A new version of GITI is available ({latest_version.version()})")
     json_file["LUC"] = get_today()
-    with open(f"{script_path}/versions_changelog.json", "w") as f:
+    with open(f"{script_path}/{CHANGELOG}", "w") as f:
         f.write(json.dumps(json_file))
 
 
