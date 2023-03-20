@@ -2,6 +2,14 @@
 
 set +e
 
+beta=false
+if [ "$1" = "--beta" ]; then
+    beta=true
+fi
+
+beta_clone_cmd="git clone --quiet --branch opti git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti"
+
+
 echo "Installing giti..."
 echo -e "\033[0;32m"
 echo "░██████╗░██╗████████╗██╗"
@@ -37,7 +45,13 @@ if [ -d ~/.giti ]; then
     exit
 fi
 
-git clone --quiet git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
+if [ "$beta" = true ]; then
+    echo "Installing beta version..."
+    eval "$beta_clone_cmd"
+else
+    echo "Installing stable version..."
+    git clone --quiet git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
+fi
 echo "Cloned the repo..."
 
 if [ ! -d ~/.giti ]; then
