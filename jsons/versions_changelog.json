@@ -1,1 +1,1 @@
-{"version": "2.0.0.0", "date": "20/03/2023", "changelog": "\t[UPDATE] Abricot integration", "LUC": "20/03/2023"}
+{"version": "2.0.0.1", "date": "20/03/2023", "changelog": "\t[UPDATE] Abricot integration\n\tFix: Update command can fail. Trying to fix that.", "LUC": "20/03/2023"}
