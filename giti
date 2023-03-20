@@ -15,10 +15,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 
 
 def main():
-    try:
-        giti_update_necessity()
-    except Exception:
-        print("\033[91mError: \033[0mNot fatal failure while checking for updates")
+    giti_update_necessity()
     is_git()
     if len(sys.argv) == 1:
         giti_interactive()

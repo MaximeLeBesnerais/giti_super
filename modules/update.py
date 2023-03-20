@@ -6,7 +6,7 @@ import urllib.request
 # https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json
 
 CHANGELOG = "jsons/versions_changelog.json"
-ADDRESS = f"https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/{CHANGELOG}"
+ADDRESS = f"https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/versions_changelog.json"
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 # file is in parent directory, in jsons folder
