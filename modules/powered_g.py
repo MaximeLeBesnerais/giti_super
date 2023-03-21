@@ -69,14 +69,27 @@ def giti_ignore():
 
 
 def giti_del():
-    git_log = os.popen('git ls-files --deleted').readlines()
-    git_log = [line[3:-1] for line in git_log]
-    if len(git_log) == 0:
-        print("There are no deleted files to commit")
+    git_log = os.popen("git status --porcelain").readlines()
+    git_log = [line[:-1] for line in git_log]
+    files = []
+    for line in git_log:
+        if line.startswith("D") or line.startswith(" D"):
+            files.append(line[3:])
+    if len(files) == 0:
+        print("No deleted files were found")
         exit()
-    title = f"{len(git_log)} {'file' if len(git_log) <= 1 else 'files'} were deleted"
+    files_text = "\t\n".join(files)
+    title = f"{len(files)} {'file' if len(files) <= 1 else 'files'} were deleted"
     comment = "Committed files deletion"
-    do_commit("DEL", title, comment, git_log, "git ls-files --deleted")
+    # commit directly without using the do_commit function because it doesn't work with the git status --porcelain command
+    final_commit_msg = f"[DEL] {title}\n\t{files_text}\n\n{comment}"
+    try:
+        os.popen(f"git add {' '.join(files)}").readlines()
+        os.popen(f'git commit -m "{final_commit_msg}"').readlines()
+    except:
+        print("Commit status: \033[91mFailed\033[0m")
+        exit(1)
+    print("Commit status: \033[92mSuccess\033[0m")
 
 
 def generic_giti(tag_key, files:list, title = "", comment = ""):

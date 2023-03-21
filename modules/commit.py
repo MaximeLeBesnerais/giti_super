@@ -27,7 +27,13 @@ def associate(letters):
 
 def file_line(log_line):
     tab = log_line.split(" ")
-    return f"{tab[1]}: {associate(tab[0])}"
+    try:
+        text = f"{tab[1]}: {associate(tab[0])}"
+    except IndexError:
+        print(f"Error: {log_line}")
+        print(f"Error: {tab}")
+        exit(84)
+    return text
 
 
 def array_accept(array, values):
