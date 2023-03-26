@@ -22,7 +22,7 @@ def get_files_selection(file_list):
     while adding:
         print("Select a file to commit")
         for i, file in enumerate(file_list):
-            print(f"\t{i + 1}. {file}")
+            print(f"\t{i + 1}. {file[3:]}")
         print("\t0. Done (or press enter)")
         try:
             selection_input = input("Selection: ")
@@ -61,14 +61,13 @@ def giti_interactive():
         print("There are too many changes to commit with interactive mode")
         print("Please use the all mode instead, or individually commit files")
         exit()
-    file_list = [line[3:] for line in git_log]
-    selection = get_files_selection(file_list)
+    selection = get_files_selection(git_log)
     if len(selection) == 0:
         print("There are no files to commit")
         exit()
     for i in selection:
-        os.system(f'git add {i}')
-        commit_line.append(f"\t{i}: {associate(i[:2])}")
+        os.system(f'git add {i[3:]}')
+        commit_line.append(f"\t{i}: {associate(i[:2].strip())}")
     type_commit = input("What type of commit is this?   ")
     if type_commit == "":
         type_commit = "OTHER"
