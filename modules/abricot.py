@@ -139,7 +139,9 @@ def giti_abricot():
         print("abricot not found. Please install it.")
         exit(1)
     git_f = get_asc()
-    output = subprocess.check_output(["abricot", "--ignore", "--format", "json"], cwd=git_f).decode("utf-8")
+    # output = subprocess.check_output(["abricot", "--ignore", "--format", "json"], cwd=git_f).decode("utf-8")
+    output = subprocess.check_output(
+        ["abricot", "--ignore", "--nofunc", "--format", "json", "./src", "./include"], cwd=git_f).decode("utf-8")
     report_ = json.loads(output)
     report_ = AbricotReport(report_)
     md_file = markdown_abricot(report_)
