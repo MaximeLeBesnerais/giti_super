@@ -2,9 +2,9 @@ from .configs import fetch_config
 import subprocess
 from .abricot import giti_abricot
 
-letters = ["A", "M", "D", "R", "C", "U", "?", "!"]
+letters = ["A", "M", "D", "R", "C", "U", "?", "!", "T"]
 
-git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored"}
+git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored", "T": "Type change"}
 
 config = fetch_config()
 
