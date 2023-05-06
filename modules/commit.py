@@ -90,7 +90,7 @@ def make_commit(tag, title, comment, files, status = "git status --porcelain"):
     return True
 
 
-def abricoting_exiting():
-    if config.Abricot.active:
+def abricoting_exiting(abricot = True):
+    if config.Abricot.active and abricot:
         giti_abricot()
-        exit()
+    exit()

@@ -60,7 +60,7 @@ GITI: Interactive commit tool
  ----------------------------
  Made by: Bandana
  Note: Using without arguments will open the interactive mode
-                            
+
 Information:
     -v, --version            Show the version of giti
     -u, --update             Update giti
@@ -73,7 +73,7 @@ Tools:
     -d, --deleted          Commit deleted files
     -l, --header           Commit header files
     -m, --make             Commit makefile
-    
+
 Help:
     --help2                Show the help of the special flags (overriding the other flags)
         ''')
@@ -110,14 +110,14 @@ def regular_action_picker(args: parser):
 def special_action_picker(args: ap.ArgumentParser):
     if args.version:
         giti_version()
-        abricoting_exiting()
+        abricoting_exiting(False)
     if args.update:
         giti_update()
-        abricoting_exiting()
+        abricoting_exiting(False)
     if args.force_update:
         giti_update(True)
-        abricoting_exiting()
+        abricoting_exiting(False)
     if args.remove:
         giti_remove()
-        abricoting_exiting()
+        abricoting_exiting(False)
     pap(args)
