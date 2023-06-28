@@ -100,6 +100,7 @@ def generate_file_summary(report_: AbricotReport):
 
 
 def markdown_abricot(report_: AbricotReport):
+    return
     report_.parse()
     total_errors = report_.major + report_.minor + report_.info
     md = f"# Abricot report\n\n"
@@ -135,6 +136,7 @@ def get_asc():
 
 
 def giti_abricot():
+    return
     if not os.path.isfile("/usr/local/bin/abricot"):
         print("abricot not found. Please install it.")
         exit(1)

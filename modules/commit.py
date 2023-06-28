@@ -4,7 +4,8 @@ from .abricot import giti_abricot
 
 letters = ["A", "M", "D", "R", "C", "U", "?", "!", "T"]
 
-git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated", "?": "Untracked", "!": "Ignored", "T": "Type change"}
+git_dict = {"A": "Added", "M": "Modified", "D": "Deleted", "R": "Renamed", "C": "Copied", "U": "Updated",
+            "?": "Untracked", "!": "Ignored", "T": "Type change"}
 
 config = fetch_config()
 
@@ -17,7 +18,7 @@ def associate(letters):
         return "Unknown"
     for i in range(len(letters)):
         if i != len(letters) - 1:
-                text += " & "
+            text += " & "
         if letters[i] in letters:
             text += git_dict[letters[i]]
             continue
@@ -39,21 +40,21 @@ def file_line(log_line):
 def array_accept(array, values):
     new_array = []
     for i in range(len(array)):
-        if any (value in array[i] for value in values):
+        if any(value in array[i] for value in values):
             new_array.append(array[i])
     return new_array
 
 
 class Commit:
     def __init__(self, tag, title, comment, files,
-                 status = "git status --porcelain"):
+                 status="git status --porcelain"):
         self.tag: str = tag
         self.title: str = title
         self.comment: str = comment
         self.files: list = files
-        self.valid : bool = False
+        self.valid: bool = False
         self.status = subprocess.run(status.split(), stdout=subprocess.PIPE).stdout.decode("utf-8")
-    
+
     def __str__(self):
         tag = f"[{self.tag.upper()}]"
         if self.title != "":
@@ -70,7 +71,7 @@ class Commit:
             comment = "\tComment:\n\t\tCommit made without comment"
         commit_msg = f"{tag} {title}\n{files_msg}\n\n{comment}"
         return commit_msg
-    
+
     def commit(self):
         if self.valid:
             array = ["git", "add"]
@@ -83,14 +84,12 @@ class Commit:
         return False
 
 
-def make_commit(tag, title, comment, files, status = "git status --porcelain"):
+def make_commit(tag, title, comment, files, status="git status --porcelain"):
     commit = Commit(tag, title, comment, files, status)
     commit.valid = True
     commit.commit()
     return True
 
 
-def abricoting_exiting(abricot = True):
-    if config.Abricot.active and abricot:
-        giti_abricot()
+def abricoting_exiting(abricot=False):
     exit()
