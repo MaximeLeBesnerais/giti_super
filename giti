@@ -2,6 +2,26 @@
 
 import sys
 import os
+import subprocess
+
+VENV_PATH = os.path.expanduser("~/.giti_venv")
+
+def activate_virtualenv():
+    """
+    Activates the virtual environment if it's not already activated.
+    """
+    if os.getenv("VIRTUAL_ENV") is None:
+        activate_script = os.path.join(VENV_PATH, "bin", "activate_this.py")
+        if os.path.exists(activate_script):
+            print("Activating virtual environment...")
+            with open(activate_script) as f:
+                exec(f.read(), dict(__file__=activate_script))
+        else:
+            print(f"Virtual environment not found at {VENV_PATH}. Exiting.")
+            sys.exit(1)
+
+activate_virtualenv()
+
 from modules.update import giti_update_necessity, is_git
 from modules.argsParse import parser as p
 from modules.giti_interactive import giti_interactive
@@ -12,7 +32,6 @@ from modules.argsParse import regular_action_picker as rap
 from modules.argsParse import special_action_picker as sap
 
 script_path = os.path.dirname(os.path.realpath(__file__))
-
 
 def main():
     giti_update_necessity()
@@ -29,7 +48,6 @@ def main():
         sap(special_flags)
     args = p.parse_args()
     rap(args)
-
 
 if __name__ == "__main__":
     main()
