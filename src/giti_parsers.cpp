@@ -18,6 +18,7 @@ cxxopts::Options createUtilityParser(void) {
         ("b,build", "Makefiles, CMakeLists.txt or other build files")
         ("i,ignore", ".gitignore, .dockerignore or other ignore files")
         ("d,del", "Add deleted files to the selection");
+    options.allow_unrecognised_options();
     return options;
 }
 
@@ -31,7 +32,8 @@ cxxopts::Options createToolParser(void) {
         ("v,version", "Print current version of giti")
         ("u,update", "Update giti to the latest version")
         ("f,force", "Reinstall giti to the latest version")
-        ("r, remove", "Get rid of giti and all its files");
+        ("r,remove", "Get rid of giti and all its files");
+    options.allow_unrecognised_options();
     return options;
 }
 
@@ -43,8 +45,7 @@ cxxopts::Options createCommandLineParser(void) {
     cxxopts::Options options("Giti", "A git utility for better commits");
     options.add_options()
         ("t,title", "Commit title", cxxopts::value<std::string>())
-        ("m,message", "Commit message", cxxopts::value<std::string>())
-        ("help", "Print help");
+        ("m,message", "Commit message", cxxopts::value<std::string>());
 
     options.add_options()
         ("type", "Type of the commit", cxxopts::value<std::string>())
