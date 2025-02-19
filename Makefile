@@ -19,14 +19,14 @@ build:
 clean:
 	rm -rf build
 
-# Run target
-.PHONY: run
-run:
+.PHONY: get
+get: build
 	@if [ ! -f "build/build/giti" ]; then \
 		echo "giti not found"; \
 		exit 1; \
 	fi
-	./build/build/giti
+	@cp build/build/giti ./giti
+	@echo "giti binary copied to current directory"
 
 # Help target
 .PHONY: help
