@@ -3,7 +3,6 @@ CMakeFiles/
 _deps/
 CMakeCache.txt
 *.cmake
-Makefile
 ./giti
 
 
