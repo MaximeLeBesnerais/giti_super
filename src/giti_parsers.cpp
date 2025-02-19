@@ -1,3 +1,4 @@
+
 #include <cxxopts.hpp>
 
 /**
@@ -45,6 +46,6 @@ cxxopts::Options createCommandLineParser(void) {
 
     options.parse_positional({"type", "files"});
     options.positional_help("<type> [files...]");
-    
+
     return options;
 }
