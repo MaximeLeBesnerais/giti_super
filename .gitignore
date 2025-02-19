@@ -4,7 +4,7 @@ _deps/
 CMakeCache.txt
 *.cmake
 ./giti
-Buildfiles
+build
 
 
 *.c
