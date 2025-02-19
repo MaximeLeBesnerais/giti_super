@@ -1,6 +1,7 @@
 # CMake
 CMakeFiles/
 _deps/
+CMakeCache.txt
 
 
 *.c
