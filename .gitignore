@@ -2,6 +2,8 @@
 CMakeFiles/
 _deps/
 CMakeCache.txt
+*.cmake
+Makefile
 
 
 *.c
