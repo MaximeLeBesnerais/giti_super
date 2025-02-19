@@ -1,51 +1,76 @@
-# Giti Powercharged
+# ⚡ Giti Powercharged
 
-Python script to write commit message following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
-This is a tool and not perfect, so please use it with caution.
+A Python script for generating commit messages following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. While helpful, this tool isn't perfect—use with caution!
 
-## Installation
+---
+
+## 🚀 Installation
+
+Install Giti Powercharged with a single command:
 
 ```bash
 curl https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/install.sh | sh
 ```
-## Usage
 
-Default usage:
+---
+
+## 📌 Usage
+
+### Basic Syntax
 ```bash
 giti [skip options] <type> [files]
 ```
-to skip a field, use `-`:
-- `-nt` to skip the title
-- `-nc` to skip the commit message
-- `-nct` to skip the title and the commit message (or `-ntc`)
+- **`<type>`**: Required. The type of commit.
+- **`[files]`**: Required. The files to commit.
+- **Skip Options**: Use `-` to skip specific fields.
 
-You can't skip the type, nor the files.
+### Skipping Fields
+You can skip fields using these options:
+- `-nt` → Skip the title
+- `-nc` → Skip the commit message
+- `-nct` or `-ntc` → Skip both title and commit message
 
-There is also an interactive mode. It will prompt you for each field.
+❗ **You cannot skip the type or files.**
 
-- `giti -h` to show help
+### Interactive Mode
+If no skip options are provided, the tool will prompt you for each field.
 
-## Special Commands
+#### Help Command
+- `giti -h` → Display help menu
 
-**Utility commands:**
-- `giti -a` to add all files
-- `giti -m` to add all makefiles
-- `giti -i` to add .gitiignore files
-- `giti -d` to add deleted files
-- `giti -l` to add header files
+---
 
-**Tool commands:**
-- `giti -v` show version
-- `giti -u` update giti
-- `giti -U` Force update giti
-- `giti -r` remove giti
+## 🛠 Special Commands
 
-- `giti --help2` show this help
+### Utility Commands
+| Command       | Description               |
+|--------------|---------------------------|
+| `giti -a`   | Add all files              |
+| `giti -m`   | Add all makefiles          |
+| `giti -i`   | Add `.gitiignore` files    |
+| `giti -d`   | Add deleted files          |
+| `giti -l`   | Add header files           |
 
-### Examples
+### Tool Commands
+| Command       | Description               |
+|--------------|---------------------------|
+| `giti -v`   | Show version               |
+| `giti -u`   | Update Giti                |
+| `giti -U`   | Force update Giti          |
+| `giti -r`   | Remove Giti                |
+| `giti --help2` | Show extended help      |
+
+---
+
+## 📖 Examples
 
 ```bash
-giti -nct feat README.md (no title & no commit message)
-giti fix readme.md (title & commit message)
-giti -nc bug readme.md (no commit message)
+giti -nct feat README.md   # No title & no commit message
+giti fix readme.md         # Includes title & commit message
+giti -nc bug readme.md     # No commit message
 ```
+
+---
+
+Enhance your Git workflow with **Giti Powercharged**! 🚀
+
