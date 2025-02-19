@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# find CMakelists.txt
+CMAKE_FILE=$(find . -name "CMakeLists.txt")
+
+if [ -z "$CMAKE_FILE" ]; then
+    echo "CMakeLists.txt not found"
+    exit 1
+fi
+
+if [ ! -d "Buildfiles" ]; then
+    mkdir Buildfiles
+fi
+
+cd Buildfiles
+cmake ..
+make
+cd ..
+cp Buildfiles/build/giti .
