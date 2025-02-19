@@ -17,6 +17,10 @@ build:
 # Clean target
 .PHONY: clean
 clean:
+	rm giti
+
+.PHONY: fclean
+fclean: clean
 	rm -rf build
 
 .PHONY: get
@@ -33,6 +37,8 @@ get: build
 help:
 	@echo "Available targets:"
 	@echo "  build  - Build the project (default)"
-	@echo "  clean  - Remove build directory"
+	@echo "  get    - Copy the giti binary to the current directory"
+	@echo "  fclean - Remove build directory and giti binary"
+	@echo "  clean  - Remove giti binary"
 	@echo "  run    - Run the giti executable"
 	@echo "  help   - Show this help message"
