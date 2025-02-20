@@ -6,6 +6,8 @@ CMakeCache.txt
 ./giti
 build
 
+giti
+
 
 *.c
 *.h
