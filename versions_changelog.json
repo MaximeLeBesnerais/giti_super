@@ -1,1 +1,28 @@
-{"version": "3.0.0.0a", "date": "20/02/2025", "changelog": "\t[WIP] Start work for CPP\n", "LUC": "06/01/2023"}
+{
+    "version": {
+      "VersionName": "Giti CPP Overload",
+      "Changelog": "Entire rewrite of Giti in Cpp, addition of new features, and bug fixes.",
+      "major": "3",
+      "minor": "0",
+      "patch": "0"
+    },
+    "author": "Maxime Le Besnerais",
+    "LastUpdate": {
+      "day": "21",
+      "month": "02",
+      "year": "2025"
+    },
+    "file_setup": {
+      "build_file_ext": ["Makefile", "CMakeLists.txt", "*.mk"],
+      "ignore_file_ext": [".gitignore", ".dockerignore"],
+      "other_file_ext": [".h", ".hpp", ".c", ".cpp"]
+    },
+    "commit_settings": {
+      "require_scope": false,
+      "allowed_types": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+      "allow_custom_types": true,
+      "require_issue_reference": false,
+      "issue_prefix": "#"
+    }
+  }
+  
