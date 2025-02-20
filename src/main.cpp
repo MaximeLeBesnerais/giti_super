@@ -9,6 +9,7 @@ created: 20/02/2025 03:19:18
 #include <iostream>
 #include <giti_parser.hpp>
 #include <giti_parser_result.hpp>
+#include <GitRepoClass.hpp>
 
 bool utilityManager(cxxopts::ParseResult result) {
     if (result.count("all")) {
@@ -82,6 +83,27 @@ bool commandLineManager(cxxopts::ParseResult result) {
 }
 
 int main(int argc, char *argv[]) {
+    GitRepository repo;
+    try {
+        if (!repo.open()) {
+            std::cerr << "Error: Could not open repository" << std::endl;
+            return 1;
+        }
+    } catch(const std::exception& e) {
+        std::cerr << e.what() << '\n';
+        return 1;
+    }
+    std::string path = repo.getPath();
+    std::cout << "Repository path: " << path << std::endl;
+    std::vector<fs_porcelain> r = repo.getStatus();
+
+    for (auto &file : r) {
+        std::cout << file.filepath << " : " 
+        << statusToString(file.status) << std::endl;
+    }
+
+    std::cout << "---------------------" << std::endl;
+
     cxxopts::Options parser_used = createUtilityParser();
     cxxopts::ParseResult result = parser_used.parse(argc, argv);
     
