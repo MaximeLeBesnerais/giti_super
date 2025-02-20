@@ -17,7 +17,8 @@ cxxopts::Options createUtilityParser(void) {
         ("a,all", "Select all files")
         ("b,build", "Makefiles, CMakeLists.txt or other build files")
         ("i,ignore", ".gitignore, .dockerignore or other ignore files")
-        ("d,del", "Add deleted files to the selection");
+        ("d,del", "Add deleted files to the selection")
+        ("o,other", "Add other files to the selection (to configure)");
     options.allow_unrecognised_options();
     return options;
 }
