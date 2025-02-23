@@ -17,13 +17,6 @@ int main(int argc, char* argv[]) {
         giti::config::Config config;
         config.loadConfig(getConfigPath());
 
-        // Initialize git repository
-        giti::git::Repository repo;
-        if (!repo.open()) {
-            std::cerr << "Error: Could not open repository" << std::endl;
-            return 1;
-        }
-
         // Parse commands
         giti::cli::Parser parser;
 
@@ -33,7 +26,14 @@ int main(int argc, char* argv[]) {
             // Handle tool commands...
             return 0;
         }
-        
+
+        // Initialize git repository
+        giti::git::Repository repo;
+        if (!repo.open()) {
+            std::cerr << "Error: Could not open repository" << std::endl;
+            return 1;
+        }
+
         // Handle utility flags
         auto utilityFlags = parser.parseUtility(argc, argv);
         if (utilityFlags.all || utilityFlags.build || utilityFlags.ignore || 
