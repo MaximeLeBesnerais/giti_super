@@ -57,3 +57,63 @@ cxxopts::Options createCommandLineParser(void) {
 
     return options;
 }
+
+_utilityParser utilityManager(cxxopts::ParseResult result) {
+    _utilityParser utility;
+    utility._all = result.count("all") > 0;
+    utility._build = result.count("build") > 0;
+    utility._ignore = result.count("ignore") > 0;
+    utility._del = result.count("del") > 0;
+    utility._other = result.count("other") > 0;
+    return utility;
+}
+
+_toolParser toolManager(cxxopts::ParseResult result) {
+    _toolParser tool;
+    tool._version = result.count("version") > 0;
+    tool._update = result.count("update") > 0;
+    tool._force = result.count("force") > 0;
+    tool._remove = result.count("remove") > 0;
+    return tool;
+}
+
+bool parserAnyTrue(cxxopts::ParseResult result, _toolParser &tool) {
+    tool._version = result.count("version") > 0;
+    tool._update = result.count("update") > 0;
+    tool._force = result.count("force") > 0;
+    tool._remove = result.count("remove") > 0;
+    return tool._version || tool._update || tool._force || tool._remove;
+}
+
+bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser &utility) {
+    utility._all = result.count("all") > 0;
+    utility._build = result.count("build") > 0;
+    utility._ignore = result.count("ignore") > 0;
+    utility._del = result.count("del") > 0;
+    utility._other = result.count("other") > 0;
+    return utility._all || utility._build || utility._ignore || utility._del || utility._other;
+}
+
+void printFound(_toolParser tool) {
+    if (tool._version)
+        std::cout << "Version" << std::endl;
+    if (tool._update)
+        std::cout << "Update" << std::endl;
+    if (tool._force)
+        std::cout << "Force" << std::endl;
+    if (tool._remove)
+        std::cout << "Remove" << std::endl;
+}
+
+void printFound(_utilityParser utility) {
+    if (utility._all)
+        std::cout << "All" << std::endl;
+    if (utility._build)
+        std::cout << "Build" << std::endl;
+    if (utility._ignore)
+        std::cout << "Ignore" << std::endl;
+    if (utility._del)
+        std::cout << "Del" << std::endl;
+    if (utility._other)
+        std::cout << "Other" << std::endl;
+}
