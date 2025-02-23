@@ -77,7 +77,7 @@ _toolParser toolManager(cxxopts::ParseResult result) {
     return tool;
 }
 
-bool parserAnyTrue(cxxopts::ParseResult result, _toolParser &tool) {
+bool parserAnyTrue(cxxopts::ParseResult result, _toolParser tool) {
     tool._version = result.count("version") > 0;
     tool._update = result.count("update") > 0;
     tool._force = result.count("force") > 0;
@@ -85,7 +85,7 @@ bool parserAnyTrue(cxxopts::ParseResult result, _toolParser &tool) {
     return tool._version || tool._update || tool._force || tool._remove;
 }
 
-bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser &utility) {
+bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser utility) {
     utility._all = result.count("all") > 0;
     utility._build = result.count("build") > 0;
     utility._ignore = result.count("ignore") > 0;
