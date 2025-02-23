@@ -10,6 +10,7 @@ created: 20/02/2025 03:19:18
 #include "giti_parser.hpp"
 #include "giti_parser_result.hpp"
 #include "GitRepoClass.hpp"
+#include "ConfigReader.hpp"
 
 bool commandLineManager(cxxopts::ParseResult result) {
     cmd command;
@@ -49,6 +50,9 @@ int main(int argc, char *argv[]) {
         std::cerr << e.what() << '\n';
         return 1;
     }
+    ConfigParser config;
+    config.loadConfig(getConfigPath());
+    config.printConfig();
 /*     std::string path = repo.getPath();
     std::cout << "Repository path: " << path << std::endl;
     std::vector<fs_porcelain> r = repo.getStatus();
