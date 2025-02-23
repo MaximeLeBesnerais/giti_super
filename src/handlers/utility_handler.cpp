@@ -68,34 +68,40 @@ namespace giti
                 return result;
             }
 
-            bool commitFiles(const std::vector<commit::FileEntry> &files)
-            {
-                if (files.empty())
-                {
+            bool commitFiles(const std::vector<commit::FileEntry>& files, const cli::UtilityFlags& flags) {
+                if (files.empty()) {
                     std::cout << "No files to commit" << std::endl;
                     return false;
                 }
-
+            
                 std::vector<std::string> filePaths;
-                for (const auto &file : files)
-                {
+                for (const auto& file : files) {
                     filePaths.push_back(file.path);
                 }
-
+            
+                // Determine tag and title based on flag
+                std::string tag;
+                if (flags.all) tag = "ALL";
+                else if (flags.build) tag = "BUILD";
+                else if (flags.ignore) tag = "IGNORE";
+                else if (flags.deleted) tag = "DEL";
+                else if (flags.other) tag = "OTHER";
+            
                 std::string message = commit::MessageFormatter::formatCommitMessage(
-                    "ALL", // Auto tag for utility commits
+                    tag,
                     "",    // Empty title for auto-generated message
                     files,
-                    "Committed all matching files");
-
+                    "Committed all matching files"
+                );
+            
                 git::Repository::CommitOptions options{
                     .title = message,
                     .message = "",
-                    .files = filePaths};
-
+                    .files = filePaths
+                };
+            
                 return repo.commit(options);
             }
-
         private:
             bool isMatchingExtension(const std::string &filepath,
                                      const std::vector<std::string> &extensions)
@@ -131,10 +137,9 @@ namespace giti
         UtilityHandler::UtilityHandler(UtilityHandler &&) noexcept = default;
         UtilityHandler &UtilityHandler::operator=(UtilityHandler &&) noexcept = default;
 
-        bool UtilityHandler::handle(const cli::UtilityFlags &flags)
-        {
+        bool UtilityHandler::handle(const cli::UtilityFlags& flags) {
             auto files = pImpl->getMatchingFiles(flags);
-            return pImpl->commitFiles(files);
+            return pImpl->commitFiles(files, flags);
         }
 
     } // namespace handlers
