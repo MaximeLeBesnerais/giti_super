@@ -27,6 +27,8 @@ set(GITI_SOURCES
     src/git/repository.cpp
     src/cli/parser.cpp
     src/handlers/tool_handler.cpp
+    src/handlers/commit_handler.cpp
+    src/handlers/utility_handler.cpp
 )
 
 # Define the library headers
@@ -37,6 +39,8 @@ set(GITI_HEADERS
     include/giti/cli/types.hpp
     include/giti/cli/parser.hpp
     include/giti/handlers/tool_handler.hpp
+    include/giti/handlers/commit_handler.hpp
+    include/giti/handlers/utility_handler.hpp
 )
 
 # Add the library target
