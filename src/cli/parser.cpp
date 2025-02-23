@@ -72,13 +72,8 @@ std::optional<CommitCommand> Parser::parseCommit(int argc, char* argv[]) {
         cmd.message = result.count("message") > 0 ? 
             result["message"].as<std::string>() : "No message";
 
-        if (result.count("type") == 0 || result.count("files") == 0) {
-            if (result.count("type") == 0)
-                std::cerr << "Error: Type is missing" << std::endl;
-            if (result.count("files") == 0)
-                std::cerr << "Error: Files are missing" << std::endl;
+        if (result.count("type") == 0 || result.count("files") == 0)
             return std::nullopt;
-        }
 
         cmd.type = result["type"].as<std::string>();
         cmd.files = result["files"].as<std::vector<std::string>>();
