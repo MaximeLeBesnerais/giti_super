@@ -39,24 +39,6 @@ bool commandLineManager(cxxopts::ParseResult result) {
     return true;
 }
 
-
-/*     
-This snippet allows to test the GitRepository class
-it will print the status of the repository, the path of the repository, and the status of the files
-
-std::string path = repo.getPath();
-std::cout << "Repository path: " << path << std::endl;
-std::vector<fs_porcelain> r = repo.getStatus();
-
-for (auto &file : r) {
-    std::cout << file.filepath << " : " 
-    << statusToString(file.status) << std::endl;
-}
-
-std::cout << "---------------------" << std::endl; 
-
-*/
-
 int main(int argc, char *argv[]) {
     GitRepository repo;
     try {
