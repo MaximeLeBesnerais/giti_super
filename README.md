@@ -1,76 +1,122 @@
-# ⚡ Giti Powercharged
+# 🚀 Giti C++ Overload (3.0.0)
 
-A Python script for generating commit messages following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. While helpful, this tool isn't perfect—use with caution!
+Giti has evolved! Now rewritten in blazing-fast C++, this commit message powerhouse helps you create perfect [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) with minimal effort. Experience Git workflow automation like never before!
 
----
+## ⚡ Features
 
-## 🚀 Installation
+- **Lightning Fast**: Completely rewritten in C++ for maximum performance
+- **Smart File Detection**: Automatically categorizes your changes
+- **Conventional Commits**: Built-in support for standard commit types
+- **Flexible Configuration**: Easy to customize via JSON config
+- **Native Git Integration**: Direct libgit2 integration for reliable operations
 
-Install Giti Powercharged with a single command:
+## 🔧 Prerequisites
 
+Before installing Giti, ensure you have:
+- C++ compiler with C++17 support
+- CMake (3.15 or higher)
+- Make
+- libgit2 development files
+- Git
+
+### Installing Prerequisites
+
+#### Ubuntu/Debian
 ```bash
-curl https://raw.githubusercontent.com/MaximeLeBesnerais/giti_super/main/install.sh | sh
+sudo apt update
+sudo apt install build-essential cmake libgit2-dev git
 ```
 
----
-
-## 📌 Usage
-
-### Basic Syntax
+#### Fedora
 ```bash
-giti [skip options] <type> [files]
+sudo dnf install gcc-c++ cmake libgit2-devel git
 ```
-- **`<type>`**: Required. The type of commit.
-- **`[files]`**: Required. The files to commit.
-- **Skip Options**: Use `-` to skip specific fields.
 
-### Skipping Fields
-You can skip fields using these options:
-- `-nt` → Skip the title
-- `-nc` → Skip the commit message
-- `-nct` or `-ntc` → Skip both title and commit message
+#### macOS
+```bash
+brew install cmake libgit2 git
+```
 
-❗ **You cannot skip the type or files.**
+## 📦 Installation
 
-### Interactive Mode
-If no skip options are provided, the tool will prompt you for each field.
+### One-Command Install (Recommended)
+```bash
+curl -sSL https://raw.githubusercontent.com/MaximeLeBesnerais/giti/main/install.sh | sudo bash
+```
 
-#### Help Command
-- `giti -h` → Display help menu
+### Manual Installation
+```bash
+git clone https://github.com/MaximeLeBesnerais/giti.git
+cd giti
+make install
+```
 
----
+## 🎯 Usage
 
-## 🛠 Special Commands
+### Basic Command Syntax
+```bash
+giti <type> [files...]
+```
 
-### Utility Commands
-| Command       | Description               |
-|--------------|---------------------------|
-| `giti -a`   | Add all files              |
-| `giti -m`   | Add all makefiles          |
-| `giti -i`   | Add `.gitiignore` files    |
-| `giti -d`   | Add deleted files          |
-| `giti -l`   | Add header files           |
+### Options
+- `-t, --title <title>`: Set commit title
+- `-m, --message <message>`: Set commit message
+- `--type <type>`: Specify commit type
+
+### Quick Commands
+| Command     | Description                         |
+|-------------|-------------------------------------|
+| `giti -a`   | Select all modified files           |
+| `giti -b`   | Select build-related files          |
+| `giti -i`   | Select .gitignore files             |
+| `giti -d`   | Select deleted files                |
+| `giti -o`   | Select other tracked files          |
 
 ### Tool Commands
-| Command       | Description               |
-|--------------|---------------------------|
-| `giti -v`   | Show version               |
-| `giti -u`   | Update Giti                |
-| `giti -U`   | Force update Giti          |
-| `giti -r`   | Remove Giti                |
-| `giti --help2` | Show extended help      |
+| Command       | Description                     |
+|---------------|---------------------------------|
+| `giti -v`     | Display version information     |
+| `giti -u`     | Check for updates               |
+| `giti -f`     | Force reinstall                 |
+| `giti -r`     | Remove Giti                     |
 
----
-
-## 📖 Examples
+## 📝 Examples
 
 ```bash
-giti -nct feat README.md   # No title & no commit message
-giti fix readme.md         # Includes title & commit message
-giti -nc bug readme.md     # No commit message
+# Commit all modified files
+giti -a
+
+# Feature commit with specific files
+giti feat src/main.cpp include/giti/config.hpp
+
+# Bug fix with title and message
+giti fix -t "Fix memory leak" -m "Resolved issue in config parser" src/config.cpp
+
+# Build-related changes
+giti -b
 ```
+
+## ⚙️ Configuration
+
+Giti uses a JSON configuration file located at `~/.giti/config.json`. You can customize:
+- Allowed commit types
+- File extensions for different categories
+- Commit message templates
+- And more!
+
+## 🛠️ Building from Source
+
+```bash
+git clone https://github.com/MaximeLeBesnerais/giti.git
+cd giti
+make
+make install  # Requires sudo
+```
+
+## 📜 License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Enhance your Git workflow with **Giti Powercharged**! 🚀
-
+⭐ Star us on GitHub if Giti makes your Git workflow easier!
