@@ -14,7 +14,6 @@ private:
 public:
     explicit ConfigManager(ConfigParser &config);
     bool initialize();
-    static std::string getConfigPath();
 };
 
 #endif // CONFIGMANAGER_HPP
