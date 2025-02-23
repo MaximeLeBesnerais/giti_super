@@ -49,14 +49,15 @@ if [ $MISSING_DEPS -eq 1 ]; then
     fi
 fi
 
-# Create temporary directory
-TEMP_DIR=$(mktemp -d)
-cd $TEMP_DIR
+# Create local git configuration
+echo "🔧 Setting up Git configuration..."
+mkdir -p ~/.giti
+cd ~/.giti
 
 # Clone repository
 echo "📥 Cloning Giti repository..."
-git clone git@github.com:MaximeLeBesnerais/giti_super.git
-cd giti_super
+git clone git@github.com:MaximeLeBesnerais/giti_super.git repo
+cd repo
 
 # Build and install
 echo "🔨 Building Giti..."
@@ -68,9 +69,5 @@ else
     echo "Please check the error messages above"
     exit 1
 fi
-
-# Cleanup
-cd /
-rm -rf $TEMP_DIR
 
 echo "🎉 All done! Enjoy using Giti!"
