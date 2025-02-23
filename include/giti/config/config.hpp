@@ -12,6 +12,13 @@
     #include <string>
     #include <vector>
     #include <memory>
+    #define DEFAULT_CONFIG_PATH "~/.giti/config.json"
+    #define ENV_CONFIG_PATH "GITI_CONFIG"
+
+    static std::string getConfigPath() {
+        const char* env_path = std::getenv(ENV_CONFIG_PATH);
+        return env_path ? std::string(env_path) : std::string(DEFAULT_CONFIG_PATH);
+    }
 
     namespace giti {
     namespace config {
