@@ -9,6 +9,9 @@
 #include "giti/cli/parser.hpp"
 #include "giti/git/repository.hpp"
 #include "giti/config/config.hpp"
+#include "giti/handlers/tool_handler.hpp"
+#include "giti/handlers/utility_handler.hpp"
+#include "giti/handlers/commit_handler.hpp"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -19,12 +22,12 @@ int main(int argc, char* argv[]) {
 
         // Parse commands
         giti::cli::Parser parser;
-
-        // Handle tool flags
+        
+        // Handle tool flags first (these don't need repo access)
         auto toolFlags = parser.parseTool(argc, argv);
         if (toolFlags.version || toolFlags.update || toolFlags.force || toolFlags.remove) {
-            // Handle tool commands...
-            return 0;
+            giti::handlers::ToolHandler handler(config);
+            return handler.handle(toolFlags) ? 0 : 1;
         }
 
         // Initialize git repository
@@ -38,22 +41,14 @@ int main(int argc, char* argv[]) {
         auto utilityFlags = parser.parseUtility(argc, argv);
         if (utilityFlags.all || utilityFlags.build || utilityFlags.ignore || 
             utilityFlags.deleted || utilityFlags.other) {
-            // Handle utility commands...
-            return 0;
+            giti::handlers::UtilityHandler handler(repo, config);
+            return handler.handle(utilityFlags) ? 0 : 1;
         }
 
         // Handle commit command
         if (auto commitCmd = parser.parseCommit(argc, argv)) {
-            giti::git::Repository::CommitOptions options{
-                .title = commitCmd->title,
-                .message = commitCmd->message,
-                .files = commitCmd->files
-            };
-            if (repo.commit(options)) {
-                std::cout << "Successfully committed changes" << std::endl;
-                return 0;
-            }
-            return 1;
+            giti::handlers::CommitHandler handler(repo, config);
+            return handler.handle(*commitCmd) ? 0 : 1;
         }
 
         // If no valid command was found
