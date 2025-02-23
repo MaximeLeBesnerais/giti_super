@@ -78,7 +78,6 @@ namespace giti
         // Public methods
         bool Config::loadConfig(const std::string &filepath)
         {
-            std::cout << "Loading config file: " << filepath << std::endl;
             try
             {
                 std::ifstream config_file(filepath);
