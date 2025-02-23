@@ -47,9 +47,11 @@ public:
                 "if [ -d \"giti\" ]; then\n"
                 "    cd giti && git pull\n"
                 "else\n"
-                "    git clone https://github.com/MaximeLeBesnerais/giti.git\n"
+                "    git clone https://github.com/MaximeLeBesnerais/giti_super.git giti\n"
                 "    cd giti\n"
                 "fi && \n"
+                "# Replace the old config.json with the new one\n"
+                "sudo cp config.json $HOME/.giti/config.json && \n"
                 "make && \n"
                 "# Create a temporary copy of the new binary\n"
                 "sudo cp build/giti /usr/bin/giti.new && \n"
@@ -62,7 +64,6 @@ public:
                 "(while kill -0 $GITI_PID 2>/dev/null; do sleep 0.1; done; \n"
                 " sudo mv /usr/bin/giti.new /usr/bin/giti; \n"
                 " rm -rf " + tempDir.string() + ") & \n"
-                "# Exit the script, which will let the background process complete the update\n"
                 "exit 0\n";
     
             // Write update script to temporary file

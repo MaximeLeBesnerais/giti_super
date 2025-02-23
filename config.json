@@ -1,10 +1,10 @@
 {
     "version": {
       "VersionName": "Giti CPP Overload",
-      "Changelog": "Add update function",
+      "Changelog": "Add update function - also bumb config version",
       "major": "3",
       "minor": "0",
-      "patch": "1"
+      "patch": "2"
     },
     "author": "Maxime Le Besnerais",
     "LastUpdate": {
