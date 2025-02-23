@@ -120,3 +120,29 @@ bool ConfigParser::createDefaultConfig(const std::string& filepath) {
         return false;
     }
 }
+
+void ConfigParser::printConfig() const {
+    std::cout << "Version: " << config.version.VersionName << std::endl;
+    std::cout << "Changelog: " << config.version.Changelog << std::endl;
+    std::cout << "Major: " << config.version.major << std::endl;
+    std::cout << "Minor: " << config.version.minor << std::endl;
+    std::cout << "Patch: " << config.version.patch << std::endl;
+    std::cout << "Author: " << config.author << std::endl;
+    std::cout << "Last update: " << config.LastUpdate.day << "/" << config.LastUpdate.month << "/" << config.LastUpdate.year << std::endl;
+    std::cout << "Build file extensions: " << std::endl;
+    for (auto &ext : config._file_setup.build_file_ext)
+        std::cout << "\t" << ext << std::endl;
+    std::cout << "Ignore file extensions: " << std::endl;
+    for (auto &ext : config._file_setup.ignore_file_ext)
+        std::cout << "\t" << ext << std::endl;
+    std::cout << "Other file extensions: " << std::endl;
+    for (auto &ext : config._file_setup.other_file_ext)
+        std::cout << "\t" << ext << std::endl;
+    std::cout << "Require scope: " << config._commit_settings.require_scope << std::endl;
+    std::cout << "Allowed types: " << std::endl;
+    for (auto &type : config._commit_settings.allowed_types)
+        std::cout << "\t" << type << std::endl;
+    std::cout << "Allow custom types: " << config._commit_settings.allow_custom_types << std::endl;
+    std::cout << "Require issue reference: " << config._commit_settings.require_issue_reference << std::endl;
+    std::cout << "Issue prefix: " << config._commit_settings.issue_prefix << std::endl;
+}
