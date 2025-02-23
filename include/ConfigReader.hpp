@@ -1,10 +1,6 @@
-/*
-Name: ConfigReader.hpp                     
-by: Maxime                                 
-mail: maxime.le-besnerais@epitech.eu            
-description:                               
-created: 21/02/2025 00:40:19              
-*/
+/*  ConfigReader.hpp by: Maxime Le Besnerais                              
+  mail: maxoulebesnerais@gmail.com                              
+  created: 23/02/2025 22:19:04                   */
 
 #ifndef CONFIG_READER_HPP_
     #define CONFIG_READER_HPP_
@@ -20,17 +16,14 @@ created: 21/02/2025 00:40:19
 
     #include <vector>
     #include <string>
-    #include "json.hpp"
-    
+    #include <json.hpp>
+
     typedef struct Date_s {
         std::string day;
         std::string month;
         std::string year;
     } Date;
     
-    /**
-     * @brief Struct to store the version of the program
-     */
     typedef struct Version_struct{
         std::string VersionName;
         std::string Changelog;
@@ -39,28 +32,12 @@ created: 21/02/2025 00:40:19
         std::string patch;
     } Version;
 
-    /**
-     * @brief Control what files are selected by giti when using shortcuts
-     * 
-     * @default build_file_ext: ["Makefile", "CMakeLists.txt", "*.mk"]
-     * @default ignore_file_ext: [".gitignore", ".dockerignore"]
-     * @default other_file_ext: [".h", ".hpp", ".c", ".cpp"]
-     */
     typedef struct file_setup_struct {
         std::vector<std::string> build_file_ext;
         std::vector<std::string> ignore_file_ext;
         std::vector<std::string> other_file_ext;
     } file_setup;
 
-    /**
-     * @brief Control what is required in a commit, how it should be formatted
-     * 
-     * @param require_scope: false - to be implemented
-     * @param allowed_types: [] (empty vector) - enforce a list of types
-     * @param allow_custom_types: true if allowed_types is empty, false otherwise
-     * @param require_issue_reference: false - to be implemented
-     * @param issue_prefix: "#", "JIRA-" - to be implemented
-     */
     typedef struct commit_settings_struct {
         bool require_scope;
         std::vector<std::string> allowed_types;
@@ -76,5 +53,24 @@ created: 21/02/2025 00:40:19
         file_setup file_setup;
         commit_settings commit_settings;
     } Config;
+
+    class ConfigParser {
+    private:
+        nlohmann::json config_json;
+        Config config;
+
+        void parseVersion(const nlohmann::json& j);
+        void parseDate(const nlohmann::json& j);
+        void parseFileSetup(const nlohmann::json& j);
+        void parseCommitSettings(const nlohmann::json& j);
+
+    public:
+        ConfigParser() = default;
+        ~ConfigParser() = default;
+
+        bool loadConfig(const std::string& filepath);
+        Config getConfig() const;
+        static bool createDefaultConfig(const std::string& filepath);
+    };
 
 #endif // CONFIG_READER_HPP_
