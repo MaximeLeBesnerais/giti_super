@@ -22,7 +22,7 @@
       "allowed_types": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
       "allow_custom_types": true,
       "require_issue_reference": false,
-      "issue_prefix": "#"
+      "issue_prefix": ""
     }
   }
   
