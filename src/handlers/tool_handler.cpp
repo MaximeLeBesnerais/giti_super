@@ -19,7 +19,7 @@ public:
 
     bool handleVersion() const {
         auto version = config.getVersion();
-        std::cout << "Giti Version " << version.name << " ("
+        std::cout << "Giti Version:\n" << version.name << " ("
                   << version.major << "."
                   << version.minor << "."
                   << version.patch << ")" << std::endl;
@@ -43,7 +43,7 @@ public:
         std::cout << "Remove functionality not yet implemented." << std::endl;
         std::cout << "To remove manually:" << std::endl;
         std::cout << "1. Remove the executable" << std::endl;
-        std::cout << "2. Remove configuration files from ~/.giti/" << std::endl;
+        std::cout << "2. Remove configuration files from ~/.giti/ or your custom path" << std::endl;
         return true;
     }
 
