@@ -6,6 +6,7 @@
 #ifndef GITMANAGER_HPP
 #define GITMANAGER_HPP
 #include "GitRepoClass.hpp"
+#include <iostream>
 
 class GitManager
 {
