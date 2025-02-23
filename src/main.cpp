@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         std::cerr << e.what() << '\n';
         return 1;
     }
-    std::string path = repo.getPath();
+/*     std::string path = repo.getPath();
     std::cout << "Repository path: " << path << std::endl;
     std::vector<fs_porcelain> r = repo.getStatus();
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
         << statusToString(file.status) << std::endl;
     }
 
-    std::cout << "---------------------" << std::endl;
+    std::cout << "---------------------" << std::endl; */
 
     cxxopts::Options parser_used = createUtilityParser();
     cxxopts::ParseResult result = parser_used.parse(argc, argv);
