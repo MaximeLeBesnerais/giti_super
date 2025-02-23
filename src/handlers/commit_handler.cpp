@@ -61,8 +61,10 @@ namespace giti
             bool commitFiles(const cli::CommitCommand &cmd,
                              const std::vector<commit::FileEntry> &fileEntries)
             {
+                std::string tag = cmd.type;
+                std::transform(tag.begin(), tag.end(), tag.begin(), ::toupper);
                 std::string message = commit::MessageFormatter::formatCommitMessage(
-                    cmd.type,
+                    tag,
                     cmd.title, // Can be empty
                     fileEntries,
                     cmd.message // Can be empty
