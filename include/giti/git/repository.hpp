@@ -42,6 +42,7 @@ public:
     std::vector<FileStatusEntry> getStatus() const;
     std::vector<FileStatusEntry> getModifiedFiles() const;
     std::vector<FileStatusEntry> getUntrackedFiles() const;
+    std::vector<FileStatusEntry> getDeletedFiles() const;
 
     // Commit operations
     struct CommitOptions {

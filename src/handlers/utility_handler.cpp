@@ -57,6 +57,10 @@ namespace giti
                         {
                             shouldInclude = true;
                         }
+                        if (flags.deleted && status.status == git::FileStatus::DeletedStaged)
+                        {
+                            shouldInclude = true;
+                        }
                     }
 
                     if (shouldInclude)

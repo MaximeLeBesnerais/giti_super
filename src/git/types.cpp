@@ -18,6 +18,7 @@ std::string statusToString(FileStatus status) {
         case FileStatus::ModifiedBoth: return "Modified and staged with new changes";
         case FileStatus::Added: return "Added";
         case FileStatus::Deleted: return "Deleted";
+        case FileStatus::DeletedStaged: return "Deleted and staged";
         case FileStatus::Renamed: return "Renamed";
         case FileStatus::Copied: return "Copied";
         case FileStatus::Unmerged: return "Updated but unmerged";

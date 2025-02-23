@@ -21,6 +21,7 @@ enum class FileStatus {
     ModifiedBoth,
     Added,
     Deleted,
+    DeletedStaged,
     Renamed,
     Copied,
     Unmerged,
