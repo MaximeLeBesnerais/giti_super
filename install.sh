@@ -1,91 +1,75 @@
 #!/bin/bash
 
-set +e
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
 
-beta=false
-if [ "$1" = "--beta" ]; then
-    beta=true
+# Print banner
+echo "🚀 Installing Giti C++ Overload (3.0.0)"
+echo "======================================="
+
+# Check for required commands
+MISSING_DEPS=0
+for cmd in git cmake make pkg-config; do
+    if ! command_exists $cmd; then
+        echo "❌ Required command '$cmd' not found"
+        MISSING_DEPS=1
+    fi
+done
+
+# Check for libgit2
+if ! pkg-config --exists libgit2; then
+    echo "❌ libgit2 development files not found"
+    MISSING_DEPS=1
 fi
 
-beta_clone_cmd="git clone --quiet --branch opti git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti"
-
-echo "Installing giti..."
-echo -e "\033[0;32m"
-echo "░██████╗░██╗████████╗██╗"
-echo "██╔════╝░██║╚══██╔══╝██║"
-echo "██║░░██╗░██║░░░██║░░░██║"
-echo "██║░░╚██╗██║░░░██║░░░██║"
-echo "╚██████╔╝██║░░░██║░░░██║"
-echo "░╚═════╝░╚═╝░░░╚═╝░░░╚═╝"
-echo -e "\033[0m"
-
-if [ "$EUID" -eq 0 ]; then
-  echo "Please do not run this script as root"
-  exit
+# If dependencies are missing, try to install them
+if [ $MISSING_DEPS -eq 1 ]; then
+    echo "📦 Attempting to install missing dependencies..."
+    
+    if command_exists apt-get; then
+        sudo apt-get update
+        sudo apt-get install -y git cmake make pkg-config libgit2-dev build-essential
+    elif command_exists dnf; then
+        sudo dnf install -y git cmake make pkgconfig libgit2-devel gcc-c++
+    elif command_exists brew; then
+        brew install git cmake make pkg-config libgit2
+    else
+        echo "❌ Could not automatically install dependencies"
+        echo "Please install the required dependencies manually:"
+        echo "- git"
+        echo "- cmake"
+        echo "- make"
+        echo "- pkg-config"
+        echo "- libgit2 development files"
+        echo "- C++ compiler with C++20 support"
+        exit 1
+    fi
 fi
 
-if [ -f /usr/bin/giti ]; then
-    sudo rm /usr/bin/giti
-    echo "Removed old version of giti shortcut..."
-fi
+# Create temporary directory
+TEMP_DIR=$(mktemp -d)
+cd $TEMP_DIR
 
-if [ -f /usr/bin/giti ]; then
-    echo "Failed to remove old version of giti"
-    exit
-fi
+# Clone repository
+echo "📥 Cloning Giti repository..."
+git clone https://github.com/MaximeLeBesnerais/giti.git
+cd giti
 
-if [ -d ~/.giti ]; then
-    rm -rf ~/.giti
-    echo "Removed old version of giti folder..."
-fi
-
-if [ -d ~/.giti ]; then
-    echo "Failed to remove old version of giti"
-    exit
-fi
-
-if [ "$beta" = true ]; then
-    echo "Installing beta version..."
-    eval "$beta_clone_cmd"
+# Build and install
+echo "🔨 Building Giti..."
+if make install; then
+    echo "✅ Giti installed successfully!"
+    echo "Run 'giti -h' to get started"
 else
-    echo "Installing stable version..."
-    git clone --quiet git@github.com:MaximeLeBesnerais/giti_super.git ~/.giti
-fi
-echo "Cloned the repo..."
-
-if [ ! -d ~/.giti ]; then
-    echo "Failed to clone the repo"
-    exit
+    echo "❌ Installation failed"
+    echo "Please check the error messages above"
+    exit 1
 fi
 
-sudo ln -s ~/.giti/giti /usr/bin/giti
-echo "Created symlink..."
+# Cleanup
+cd /
+rm -rf $TEMP_DIR
 
-if [ ! -f /usr/bin/giti ]; then
-    echo "Failed to create symlink"
-    exit
-fi
-
-echo "Setting up virtual environment..."
-
-if [ ! -d ~/.giti_venv ]; then
-    python3 -m venv ~/.giti_venv
-    echo "Virtual environment created at ~/.giti_venv"
-else
-    echo "Virtual environment already exists at ~/.giti_venv"
-fi
-
-echo "Activating virtual environment and installing dependencies..."
-source ~/.giti_venv/bin/activate
-
-pip install --upgrade pip
-pip install -r ~/.giti/requirements.txt
-
-deactivate
-
-# Rename install.sh to update.sh
-if [ -f ~/.giti/install.sh ]; then
-    mv ~/.giti/install.sh ~/.giti/update.sh
-fi
-
-echo "Installation completed successfully."
+echo "🎉 All done! Enjoy using Giti!"

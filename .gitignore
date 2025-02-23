@@ -1,3 +1,16 @@
+# CMake
+CMakeFiles/
+_deps/
+CMakeCache.txt
+*.cmake
+./giti
+build
+
+giti
+
+!giti/
+
+
 *.c
 *.h
 report.*
