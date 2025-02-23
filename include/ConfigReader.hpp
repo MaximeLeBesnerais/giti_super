@@ -77,6 +77,7 @@
         bool loadConfig(const std::string& filepath);
         Config getConfig() const;
         static bool createDefaultConfig(const std::string& filepath);
+        void printConfig() const;
     };
 
 #endif // CONFIG_READER_HPP_
