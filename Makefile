@@ -30,7 +30,7 @@ install: build
 	@sudo cp build/giti /usr/bin/giti
 	@mkdir -p ~/.giti
 	@if [ ! -f ~/.giti/config.json ]; then \
-		cp build/config.json ~/.giti/config.json; \
+		cp ./config.json ~/.giti/config.json; \
 		echo "Created default config at ~/.giti/config.json"; \
 	else \
 		echo "Config file already exists at ~/.giti/config.json"; \
