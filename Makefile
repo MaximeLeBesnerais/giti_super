@@ -7,6 +7,11 @@ all: build
 # Build target
 .PHONY: build
 build:
+	@if ! pkg-config --exists libgit2; then \
+		echo "libgit2 not found"; \
+		echo "Please install libgit2"; \
+		exit 1; \
+	fi
 	@if [ ! -f "CMakeLists.txt" ]; then \
 		echo "CMakeLists.txt not found"; \
 		exit 1; \
