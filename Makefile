@@ -35,8 +35,36 @@ install: build
 	else \
 		echo "Config file already exists at ~/.giti/config.json"; \
 	fi
+	@echo "Adding 'GITI_CONFIG' environment variable to your shell profile"
+	@if [ -f ~/.bashrc ]; then \
+		grep -qx "export GITI_CONFIG=~/.giti/config.json" ~/.bashrc || echo "export GITI_CONFIG=~/.giti/config.json" >> ~/.bashrc; \
+	fi
+	@if [ -f ~/.zshrc ]; then \
+		grep -qx "export GITI_CONFIG=~/.giti/config.json" ~/.zshrc || echo "export GITI_CONFIG=~/.giti/config.json" >> ~/.zshrc; \
+	fi
+	@if [ -f ~/.profile ]; then \
+		grep -qx "export GITI_CONFIG=~/.giti/config.json" ~/.profile || echo "export GITI_CONFIG=~/.giti/config.json" >> ~/.profile; \
+	fi
+	@if [ -f ~/.bash_profile ]; then \
+		grep -qx "export GITI_CONFIG=~/.giti/config.json" ~/.bash_profile || echo "export GITI_CONFIG=~/.giti/config.json" >> ~/.bash_profile; \
+	fi
+	@echo "Attempted to add 'GITI_CONFIG' environment variable to your shell profile"
 	@echo "Giti installed successfully!"
 	@echo "Run 'giti' for usage information"
+
+# Update target
+.PHONY: update
+update:
+	@echo "Updating Giti..."
+	var=$$(git pull); \
+	if [ "$$var" = "Already up to date." ]; then \
+		echo "Giti is already up to date!"; \
+	else \
+		@echo "Giti is being updated..."; \
+		@make build; \
+		sudo cp build/giti /usr/bin/giti; \
+		echo "Giti updated successfully!"; \
+	fi
 
 # Clean target
 .PHONY: clean
