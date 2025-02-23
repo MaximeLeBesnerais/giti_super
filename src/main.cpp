@@ -7,53 +7,9 @@ created: 20/02/2025 03:19:18
 */
 
 #include <iostream>
-#include <giti_parser.hpp>
-#include <giti_parser_result.hpp>
-#include <GitRepoClass.hpp>
-
-bool utilityManager(cxxopts::ParseResult result) {
-    if (result.count("all")) {
-        std::cout << "ALL" << std::endl;
-        return true;
-    }
-    if (result.count("build")) {
-        std::cout << "BUILD" << std::endl;
-        return true;
-    }
-    if (result.count("ignore")) {
-        std::cout << "IGNORE" << std::endl;
-        return true;
-    }
-    if (result.count("del")) {
-        std::cout << "DEL" << std::endl;
-        return true;
-    }
-    return false;
-}
-
-bool toolManager(cxxopts::ParseResult result) {
-    if (result.count("version")) {
-        std::cout << "VERSION" << std::endl;
-        return true;
-    }
-    if (result.count("update")) {
-        std::cout << "UPDATE" << std::endl;
-        return true;
-    }
-    if (result.count("force")) {
-        std::cout << "FORCE" << std::endl;
-        return true;
-    }
-    if (result.count("remove")) {
-        std::cout << "REMOVE" << std::endl;
-        return true;
-    }
-    if (result.count("help")) {
-        std::cout << "HELP" << std::endl;
-        return true;
-    }
-    return false;
-}
+#include "giti_parser.hpp"
+#include "giti_parser_result.hpp"
+#include "GitRepoClass.hpp"
 
 bool commandLineManager(cxxopts::ParseResult result) {
     cmd command;
@@ -107,14 +63,18 @@ int main(int argc, char *argv[]) {
     cxxopts::Options parser_used = createUtilityParser();
     cxxopts::ParseResult result = parser_used.parse(argc, argv);
     
-    if (utilityManager(result))
+    if (parserAnyTrue(result, utilityManager(result))) {
+        printFound(utilityManager(result));
         return 0;
+    }
 
     parser_used = createToolParser();
     result = parser_used.parse(argc, argv);
     
-    if (toolManager(result))
+    if (parserAnyTrue(result, toolManager(result))) {
+        printFound(toolManager(result));
         return 0;
+    }
 
     parser_used = createCommandLineParser();
     try {
