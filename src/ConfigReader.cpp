@@ -42,10 +42,13 @@ void ConfigParser::parseCommitSettings(const nlohmann::json& j) {
 }
 
 bool ConfigParser::loadConfig(const std::string& filepath) {
+    std::cout << "Loading config file: " << filepath << std::endl;
     try {
         std::ifstream config_file(filepath);
         if (!config_file.is_open()) {
             std::cerr << "Error: Could not open config file: " << filepath << std::endl;
+            std::cerr << "Some functionalities might not work properly without a config file." << std::endl;
+            std::cerr << "If needed, you can create a default config file by following the documentation." << std::endl;
             return false;
         }
 
