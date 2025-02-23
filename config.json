@@ -1,10 +1,10 @@
 {
     "version": {
       "VersionName": "Giti CPP Overload",
-      "Changelog": "Entire rewrite of Giti in Cpp, addition of new features, and bug fixes.",
+      "Changelog": "Add update function",
       "major": "3",
       "minor": "0",
-      "patch": "0"
+      "patch": "1"
     },
     "author": "Maxime Le Besnerais",
     "LastUpdate": {
