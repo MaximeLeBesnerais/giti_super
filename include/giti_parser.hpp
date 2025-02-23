@@ -31,8 +31,8 @@ created: 20/02/2025 03:18:42
     _utilityParser utilityManager(cxxopts::ParseResult result);
     _toolParser toolManager(cxxopts::ParseResult result);
 
-    bool parserAnyTrue(cxxopts::ParseResult result, _toolParser &tool);
-    bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser &utility);
+    bool parserAnyTrue(cxxopts::ParseResult result, _toolParser tool);
+    bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser utility);
     void printFound(_toolParser tool);
     void printFound(_utilityParser utility);
 #endif /* !GITI_PARSER_H_ */
