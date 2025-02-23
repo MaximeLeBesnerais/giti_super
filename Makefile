@@ -36,7 +36,7 @@ install: build
 		echo "Config file already exists at ~/.giti/config.json"; \
 	fi
 	@echo "Giti installed successfully!"
-	@echo "Run 'giti -h' for usage information"
+	@echo "Run 'giti' for usage information"
 
 # Clean target
 .PHONY: clean
