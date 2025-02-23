@@ -8,6 +8,8 @@ build
 
 giti
 
+!giti/
+
 
 *.c
 *.h
