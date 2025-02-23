@@ -9,6 +9,7 @@ created: 20/02/2025 03:18:42
 #ifndef GITI_PARSER_H_
     #define GITI_PARSER_H_
     #include <cxxopts.hpp>
+    #include <iostream>
     cxxopts::Options createUtilityParser(void);
     cxxopts::Options createToolParser(void);
     cxxopts::Options createCommandLineParser(void);
@@ -19,11 +20,19 @@ created: 20/02/2025 03:18:42
         bool _del;
         bool _other;
     } _utilityParser;
-    
+
     typedef struct {
         bool _version;
         bool _update;
         bool _force;
         bool _remove;
     } _toolParser;
+
+    _utilityParser utilityManager(cxxopts::ParseResult result);
+    _toolParser toolManager(cxxopts::ParseResult result);
+
+    bool parserAnyTrue(cxxopts::ParseResult result, _toolParser &tool);
+    bool parserAnyTrue(cxxopts::ParseResult result, _utilityParser &utility);
+    void printFound(_toolParser tool);
+    void printFound(_utilityParser utility);
 #endif /* !GITI_PARSER_H_ */
