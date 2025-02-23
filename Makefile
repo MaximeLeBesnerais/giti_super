@@ -22,19 +22,23 @@ build:
 # Clean target
 .PHONY: clean
 clean:
-	rm giti
+	@if [ -f "giti" ]; then \
+		rm giti; \
+	fi
 
 .PHONY: fclean
 fclean: clean
-	rm -rf build
+	@if [ -d "build" ]; then \
+		rm -rf build; \
+	fi
 
 .PHONY: get
 get: build
-	@if [ ! -f "build/build/giti" ]; then \
+	@if [ ! -f "build/giti" ]; then \
 		echo "giti not found"; \
 		exit 1; \
 	fi
-	@cp build/build/giti ./giti
+	@cp build/giti ./giti
 	@echo "giti binary copied to current directory"
 
 # Help target
