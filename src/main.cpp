@@ -27,18 +27,18 @@ int main(int argc, char* argv[]) {
         // Parse commands
         giti::cli::Parser parser;
 
+        // Handle tool flags
+        auto toolFlags = parser.parseTool(argc, argv);
+        if (toolFlags.version || toolFlags.update || toolFlags.force || toolFlags.remove) {
+            // Handle tool commands...
+            return 0;
+        }
+        
         // Handle utility flags
         auto utilityFlags = parser.parseUtility(argc, argv);
         if (utilityFlags.all || utilityFlags.build || utilityFlags.ignore || 
             utilityFlags.deleted || utilityFlags.other) {
             // Handle utility commands...
-            return 0;
-        }
-
-        // Handle tool flags
-        auto toolFlags = parser.parseTool(argc, argv);
-        if (toolFlags.version || toolFlags.update || toolFlags.force || toolFlags.remove) {
-            // Handle tool commands...
             return 0;
         }
 
