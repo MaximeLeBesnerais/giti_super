@@ -9,6 +9,8 @@
 #include "giti/handlers/tool_handler.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <filesystem>
+#include <fstream>
 
 namespace giti {
 namespace handlers {
@@ -28,9 +30,70 @@ public:
     }
 
     bool handleUpdate() const {
-        std::cout << "Update functionality not yet implemented." << std::endl;
-        std::cout << "To update, please check the repository for new versions." << std::endl;
-        return true;
+        std::cout << "🔄 Updating Giti..." << std::endl;
+        
+        try {
+            // Create temporary directory for update
+            std::filesystem::path tempDir = std::filesystem::temp_directory_path() / "giti_update";
+            std::filesystem::create_directories(tempDir);
+    
+            // Create a temporary script that will:
+            // 1. Move the new binary to a temporary location
+            // 2. Kill the current giti process
+            // 3. Move the new binary to the correct location
+            std::string updateScript = 
+                "#!/bin/bash\n"
+                "cd " + tempDir.string() + " && \n"
+                "if [ -d \"giti\" ]; then\n"
+                "    cd giti && git pull\n"
+                "else\n"
+                "    git clone https://github.com/MaximeLeBesnerais/giti.git\n"
+                "    cd giti\n"
+                "fi && \n"
+                "make && \n"
+                "# Create a temporary copy of the new binary\n"
+                "sudo cp build/giti /usr/bin/giti.new && \n"
+                "# Get the PID of the current giti process (our process)\n"
+                "GITI_PID=$$ && \n"
+                "# Create a background process that will:\n"
+                "# 1. Wait for our process to exit\n"
+                "# 2. Move the new binary into place\n"
+                "# 3. Clean up\n"
+                "(while kill -0 $GITI_PID 2>/dev/null; do sleep 0.1; done; \n"
+                " sudo mv /usr/bin/giti.new /usr/bin/giti; \n"
+                " rm -rf " + tempDir.string() + ") & \n"
+                "# Exit the script, which will let the background process complete the update\n"
+                "exit 0\n";
+    
+            // Write update script to temporary file
+            std::filesystem::path scriptPath = tempDir / "update.sh";
+            std::ofstream scriptFile(scriptPath);
+            scriptFile << updateScript;
+            scriptFile.close();
+    
+            // Make script executable
+            std::filesystem::permissions(scriptPath, 
+                std::filesystem::perms::owner_exec | 
+                std::filesystem::perms::owner_read | 
+                std::filesystem::perms::owner_write,
+                std::filesystem::perm_options::add);
+    
+            // Execute update script
+            std::string cmd = "bash " + scriptPath.string();
+            int result = std::system(cmd.c_str());
+    
+            if (result != 0) {
+                std::cerr << "❌ Update failed. Please check your permissions and try again." << std::endl;
+                return false;
+            }
+    
+            std::cout << "✅ Giti has been successfully updated! The changes will take effect next time you run giti." << std::endl;
+            return true;
+    
+        } catch (const std::exception& e) {
+            std::cerr << "❌ Update failed: " << e.what() << std::endl;
+            return false;
+        }
     }
 
     bool handleForce() const {
