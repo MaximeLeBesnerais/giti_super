@@ -17,6 +17,12 @@
     #include <vector>
     #include <string>
     #include <json.hpp>
+    #include <cstdlib>
+
+    static std::string getConfigPath() {
+        const char* env_path = std::getenv(CONF_LOC_ENV);
+        return env_path ? std::string(env_path) : std::string(CONF_LOC_ENV_DEFAULT);
+    }
 
     typedef struct Date_s {
         std::string day;
@@ -50,8 +56,8 @@
         Version version;
         std::string author;
         Date LastUpdate;
-        file_setup file_setup;
-        commit_settings commit_settings;
+        file_setup _file_setup;
+        commit_settings _commit_settings;
     } Config;
 
     class ConfigParser {
