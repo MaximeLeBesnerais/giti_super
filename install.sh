@@ -1,3 +1,4 @@
+#!/bin/bash -e
 #!/bin/bash
 
 # Function to check if a command exists
@@ -54,8 +55,8 @@ cd $TEMP_DIR
 
 # Clone repository
 echo "📥 Cloning Giti repository..."
-git clone https://github.com/MaximeLeBesnerais/giti.git
-cd giti
+git clone git@github.com:MaximeLeBesnerais/giti_super.git
+cd giti_super
 
 # Build and install
 echo "🔨 Building Giti..."
