@@ -8,7 +8,7 @@
 
 #include "giti/handlers/tool_handler.hpp"
 #include <iostream>
-#include <filesystem>
+#include <unistd.h>
 
 namespace giti {
 namespace handlers {
@@ -40,10 +40,26 @@ public:
     }
 
     bool handleRemove() const {
-        std::cout << "Remove functionality not yet implemented." << std::endl;
-        std::cout << "To remove manually:" << std::endl;
-        std::cout << "1. Remove the executable" << std::endl;
-        std::cout << "2. Remove configuration files from ~/.giti/ or your custom path" << std::endl;
+        if (geteuid() != 0) {
+            std::cerr << "You must be root to remove Giti." << std::endl;
+            return false;
+        }
+
+        std::cout << "Removing Giti..." << std::endl;
+        if (std::remove("/usr/bin/giti") != 0) {
+            std::cerr << "❌ Failed to remove Giti." << std::endl;
+            return false;
+        }
+        std::cout << "Giti executable removed." << std::endl;
+
+        std::string home = std::getenv("HOME");
+        std::string gitiDir = home + "/.giti";
+        if (std::remove(gitiDir.c_str()) != 0) {
+            std::cerr << "❌ Failed to remove Giti directory." << std::endl;
+            return false;
+        }
+        std::cout << "Giti directory removed." << std::endl;
+        std::cout << "✅ Giti has been successfully removed." << std::endl;
         return true;
     }
 
