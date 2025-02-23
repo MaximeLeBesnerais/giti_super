@@ -20,24 +20,24 @@ void ConfigParser::parseDate(const nlohmann::json& j) {
 }
 
 void ConfigParser::parseFileSetup(const nlohmann::json& j) {
-    config.file_setup.build_file_ext = 
+    config._file_setup.build_file_ext = 
         j["file_setup"]["build_file_ext"].get<std::vector<std::string>>();
-    config.file_setup.ignore_file_ext = 
+    config._file_setup.ignore_file_ext = 
         j["file_setup"]["ignore_file_ext"].get<std::vector<std::string>>();
-    config.file_setup.other_file_ext = 
+    config._file_setup.other_file_ext = 
         j["file_setup"]["other_file_ext"].get<std::vector<std::string>>();
 }
 
 void ConfigParser::parseCommitSettings(const nlohmann::json& j) {
-    config.commit_settings.require_scope = 
+    config._commit_settings.require_scope = 
         j["commit_settings"]["require_scope"];
-    config.commit_settings.allowed_types = 
+    config._commit_settings.allowed_types = 
         j["commit_settings"]["allowed_types"].get<std::vector<std::string>>();
-    config.commit_settings.allow_custom_types = 
+    config._commit_settings.allow_custom_types = 
         j["commit_settings"]["allow_custom_types"];
-    config.commit_settings.require_issue_reference = 
+    config._commit_settings.require_issue_reference = 
         j["commit_settings"]["require_issue_reference"];
-    config.commit_settings.issue_prefix = 
+    config._commit_settings.issue_prefix = 
         j["commit_settings"]["issue_prefix"];
 }
 
